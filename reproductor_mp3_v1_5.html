@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reproductor MP3 Simple</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .sidebar {
+      overflow-y: auto;
+    }
+    .sidebar .miniatura {
+      position: relative;
+      width: 100px;
+      aspect-ratio: 1 / 1;
+      font-size: 0;
+      background: #555;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 0;
+      background-size: cover;
+      background-position: center;
+    }
+    .sidebar .miniatura::after {
+      content: attr(data-label);
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      font-size: 16px;
+      background: black;
+      color: white;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+    .sidebar .miniatura:hover {
+      background: #777;
+    }
+    .main {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+    }
+    .caratula {
+      width: 200px;
+      height: 200px;
+      border-radius: 30px;
+      background-color: red;
+      background-image: url('cover1.jpeg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+    }
+    #seekBar {
+      width: 80%;
+    }
+    #playPause {
+      width: 150px;
+      height: 150px;
+      font-size: 64px;
+      border: none;
+      border-radius: 50%;
+      background: white;
+      color: black;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+    #playPause:hover {
+      background: #eee;
+    }
+    .version {
+      position: absolute;
+      bottom: 10px;
+      right: 20px;
+      font-size: 16px;
+      color: #999;
+    }
+    .icon {
+      width: 0;
+      height: 0;
+      border-style: solid;
+    }
+    .play-icon {
+      border-width: 20px 0 20px 35px;
+      border-color: transparent transparent transparent black;
+    }
+    .pause-icon {
+      display: flex;
+      gap: 10px;
+    }
+    .pause-icon div {
+      width: 10px;
+      height: 40px;
+      background: black;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" style="height: 100vh; display: flex; flex-direction: row;">
+    <div class="sidebar" style="height: 100%; width: 100px; display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; padding-top: 20px; gap: 20px; overflow-y: auto;">
+      <button onclick="selectAudio('10.mp3', 'cover10.jpeg')" data-label="10" class="miniatura" style="background-image: url('cover10.jpeg');"></button>
+      <button onclick="selectAudio('9.mp3', 'cover9.jpeg')" data-label="9" class="miniatura" style="background-image: url('cover9.jpeg');"></button>
+      <button onclick="selectAudio('8.mp3', 'cover8.jpeg')" data-label="8" class="miniatura" style="background-image: url('cover8.jpeg');"></button>
+      <button onclick="selectAudio('7.mp3', 'cover7.jpeg')" data-label="7" class="miniatura" style="background-image: url('cover7.jpeg');"></button>
+      <button onclick="selectAudio('6.mp3', 'cover6.jpeg')" data-label="6" class="miniatura" style="background-image: url('cover6.jpeg');"></button>
+      <button onclick="selectAudio('5.mp3', 'cover5.jpeg')" data-label="5" class="miniatura" style="background-image: url('cover5.jpeg');"></button>
+      <button onclick="selectAudio('4.mp3', 'cover4.jpeg')" data-label="4" class="miniatura" style="background-image: url('cover4.jpeg');"></button>
+      <button onclick="selectAudio('3.mp3', 'cover3.jpeg')" data-label="3" class="miniatura" style="background-image: url('cover3.jpeg');"></button>
+      <button onclick="selectAudio('2.mp3', 'cover2.jpeg')" data-label="2" class="miniatura" style="background-image: url('cover2.jpeg');"></button>
+      <button onclick="selectAudio('1.mp3', 'cover1.jpeg')" data-label="1" class="miniatura" style="background-image: url('cover1.jpeg');"></button>
+    </div>
+    <div class="main">
+      <div class="caratula" id="cover"></div>
+      <input type="range" id="seekBar" value="0" min="0" step="1">
+      <button id="playPause">
+        <div id="icon" class="icon play-icon"></div>
+      </button>
+    </div>
+  </div>
+  <div class="version">Versión 1.5</div>
+
+  <audio id="audio"></audio>
+
+  <script>
+    const audio = document.getElementById('audio');
+    const playPauseBtn = document.getElementById('playPause');
+    const icon = document.getElementById('icon');
+    const cover = document.getElementById('cover');
+    const seekBar = document.getElementById('seekBar');
+
+    function selectAudio(filename, coverImage) {
+      audio.src = filename;
+      localStorage.setItem('selectedAudio', filename);
+      localStorage.setItem('selectedCover', coverImage);
+      if (cover) cover.style.backgroundImage = `url('${coverImage}')`;
+      audio.load();
+      setIcon('play');
+    }
+
+    function togglePlay() {
+      if (!audio.src) return;
+      if (audio.paused) {
+        audio.play();
+        localStorage.setItem('audioWasPlaying', 'true');
+        setIcon('pause');
+      } else {
+        audio.pause();
+        localStorage.setItem('audioWasPlaying', 'false');
+        setIcon('play');
+      }
+    }
+
+    function setIcon(state) {
+      if (state === 'play') {
+        icon.className = 'icon play-icon';
+        icon.innerHTML = '';
+      } else if (state === 'pause') {
+        icon.className = 'pause-icon';
+        icon.innerHTML = '<div></div><div></div>';
+      }
+    }
+
+    audio.addEventListener('ended', () => setIcon('play'));
+
+    audio.addEventListener('timeupdate', () => {
+      if (!isNaN(audio.duration)) {
+        seekBar.max = Math.floor(audio.duration);
+        seekBar.value = Math.floor(audio.currentTime);
+        localStorage.setItem('audioTime', audio.currentTime);
+      }
+    });
+
+    seekBar.addEventListener('input', () => {
+      audio.currentTime = seekBar.value;
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedAudio = localStorage.getItem('selectedAudio') || '1.mp3';
+      const savedCover = localStorage.getItem('selectedCover') || 'cover1.jpeg';
+      const savedTime = parseFloat(localStorage.getItem('audioTime')) || 0;
+
+      selectAudio(savedAudio, savedCover);
+
+      audio.addEventListener('loadedmetadata', () => {
+        if (!isNaN(savedTime) && savedTime > 0 && savedTime < audio.duration) {
+          audio.currentTime = savedTime;
+        }
+        setIcon('play');
+      });
+    });
+
+    playPauseBtn.addEventListener('click', togglePlay);
+  </script>
+</body>
+</html>
