@@ -103,12 +103,20 @@
 <body>
   <div class="container" style="height: 100vh; display: flex; flex-direction: row;">
     <div class="sidebar" style="height: 100%; width: 100px; display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; padding-top: 20px; gap: 20px; overflow-y: auto;">
-      <button onclick="selectAudio('6.mp3', 'cover6.jpeg')" data-label="6" class="miniatura" style="background-image: url('cover6.jpeg');"></button>
-      <button onclick="selectAudio('5.mp3', 'cover5.jpeg')" data-label="5" class="miniatura" style="background-image: url('cover5.jpeg');"></button>
-      <button onclick="selectAudio('4.mp3', 'cover4.jpeg')" data-label="4" class="miniatura" style="background-image: url('cover4.jpeg');"></button>
-      <button onclick="selectAudio('3.mp3', 'cover3.jpeg')" data-label="3" class="miniatura" style="background-image: url('cover3.jpeg');"></button>
-      <button onclick="selectAudio('2.mp3', 'cover2.jpeg')" data-label="2" class="miniatura" style="background-image: url('cover2.jpeg');"></button>
-      <button onclick="selectAudio('1.mp3', 'cover1.jpeg')" data-label="1" class="miniatura" style="background-image: url('cover1.jpeg');"></button>
+      <div id="miniaturasContainer"></div>
+      <script>
+        const totalCovers = 6; // Modifica este número cuando agregues más
+        const miniaturasContainer = document.getElementById("miniaturasContainer");
+
+        for (let i = totalCovers; i >= 1; i--) {
+          const button = document.createElement("button");
+          button.className = "miniatura";
+          button.setAttribute("data-label", i);
+          button.setAttribute("onclick", `selectAudio('${i}.mp3', 'cover${i}.jpeg')`);
+          button.style.backgroundImage = `url('cover${i}.jpeg')`;
+          miniaturasContainer.appendChild(button);
+        }
+      </script>
     </div>
     <div class="main">
       <div class="caratula" id="cover"></div>
