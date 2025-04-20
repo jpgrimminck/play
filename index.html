@@ -1,428 +1,445 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Play</title>
+  <meta charset="UTF-8">
+  <title>Play</title>
 
-    <!-- ================================
-         iOS PWA Meta Tags
-         ================================ -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="Play">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Configuración para instalar como app en iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Play">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    <!-- ================================
-         Responsive Meta Tag
-         ================================ -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Escala responsive -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- ============== FAVICONS ============== -->
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <!-- Íconos de la app -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-    <!-- ================================
-         Estilos globales
-         ================================ -->
-    <style>
-        /* ---- Diseño global ---- */
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-            background-color: #363739; /* Dark background chosen by user */
-        }
+  <style>
+    /* ====================================================================== */
+    /* =======================  ESTILOS GENERALES  ========================== */
+    /* ====================================================================== */
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;      /* Evita scroll de fondo */
+      height: 100%;
+      background-color: #363739; /* Fondo gris oscuro solicitado */
+      font-family: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Helvetica Neue', sans-serif;
+    }
 
-        /* Barra lateral con miniaturas */
-        .sidebar {
-            width: 100px;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch; /* Momentum scroll on iOS   */
-            margin-top: calc(-1 * env(safe-area-inset-top)); /* Extend under status‑bar */
-            flex-shrink: 0;
-        }
+    /* Contenedor principal dividido en barra lateral y área de reproducción */
+    .container {
+      display: flex;
+      flex-direction: row;
+      height: 100vh;
+      overflow: hidden;
+    }
 
-        /* Botón individual de miniatura */
-        .sidebar .miniatura {
-            position: relative;
-            width: 100px;
-            aspect-ratio: 1/1;   /* Keep square */
-            padding: 0;
-            margin: 0;
-            font-size: 0;        /* Hide text node space */
-            background-size: cover;
-            background-position: center;
-            border: none;
-            cursor: pointer;
-        }
-        .sidebar .miniatura::after {   /* Number overlay */
-            content: attr(data-label);
-            position: absolute;
-            bottom: 4px;
-            right: 4px;
-            font-size: 14px;
-            background: black;
-            color: white;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-        .sidebar .miniatura:hover { filter: brightness(1.3); }
+    /* ====================================================================== */
+    /* ===============  BARRA LATERAL CON MINIATURAS (SIDEBAR) ============== */
+    /* ====================================================================== */
+    .sidebar {
+      width: 100px;                     /* Ancho fijo */
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      overflow-y: auto;                 /* Scroll vertical solo aquí */
+      -webkit-overflow-scrolling: touch;/* Inercia en iOS */
+      gap: 0;                           /* Sin espacios extra */
+      /* Coloca la barra sobre el “notch”/status‑bar en iPhone */
+      margin-top: calc(-1 * env(safe-area-inset-top));
+    }
 
-        /* ---- Columna principal del reproductor ---- */
-        .main {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            height: 100vh;
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-        }
+    /* Botones de miniaturas */
+    .sidebar .miniatura {
+      /* *IMPORTANTE*: sin padding extra para que NO aparezcan márgenes en desktop */
+      margin: 0;
+      padding: 0;
+      line-height: 0;
+      vertical-align: top;
+      box-sizing: border-box;
+      position: relative;
+      width: 100px;
+      aspect-ratio: 1/1;                /* Mantiene 1:1 */
+      font-size: 0;                     /* Oculta texto */
+      background: #555;
+      background-size: cover;
+      background-position: center;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
 
-        /* Carátula del álbum */
-        .caratula {
-            width: 200px;
-            height: 200px;
-            border-radius: 30px;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: cover;
-        }
+    /* Número sobre cada miniatura */
+    .sidebar .miniatura::after {
+      content: attr(data-label);
+      position: absolute;
+      bottom: 4px;
+      right: 4px;
+      font-size: 14px;
+      background-color: black;
+      color: white;
+      padding: 2px 6px;
+      border-radius: 4px;
+      line-height: 1;
+      z-index: 2;
+    }
 
-        /* Estilos tipográficos de canción y artista */
-        .info { width: 200px; text-align: left; }
-        .nombreCancion {
-            font-family: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Helvetica Neue', sans-serif;
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: #FFFFFF;
-        }
-        .artista {
-            font-family: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Helvetica Neue', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 400;
-            color: #B3B3B3;
-        }
+    /* Efecto hover sólo visible en computadora */
+    @media (hover: hover) {
+      .sidebar .miniatura:hover {
+        filter: brightness(1.3);
+      }
+    }
 
-        /* Controles de medios */
-        #seekBar { width: 80%; }
+    /* ====================================================================== */
+    /* ===================  ÁREA PRINCIPAL DE REPRODUCCIÓN  ================= */
+    /* ====================================================================== */
+    .main {
+      flex-grow: 1;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+    }
 
-        #playPause {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 64px;
-            background: white;
-            color: black;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-        #playPause:hover { background: #eee; }
+    /* Carátula del tema actual */
+    .caratula {
+      width: 200px;
+      height: 200px;
+      border-radius: 30px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      /* color de respaldo (carga) */
+      background-color: red;
+    }
 
-        /* Figuras dinámicas del ícono play/pause */
-        .icon { width: 0; height: 0; border-style: solid; }
-        .play-icon  { border-width: 20px 0 20px 35px; border-color: transparent transparent transparent black; }
-        .pause-icon { display: flex; gap: 10px; }
-        .pause-icon div { width: 10px; height: 40px; background: black; }
+    /* Información textual */
+    .info { width: 200px; text-align: left; }
 
-        /* Botón para alternar guitarra (solo en pistas con _sg.mp3) */
-        #guitarraBtn {
-            position: absolute;
-            top: calc(50% - 310px);
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 2;
+    .nombreCancion {
+      font-size: 1.25rem; /* 20 – 22 px aprox. */
+      font-weight: 600;
+      color: #FFFFFF;
+    }
+    .artista {
+      font-size: 0.9rem;  /* 14 – 16 px aprox. */
+      font-weight: 400;
+      color: #B3B3B3;
+    }
 
-            display: none;                /* default hidden */
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: none;
-            background: white;
-            box-shadow: 0 0 10px gray;
-            cursor: pointer;
+    /* Barra de progreso */
+    #seekBar { width: 80%; }
 
-            align-items: center;
-            justify-content: center;
-        }
-        #guitarraBtn.active { box-shadow: 0 0 10px red !important; }
+    /* Botón play / pausa redondo */
+    #playPause {
+      width: 150px;
+      height: 150px;
+      border: none;
+      border-radius: 50%;
+      background: white;
+      color: black;
+      font-size: 64px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    #playPause:hover { background: #eee; }
 
-        /* Marca de agua de versión */
-        .version {
-            position: absolute;
-            bottom: 10px;
-            right: 20px;
-            font-size: 16px;
-            color: #999;
-        }
-    </style>
+    /* Íconos de play / pause construidos con CSS */
+    .icon { width: 0; height: 0; border-style: solid; }
+    .play-icon { border-width: 20px 0 20px 35px; border-color: transparent transparent transparent black; }
+
+    .pause-icon { display: flex; gap: 10px; }
+    .pause-icon div { width: 10px; height: 40px; background: black; }
+
+    /* Botón de guitarra para alternar audio secundario */
+    #guitarraBtn {
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      top: calc(50% - 310px);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+
+      display: none;                    /* Visible solo en covers con audio alternativo */
+      align-items: center;
+      justify-content: center;
+
+      border: none;
+      border-radius: 50%;
+      background: white;
+      box-shadow: 0 0 10px gray;
+      cursor: pointer;
+    }
+    #guitarraBtn.active {              /* Resalta en rojo cuando está activo */
+      box-shadow: 0 0 10px red !important;
+    }
+
+    /* Versión en esquina */
+    .version {
+      position: absolute;
+      bottom: 10px;
+      right: 20px;
+      font-size: 16px;
+      color: #999;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container" style="display:flex; height:100vh;">
-        <!-- ========== BARRA LATERAL (Miniaturas) ========== -->
-        <div class="sidebar">
-            <div id="miniaturasContainer"></div>
-        </div>
-
-        <!-- ========== PANEL PRINCIPAL DEL REPRODUCTOR ========== -->
-        <div class="main">
-            <!-- Botón opcional sin guitarra -->
-            <button id="guitarraBtn" title="Alternar guitarra">
-                <span style="font-size:28px;">🎸</span>
-            </button>
-
-            <!-- Carátula -->
-            <div id="cover" class="caratula"></div>
-
-            <!-- Título y artista -->
-            <div class="info">
-                <div id="nombreCancion" class="nombreCancion"></div>
-                <div id="artista"       class="artista"></div>
-            </div>
-
-            <!-- Barra de progreso y botón play/pause -->
-            <input type="range" id="seekBar" value="0" min="0" step="1">
-            <button id="playPause"><div id="icon" class="icon play-icon"></div></button>
-        </div>
+  <!-- ===========================  ESTRUCTURA HTML  =========================== -->
+  <div class="container">
+    <!-- Barra lateral -->
+    <div class="sidebar">
+      <div id="miniaturasContainer"></div>
     </div>
 
-    <!-- ========== PIE DE PÁGINA ========= -->
-    <div class="version">Versión 4.0</div>
+    <!-- Sección principal -->
+    <div class="main">
+      <button id="guitarraBtn"><span style="font-size:28px;">🎸</span></button>
+      <div class="caratula" id="cover"></div>
+      <div class="info">
+        <div class="nombreCancion" id="nombreCancion"></div>
+        <div class="artista"        id="artista"></div>
+      </div>
+      <input type="range" id="seekBar" value="0" min="0" step="1">
+      <button id="playPause"><div id="icon" class="icon play-icon"></div></button>
+    </div>
+  </div>
 
-    <!-- ========== ETIQUETAS DE AUDIO ========= -->
-    <audio id="audio"></audio>
-    <audio id="audioAlt" style="display:none;"></audio>
+  <!-- Etiqueta de versión -->
+  <div class="version">Versión 4.0</div>
 
-    <!-- ================================
-         Script de la aplicación
-         ================================ -->
-    <script>
-        /* --------------------------------
-           Configuración y metadatos
-        -------------------------------- */
-        const TOTAL_COVERS          = 10;            // Total de pistas
-        const COVERS_CON_GUITARRA   = [9, 10];       // Pistas con mezcla alternativa sin guitarra
+  <!-- ===========================  AUDIOS OCULTOS  =========================== -->
+  <audio id="audio"></audio>
+  <audio id="audioAlt" style="display:none;"></audio>
 
-        // Metadatos de canciones (título y artista)
-        const METADATOS = {
-            1 : { nombre: 'Día de Enero',                         artista: 'Shakira' },
-            2 : { nombre: 'Hey Jude',                             artista: 'Beatles' },
-            3 : { nombre: 'The Scientist',                        artista: 'Coldplay' },
-            4 : { nombre: 'Shake it off',                         artista: 'Taylor Swift' },
-            5 : { nombre: 'Main Theme',                           artista: 'Gravity Falls' },
-            6 : { nombre: 'Riptide',                              artista: 'Vance Joy' },
-            7 : { nombre: 'El Camión de Samu',                    artista: 'Hermanos' },
-            8 : { nombre: 'Capaz',                                artista: 'Alleh & Yorghaki' },
-            9 : { nombre: 'Drive',                                artista: 'Incubus' },
-            10: { nombre: "Back to december (Taylor's Version)", artista: 'Taylor Swift' }
-        };
+  <!-- ==============================  SCRIPTS  =============================== -->
+  <script>
+  /* --------------------------------------------------------------------------
+     VARIABLES Y CONSTANTES GLOBALES
+  -------------------------------------------------------------------------- */
+  const totalCovers = 10;               // Total de carátulas
+  const coversConGuitarra = [9, 10];    // Índices que poseen audio sin guitarra
 
-        /* --------------------------------
-           Elementos del DOM
-        -------------------------------- */
-        const miniaturasContainer = document.getElementById('miniaturasContainer');
-        const nombreCancionEl     = document.getElementById('nombreCancion');
-        const artistaEl           = document.getElementById('artista');
-        const coverEl             = document.getElementById('cover');
-        const seekBar             = document.getElementById('seekBar');
+  // Metadatos de canciones (nombre y artista)
+  const metadatos = {
+      1: {nombre:'Día de Enero',            artista:'Shakira'},
+      2: {nombre:'Hey Jude',                artista:'Beatles'},
+      3: {nombre:'The Scientist',           artista:'Coldplay'},
+      4: {nombre:'Shake it Off',            artista:'Taylor Swift'},
+      5: {nombre:'Main Theme',              artista:'Gravity Falls'},
+      6: {nombre:'Riptide',                 artista:'Vance Joy'},
+      7: {nombre:'El Camión de Samu',       artista:'Hermanos'},
+      8: {nombre:'Capaz',                   artista:'Alleh & Yorghaki'},
+      9: {nombre:'Drive',                   artista:'Incubus'},
+     10: {nombre:"Back to december (Taylor's Version)", artista:'Taylor Swift'}
+  };
 
-        const playPauseBtn        = document.getElementById('playPause');
-        const icon                = document.getElementById('icon');
-        const guitarraBtn         = document.getElementById('guitarraBtn');
+  /* --------------------------------------------------------------------------
+     ELEMENTOS DEL DOM
+  -------------------------------------------------------------------------- */
+  const miniaturasContainer = document.getElementById('miniaturasContainer');
+  const nombreCancionEl     = document.getElementById('nombreCancion');
+  const artistaEl           = document.getElementById('artista');
+  const audio               = document.getElementById('audio');
+  const audioAlt            = document.getElementById('audioAlt');
+  const guitarraBtn         = document.getElementById('guitarraBtn');
+  const playPauseBtn        = document.getElementById('playPause');
+  const icon                = document.getElementById('icon');
+  const cover               = document.getElementById('cover');
+  const seekBar             = document.getElementById('seekBar');
 
-        const audio        = document.getElementById('audio');
-        const audioAlt     = document.getElementById('audioAlt');
-        let   currentAudio = audio;      // <audio> actualmente activo
-        let   isAlt        = false;      // true si está sonando la mezcla sin guitarra
+  /* Estado de audio actual */
+  let currentAudio = audio;
+  let isAlt        = false;             // ¿Estamos usando audio alternativo?
 
-        /* --------------------------------
-           Ayudante: actualizar ícono play/pause
-        -------------------------------- */
-        function setIcon(state) {
-            if (state === 'play') {
-                icon.className = 'icon play-icon';
-                icon.innerHTML = ''; // Triangle via CSS borders
-            } else {
-                icon.className = 'pause-icon';
-                icon.innerHTML = '<div></div><div></div>';
-            }
-        }
+  /* --------------------------------------------------------------------------
+     FUNCIONES PRINCIPALES
+  -------------------------------------------------------------------------- */
+  /**
+   * Carga una nueva canción y actualiza UI.
+   * @param {string} filename     Archivo de audio principal.
+   * @param {string} coverImage   Imagen de carátula.
+   * @param {{nombre:string, artista:string}} metadata  Información textual.
+   */
+  function selectAudio (filename, coverImage, metadata) {
+    /* Pausa cualquier audio en reproducción */
+    if (currentAudio && !currentAudio.paused) currentAudio.pause();
 
-        /* --------------------------------
-           Seleccionar una nueva pista para reproducir
-        -------------------------------- */
-        function selectAudio(filename, coverImage, meta) {
-            // Pause any current audio
-            if (currentAudio && !currentAudio.paused) currentAudio.pause();
+    /* 1. Actualiza fuentes de audio y portada */
+    audio.src = filename;
+    cover.style.backgroundImage = `url('${coverImage}')`;
 
-            // Update primary audio source
-            audio.src = filename;
+    /* 2. Actualiza metadatos visibles */
+    nombreCancionEl.textContent = metadata.nombre;
+    artistaEl.textContent       = metadata.artista;
 
-            // Persist user selection in localStorage
-            localStorage.setItem('selectedAudio',  filename);
-            localStorage.setItem('selectedCover',  coverImage);
-            localStorage.setItem('selectedNombre', meta.nombre);
-            localStorage.setItem('selectedArtista',meta.artista);
+    /* 3. Guarda preferencia en localStorage para persistencia */
+    localStorage.setItem('selectedAudio',   filename);
+    localStorage.setItem('selectedCover',   coverImage);
+    localStorage.setItem('selectedNombre',  metadata.nombre);
+    localStorage.setItem('selectedArtista', metadata.artista);
 
-            // UI updates
-            coverEl.style.backgroundImage = `url('${coverImage}')`;
-            nombreCancionEl.textContent   = meta.nombre;
-            artistaEl.textContent         = meta.artista;
+    /* 4. Configura Media Session API (muestra info en notificación iOS/Android) */
+    if ('mediaSession' in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title:  metadata.nombre,
+        artist: metadata.artista,
+        artwork:[{ src: coverImage, sizes:'512x512', type:'image/jpeg' }]
+      });
+      navigator.mediaSession.setActionHandler('play',  () => { currentAudio.play();  setIcon('pause'); });
+      navigator.mediaSession.setActionHandler('pause', () => { currentAudio.pause(); setIcon('play');  });
+    }
 
-            // Media Session API (lock‑screen controls)
-            if ('mediaSession' in navigator) {
-                navigator.mediaSession.metadata = new MediaMetadata({
-                    title:  meta.nombre,
-                    artist: meta.artista,
-                    artwork: [{ src: coverImage, sizes: '512x512', type: 'image/jpeg' }]
-                });
+    /* 5. Configura botón de guitarra si corresponde */
+    const coverIndex = parseInt(filename.match(/(\d+)\.mp3/)[1], 10);
+    if (coversConGuitarra.includes(coverIndex)) {
+      guitarraBtn.style.display = 'flex';
+      guitarraBtn.disabled      = true;         // Esperamos precarga
+      guitarraBtn.style.filter  = 'grayscale(100%)';
+      guitarraBtn.style.opacity = '0.6';
+      guitarraBtn.classList.remove('active');
 
-                navigator.mediaSession.setActionHandler('play',  () => { currentAudio.play();  setIcon('pause'); });
-                navigator.mediaSession.setActionHandler('pause', () => { currentAudio.pause(); setIcon('play');  });
-            }
+      // Pre‑carga audio sin guitarra
+      audioAlt.src = filename.replace('.mp3','_sg.mp3');
+      audioAlt.preload = 'auto';
+      audioAlt.load();
+      audioAlt.addEventListener('canplaythrough', () => {
+        guitarraBtn.disabled     = false;
+        guitarraBtn.style.filter = 'none';
+        guitarraBtn.style.opacity= '1';
+      }, {once:true});
+    } else {
+      guitarraBtn.style.display = 'none';
+    }
 
-            /* --- Handle optional guitar‑mute track --- */
-            const index = parseInt(filename.match(/(\d+)\.mp3/)[1]);
+    /* 6. Resetea controles */
+    currentAudio = audio;
+    currentAudio.load();
+    seekBar.value = 0;
+    seekBar.max   = 1;
+    setIcon('play');
+  }
 
-            if (COVERS_CON_GUITARRA.includes(index)) {
-                guitarraBtn.style.display = 'flex';
-                guitarraBtn.disabled      = true;      // esperar precarga
-                guitarraBtn.classList.remove('active');
-                guitarraBtn.style.filter  = 'grayscale(100%)';
-                guitarraBtn.style.opacity = '0.6';
+  /** Alterna play / pause */
+  function togglePlay () {
+    if (!currentAudio.src) return;
+    if (currentAudio.paused) {
+      currentAudio.play();
+      setIcon('pause');
+    } else {
+      currentAudio.pause();
+      setIcon('play');
+    }
+  }
 
-                // Prepare alternate mix
-                audioAlt.src    = filename.replace('.mp3', '_sg.mp3');
-                audioAlt.preload = 'auto';
-                audioAlt.load();
-                audioAlt.addEventListener('canplaythrough', () => {
-                    guitarraBtn.disabled = false;
-                    guitarraBtn.style.filter  = 'none';
-                    guitarraBtn.style.opacity = '1';
-                }, { once: true });
+  /** Cambia visual de ícono principal */
+  function setIcon (state) {
+    if (state === 'play') {
+      icon.className = 'icon play-icon';
+      icon.innerHTML = '';
+    } else {
+      icon.className = 'pause-icon';
+      icon.innerHTML = '<div></div><div></div>';
+    }
+  }
 
-            } else {
-                guitarraBtn.style.display = 'none';
-            }
+  /* --------------------------------------------------------------------------
+     EVENTOS
+  -------------------------------------------------------------------------- */
+  // Sincroniza barra de progreso
+  [audio, audioAlt].forEach(aud => {
+    aud.addEventListener('timeupdate', e => {
+      if (!isNaN(e.target.duration)) {
+        seekBar.max   = Math.floor(e.target.duration);
+        seekBar.value = Math.floor(e.target.currentTime);
+      }
+    });
+    aud.addEventListener('ended', () => setIcon('play'));
+  });
 
-            // Reset playback state
-            currentAudio = audio;
-            currentAudio.load();
-            seekBar.value = 0;
-            seekBar.max   = 1;
-            setIcon('play');
-        }
+  // Drag de la barra
+  seekBar.addEventListener('input', () => {
+    currentAudio.currentTime = seekBar.value;
+  });
 
-        /* --------------------------------
-           Toggle play / pause button
-        -------------------------------- */
-        function togglePlay() {
-            if (!currentAudio.src) return;   // nada cargado aún
-            if (currentAudio.paused) {
-                currentAudio.play();
-                setIcon('pause');
-            } else {
-                currentAudio.pause();
-                setIcon('play');
-            }
-        }
+  // Click en play/pause
+  playPauseBtn.addEventListener('click', togglePlay);
 
-        /* --------------------------------
-           Actualizaciones de tiempo del elemento de audio
-        -------------------------------- */
-        [audio, audioAlt].forEach(aud => {
-            aud.addEventListener('ended',     ()  => setIcon('play'));
-            aud.addEventListener('timeupdate', e  => {
-                if (!isNaN(e.target.duration)) {
-                    seekBar.max   = Math.floor(e.target.duration);
-                    seekBar.value = Math.floor(e.target.currentTime);
-                }
-            });
-        });
+  // Click en botón guitarra
+  guitarraBtn.addEventListener('click', () => {
+    const savedAudio = localStorage.getItem('selectedAudio');
+    const coverIndex = parseInt(savedAudio.match(/(\d+)\.mp3/)[1], 10);
+    if (!coversConGuitarra.includes(coverIndex)) return;
 
-        /* --------------------------------
-           Manejador de arrastre de la barra de progreso
-        -------------------------------- */
-        seekBar.addEventListener('input', () => { currentAudio.currentTime = seekBar.value; });
+    const time    = currentAudio.currentTime;
+    const playing = !currentAudio.paused;
 
-        /* --------------------------------
-           Restaurar última sesión al cargar
-        -------------------------------- */
-        window.addEventListener('DOMContentLoaded', () => {
-            // Cargar selecciones persistidas o valores por defecto
-            const savedAudio  = localStorage.getItem('selectedAudio')  || '1.mp3';
-            const savedCover  = localStorage.getItem('selectedCover')  || 'cover1.jpeg';
-            const savedName   = localStorage.getItem('selectedNombre') || METADATOS[1].nombre;
-            const savedArt    = localStorage.getItem('selectedArtista')|| METADATOS[1].artista;
-            const savedIsAlt  = localStorage.getItem('isAlt') === 'true';
+    // Cambia estado visual
+    guitarraBtn.classList.toggle('active');
+    isAlt = guitarraBtn.classList.contains('active');
+    localStorage.setItem('isAlt', isAlt.toString());
 
-            coverEl.style.backgroundImage = `url('${savedCover}')`;
-            nombreCancionEl.textContent   = savedName;
-            artistaEl.textContent         = savedArt;
+    // Cambia fuente de audio manteniendo tiempo actual
+    currentAudio.pause();
+    currentAudio = isAlt ? audioAlt : audio;
+    currentAudio.currentTime = time;
+    if (playing) currentAudio.play();
+  });
 
-            audio.src = savedAudio;
+  // Genera miniaturas y recupera selección previa al cargar la página
+  window.addEventListener('DOMContentLoaded', () => {
+    /* 1. Reconstruir estado guardado */
+    const savedAudio   = localStorage.getItem('selectedAudio')   || '1.mp3';
+    const savedCover   = localStorage.getItem('selectedCover')   || 'cover1.jpeg';
+    const savedNombre  = localStorage.getItem('selectedNombre')  || metadatos[1].nombre;
+    const savedArtista = localStorage.getItem('selectedArtista') || metadatos[1].artista;
+    const savedIsAlt   = localStorage.getItem('isAlt') === 'true';
 
-            const index = parseInt(savedAudio.match(/(\d+)\.mp3/)[1]);
+    // Aplica estado
+    cover.style.backgroundImage = `url('${savedCover}')`;
+    nombreCancionEl.textContent = savedNombre;
+    artistaEl.textContent       = savedArtista;
+    audio.src = savedAudio;
 
-            // Mostrar u ocultar botón de guitarra
-            guitarraBtn.style.display = COVERS_CON_GUITARRA.includes(index) ? 'flex' : 'none';
+    const coverIndex = parseInt(savedAudio.match(/(\d+)\.mp3/)[1], 10);
+    guitarraBtn.style.display = coversConGuitarra.includes(coverIndex) ? 'flex' : 'none';
 
-            // Si el usuario salió con mezcla alternativa, retomarla
-            if (COVERS_CON_GUITARRA.includes(index) && savedIsAlt) {
-                isAlt = true;
-                guitarraBtn.classList.add('active');
-                audioAlt.src = savedAudio.replace('.mp3', '_sg.mp3');
-                currentAudio = audioAlt;
-            } else {
-                currentAudio = audio;
-            }
+    // ¿Debe iniciar con audio alt?
+    if (coversConGuitarra.includes(coverIndex) && savedIsAlt) {
+      isAlt        = true;
+      guitarraBtn.classList.add('active');
+      currentAudio = audioAlt;
+    } else {
+      isAlt        = false;
+      currentAudio = audio;
+    }
 
-            // Construir miniaturas en la barra lateral (orden inverso, más recientes arriba)
-            for (let i = TOTAL_COVERS; i >= 1; i--) {
-                const btn = document.createElement('button');
-                btn.className = 'miniatura';
-                btn.dataset.label = i;
-                btn.style.backgroundImage = `url('cover${i}.jpeg')`;
-                btn.onclick = () => selectAudio(`${i}.mp3`, `cover${i}.jpeg`, METADATOS[i]);
-                miniaturasContainer.appendChild(btn);
-            }
-        });
+    audio.addEventListener('loadedmetadata', () => setIcon('play'));
 
-        /* --------------------------------
-           Escuchadores de eventos para controles
-        -------------------------------- */
-        playPauseBtn.addEventListener('click', togglePlay);
-
-        guitarraBtn.addEventListener('click', () => {
-            const savedAudio = localStorage.getItem('selectedAudio');
-            const index      = parseInt(savedAudio.match(/(\d+)\.mp3/)[1]);
-
-            if (!COVERS_CON_GUITARRA.includes(index)) return;
-
-            const time    = currentAudio.currentTime;
-            const wasPlay = !currentAudio.paused;
-
-            // Alternar clase activa
-            guitarraBtn.classList.toggle('active');
-            isAlt = guitarraBtn.classList.contains('active');
-            localStorage.setItem('isAlt', isAlt.toString());
-
-            // Cambiar elementos de audio
-            currentAudio.pause();
-            currentAudio = isAlt ? audioAlt : audio;
-            currentAudio.currentTime = time;
-            if (wasPlay) currentAudio.play();
-        });
-    </script>
+    /* 2. Crea botones de miniaturas (orden inverso para mostrar último arriba) */
+    for (let i = totalCovers; i >= 1; i--) {
+      const btn = document.createElement('button');
+      btn.className = 'miniatura';
+      btn.setAttribute('data-label', i);
+      btn.style.backgroundImage = `url('cover${i}.jpeg')`;
+      btn.onclick = () => selectAudio(`${i}.mp3`, `cover${i}.jpeg`, metadatos[i]);
+      miniaturasContainer.appendChild(btn);
+    }
+  });
+  </script>
 </body>
 </html>
