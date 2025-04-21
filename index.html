@@ -11,32 +11,13 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
   <!-- Escala responsive -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Íconos de la app -->
   <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
   <style>
-    :root { --safeTop: env(safe-area-inset-top); 
-  --safeBottom: env(safe-area-inset-bottom);
-}
-
-    /* container adjustment for status-bar overlap */
-    .container {
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      margin-top: calc(-1 * var(--safeTop));
-    
-      display: flex;
-      flex-direction: row;
-      height: auto;
-      overflow: hidden;
-    }
-    
     /* ====================================================================== */
     /* =======================  ESTILOS GENERALES  ========================== */
     /* ====================================================================== */
@@ -70,13 +51,8 @@
       -webkit-overflow-scrolling: touch;/* Inercia en iOS */
       gap: 0;                           /* Sin espacios extra */
       /* Coloca la barra sobre el “notch”/status‑bar en iPhone */
-      
-    
-  padding-bottom: var(--safeBottom);
-
-  padding-top: var(--safeTop);
-  padding-bottom: calc(var(--safeBottom) * 2);
-}
+      margin-top: calc(-1 * env(safe-area-inset-top));
+    }
 
     /* Botones de miniaturas */
     .sidebar .miniatura {
@@ -245,7 +221,7 @@
   </div>
 
   <!-- Etiqueta de versión -->
-  <div class="version">v4.5</div>
+  <div class="version">Versión 4.1</div>
 
   <!-- ===========================  AUDIOS OCULTOS  =========================== -->
   <audio id="audio"></audio>
