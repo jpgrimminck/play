@@ -18,22 +18,16 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
   <style>
-    :root { --safeTop: env(safe-area-inset-top); 
-  --safeBottom: env(safe-area-inset-bottom);
-}
+    :root { --safeTop: env(safe-area-inset-top); }
 
     /* container adjustment for status-bar overlap */
     .container {
-      position: fixed;
+      position: absolute;
       top: 0;
-      right: 0;
-      bottom: 0;
       left: 0;
+      right: 0;
+      height: calc(100vh + var(--safeTop));
       margin-top: calc(-1 * var(--safeTop));
-      display: flex;
-      flex-direction: row;
-      height: auto;
-      overflow: hidden;
     }
     
     /* ====================================================================== */
@@ -239,7 +233,7 @@
   </div>
 
   <!-- Etiqueta de versión -->
-  <div class="version">v4.3</div>
+  <div class="version">Versión 4.2</div>
 
   <!-- ===========================  AUDIOS OCULTOS  =========================== -->
   <audio id="audio"></audio>
