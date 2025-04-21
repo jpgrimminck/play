@@ -221,40 +221,7 @@
   </div>
 
   <!-- Etiqueta de versión -->
-  
-    <div class="version" id="version-btn" style="cursor: pointer; user-select: none;">
-    Versión 4.4
-  </div>
-    <div id="spinner" style="
-      display: none;
-      position: fixed;
-      bottom: 10px;
-      right: 100px;
-      width: 20px;
-      height: 20px;
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid #555;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      z-index: 1000;">
-    </div>
-    <style>
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-    </style>
-    <script>
-      document.getElementById('version-btn').addEventListener('click', function() {
-        const spinner = document.getElementById('spinner');
-        spinner.style.display = 'block';
-
-        setTimeout(() => {
-          window.location.reload(true);
-        }, 1000);
-      });
-    </script>
-    
+  <div class="version">Versión 4.1</div>
 
   <!-- ===========================  AUDIOS OCULTOS  =========================== -->
   <audio id="audio"></audio>
@@ -265,7 +232,7 @@
   /* --------------------------------------------------------------------------
      VARIABLES Y CONSTANTES GLOBALES
   -------------------------------------------------------------------------- */
-  const totalCovers = 14;               // Total de carátulas (ahora 14)
+  const totalCovers = 13;               // Total de carátulas (10 + 3 nuevas)
   const coversConGuitarra = [9, 10];    // Índices que poseen audio sin guitarra
 
   // Metadatos de canciones (nombre y artista)
@@ -283,8 +250,7 @@
      /* Nuevos covers añadidos */
      11:  {nombre:'Gravity Falls',                        artista:'Pedro y Clemente'},
      12:  {nombre:'Burrito Sabanero',                     artista:'Borja y Max'},
-     13:  {nombre:"I'm still standing",                   artista:'Clemente'},
-     14: {nombre:'Diente blanco, No te vayas!', artista:'Clemente y Celeste'}
+     13:  {nombre:"I'm still standing",                   artista:'Clemente'}
   };
 
   /* --------------------------------------------------------------------------
