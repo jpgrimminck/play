@@ -25,6 +25,26 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-touch-fullscreen" content="yes">
   <link rel="manifest" href="manifest.json">
+
+  <style>
+    :root {
+      --sat: env(safe-area-inset-top);
+      --sab: env(safe-area-inset-bottom);
+      --sal: env(safe-area-inset-left);
+      --sar: env(safe-area-inset-right);
+    }
+    html {
+      height: -webkit-fill-available;
+    }
+    body {
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+    }
+  </style>
 </head>
 
 <body>
@@ -161,7 +181,6 @@
         68: {nombre:"Main Theme",                      artista:"Mario Bross"},
         69: {nombre:"Hey Jude",                        artista:"Patricia y Pedro"},
         70: {nombre:"El Cigarrito",                    artista:"Juanita y Juan Pablo"},
-        
         
     };
 

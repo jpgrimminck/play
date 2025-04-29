@@ -16,6 +16,7 @@ html, body {
   flex-direction: row;
   height: 100vh;
   overflow: hidden;
+  padding-top: env(safe-area-inset-top); /* Ajuste para notch/status-bar */
 }
 
 /* ====================================================================== */
