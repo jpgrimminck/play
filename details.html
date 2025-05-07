@@ -50,14 +50,14 @@
       flex-direction: column;
       align-items: center;
       position: fixed;
-      overflow-y: scroll;
-      -webkit-overflow-scrolling: touch;
+      overflow: hidden;
       width: 100%;
       -webkit-tap-highlight-color: transparent;
       -webkit-touch-callout: none;
       -webkit-user-select: none;
       user-select: none;
       box-sizing: border-box;
+      touch-action: none;
     }
     @supports (-webkit-touch-callout: none) {
       body {
@@ -81,6 +81,7 @@
       width: 380px;
       height: 380px;
       z-index: 2;
+      touch-action: pan-y;
     }
     .cover {
       width: 100%;
@@ -151,8 +152,8 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: linear-gradient(to right, #4a9eff var(--progreso, 0%), #444 var(--progreso, 0%));
       z-index: 1;
+      background-image: linear-gradient(to right, var(--section-color, #444) var(--progreso, 0%), #444 var(--progreso, 0%));
     }
     button.section-btn span {
       position: relative;
@@ -171,11 +172,16 @@
     button.section-btn span.active {
       color: #000;
     }
+
+    button.section-btn[data-etiqueta="coro"] span {
+      color: white !important;
+      background: transparent !important;
+    }
     button.section-btn:hover {
       background: #555;
     }
     button.section-btn.selected {
-      box-shadow: 0 0 10px rgba(74, 158, 255, 0.8);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 10px var(--section-color); /* Sombra con el color de la sección */
       outline: 2px solid #4a9eff;
       outline-offset: -2px;
     }
@@ -299,37 +305,39 @@
     }
     #fixedHeader h1 {
       position: fixed;
-      top: 26px;
-      left:68%;
+      top: calc(env(safe-area-inset-top, 0px) + 25px); /* 30px de margen adicional */
+      left: 50%;
       transform: translateX(-50%);
       width: 100%;
       margin: 0;
       padding: 0 20px;
       color: white;
       font-size: 1.8em;
-      text-align: left;
+      text-align: center; /* Mejor centrado */
       text-shadow: 0 2px 4px rgba(0,0,0,0.3);
       box-sizing: border-box;
       z-index: 3;
     }
     .secciones-fijas {
       position: fixed;
-      top: 130px; /* Puedes cambiar este valor para mover el contenedor de secciones */
+      top: 130px;
       left: 0;
       width: 100%;
       display: flex;
       justify-content: center;
       z-index: 30;
+      touch-action: none; /* Evita el desplazamiento en este contenedor */
     }
     .controles-fijos {
       position: fixed;
-      bottom: 10px; /* Puedes cambiar este valor para mover el contenedor de controles básicos */
+      bottom: 10px;
       left: 0;
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       z-index: 20;
+      touch-action: none; /* Evita el desplazamiento en este contenedor */
     }
   </style>
 </head>
@@ -412,22 +420,6 @@
 
     // Configuración de secciones por canción
     const seccionesPorCancion = {
-      "71": [ 
-      { etiqueta: "intro", inicio: 0 },
-        { etiqueta: "estrofa", inicio: 15.9 },
-        { etiqueta: "pre-coro", inicio: 41.3 },
-        { etiqueta: "pre-coro", inicio: 52.1 },
-        { etiqueta: "estrofa", inicio: 63.3 },
-        { etiqueta: "pre-coro", inicio: 89.2 },
-        { etiqueta: "pre-coro", inicio: 100.5 },
-        { etiqueta: "puente", inicio: 115.5 },
-        { etiqueta: "pre-coro", inicio: 129.8 },
-        { etiqueta: "pre-coro", inicio: 136.5 },
-        { etiqueta: "estrofa", inicio: 158.1 },
-        { etiqueta: "pre-coro", inicio: 183 },
-        { etiqueta: "pre-coro", inicio: 193.9 },
-        { etiqueta: "coda", inicio: 204.8 }
-    ],
       "70": [
         { etiqueta: "intro", inicio: 0 },
         { etiqueta: "estrofa", inicio: 12 },
@@ -1107,6 +1099,17 @@
       ]
     };
 
+    // Ejemplo de colores para cada sección
+    const sectionColors = {
+      "intro": "#2196F3", // Azul
+      "estrofa": "#2196F3", // Azul
+      "pre-coro": "#2196F3", // Azul
+      "coro": "#F44336", // Rojo
+      "puente": "#2196F3", // Azul
+      "instrumental": "#2196F3", // Azul
+      "coda": "#2196F3" // Azul
+    };
+
     // Inicializar elementos del DOM
     const audioElement = document.createElement('audio');
     audioElement.id = 'audio';
@@ -1204,6 +1207,7 @@
       secciones.forEach(({ etiqueta, inicio }, index) => {
         const btn = document.createElement('button');
         btn.className = 'section-btn';
+        btn.style.setProperty('--section-color', sectionColors[etiqueta] || "#444"); // Color de fondo específico
         // Distribuir por columnas: primero llena la primera columna, luego la segunda, etc.
         const col = Math.floor(index / maxRows) + 1;
         const row = (index % maxRows) + 1;
@@ -1545,6 +1549,16 @@
       if (e.target.closest('.seekbar-touch-area')) return;
       if (e.target.closest('.info')) return;
     }, { passive: true });
+
+    // Añadir al final del <script>
+    function adjustTitlePosition() {
+      const header = document.querySelector('#fixedHeader h1');
+      if (window.matchMedia('(display-mode: standalone)').matches) {
+        header.style.top = `calc(${window.getComputedStyle(document.documentElement).getPropertyValue('--sat') || '0px'} + 40px)`;
+      }
+    }
+    adjustTitlePosition();
+    window.addEventListener('resize', adjustTitlePosition);
   </script>
 </body>
 </html>
