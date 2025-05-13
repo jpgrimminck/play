@@ -111,7 +111,7 @@
       text-decoration: none;
       cursor: pointer;
       transition: transform 0.2s;
-      z-index: 10;
+      z-index: 50;
       background: rgba(34,34,34,0.7);
       width: 48px;
       height: 48px;
@@ -128,14 +128,14 @@
     }
     button.section-btn {
       margin: 5px;
-      padding: 8px 16px;
-      font-size: 16px;
+      padding: 7px 15px;
+      font-size: 14px;
       background: #444;
       color: white;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      width: 100px;
+      width: 75px;
       transition: background-color 0.3s;
       user-select: none;
       -webkit-user-select: none;
@@ -244,13 +244,18 @@
       height: 54px;
     }
     #secciones {
-      display: grid;
-      grid-template-columns: repeat(var(--num-cols, 2), 100px);
-      grid-auto-rows: auto;
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
       gap: 10px;
       margin: 20px 0;
-      justify-content: center; /* Centra el bloque de columnas */
-      max-width: 340px;
+      justify-content: flex-start;
+      max-width: 100%;
+      scrollbar-width: none; /* Ocultar barra de desplazamiento en Firefox */
+      -ms-overflow-style: none; /* Ocultar barra de desplazamiento en Internet Explorer y Edge */
+    }
+    #secciones::-webkit-scrollbar {
+      display: none; /* Ocultar barra de desplazamiento en Chrome, Safari y Opera */
     }
     #error-message {
       color: red;
@@ -266,7 +271,7 @@
       align-items: center;
       width: 100%;
       margin: 20px 0;
-      height:150px;
+      height: 150px;
     }
     .player-row {
       display: flex;
@@ -276,17 +281,7 @@
       gap: 24px;
       margin-bottom: 16px;
     }
-   /* .info h1 {
-   //   position: absolute;
-   //   top: 160px;
-   //   left: 50%;
-   //   transform: translateX(-50%);
-   //   width: 100%;
-   //   margin: 0;
-   //   z-index: 3;
-   //   font-size: 1.8em;
-   //   text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    } */
+
     #playPause.playing {
       box-shadow: 0 0 10px rgba(74, 158, 255, 0.8);
     }
@@ -294,6 +289,7 @@
       box-shadow: 0 0 10px rgba(74, 158, 255, 0.8);
     }
     #fixedHeader {
+      opacity: 0;
       position: fixed;
       top: 0;
       left: 0;
@@ -321,13 +317,36 @@
     }
     .secciones-fijas {
       position: fixed;
-      top: 140px;
+      top: 500px;
       left: 0;
       width: 100%;
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
+      overflow-x: auto;
+      gap: 10px;
+      padding: 10px;
+      box-sizing: border-box;
       z-index: 30;
-      touch-action: none; /* Evita el desplazamiento en este contenedor */
+      touch-action: pan-x;
+      scrollbar-width: none; /* Ocultar barra de desplazamiento en Firefox */
+      -ms-overflow-style: none; /* Ocultar barra de desplazamiento en IE y Edge */
+    }
+
+    .secciones-fijas::-webkit-scrollbar {
+      display: none; /* Ocultar barra de desplazamiento en Chrome, Safari y Opera */
+    }
+
+    .secciones-fijas::-webkit-scrollbar-thumb {
+      background: #555;
+      border-radius: 4px;
+    }
+
+    .secciones-fijas::-webkit-scrollbar-thumb:hover {
+      background: #666;
+    }
+
+    .secciones-fijas::-webkit-scrollbar-track {
+      background: #333;
     }
     .controles-fijos {
       position: fixed;
@@ -339,6 +358,45 @@
       align-items: center;
       z-index: 20;
       touch-action: none; /* Evita el desplazamiento en este contenedor */
+    }
+    .fixed-text-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: calc(628px - 10px); /* Ajusta la altura para que termine justo encima de los botones de secciones */
+      overflow-y: auto;
+      background: rgba(0, 0, 0, 0); /* Fondo semitransparente */
+      color: white;
+      font-size: 25px;
+      font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+      font-weight:700;
+      letter-spacing: -0.6px;
+      padding: 0;
+      line-height: normal;
+      box-sizing: border-box;
+      z-index: 20; /* Asegúrate de que esté por encima de otros elementos */
+      
+      /* Difuminado arriba y abajo */
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 20%,  rgba(0, 0, 0, 1) 70%,  rgba(0, 0, 0, 0) 100%);
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 20%  rgba(0, 0, 0, 1) 70%,  rgba(0, 0, 0, 0) 100%);
+
+    }
+    .linea {
+      margin: 0;
+      padding: 0 30px;
+      line-height: 0.9;
+      letter-spacing: 0;
+      font-size: 25px;
+      box-sizing: border-box;
+      opacity: 0.5; /* Texto inactivo será gris */
+      color: gray; /* Color gris para texto inactivo */
+      transition: opacity 0.3s, color 0.3s;
+    }
+
+    .linea.activa {
+      opacity: 1; /* Texto activo será completamente visible */
+      color: white; /* Color blanco para texto activo */
     }
   </style>
 </head>
@@ -353,6 +411,7 @@
   <div class="info" id="detailsContainer"></div>
   <div id="error-message"></div>
   <div id="loading-audio" style="display:none; color:#4a9eff; font-size:1.2em; margin:20px;">Cargando audio...</div>
+  <div class="fixed-text-container"></div>
   <div class="secciones-fijas">
     <div class="player-controls" id="playerControls">
       <div id="secciones"></div>
@@ -399,69 +458,10 @@
   </section>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const songId = urlParams.get('song');
-      const coverUrl = urlParams.get('cover');
-      const title = urlParams.get('title');
-      const audioUrl = urlParams.get('audio');
-
-      // Verificar si los parámetros están presentes en la URL
-      if (songId && coverUrl && title && audioUrl) {
-        // Usar los parámetros de la URL para mostrar la información
-        mostrarDetallesCancion({ id: songId, cover: coverUrl, nombre: title, audio: audioUrl });
-      } else if (songId) {
-        // Si no hay parámetros completos, cargar los datos desde covers.json
-        fetch('covers.json')
-          .then(response => {
-            if (!response.ok) {
-              throw new Error(`Error al cargar covers.json: ${response.statusText}`);
-            }
-            return response.json();
-          })
-          .then(data => {
-            const song = data.covers.find(item => item.id === parseInt(songId));
-            if (song) {
-              mostrarDetallesCancion(song);
-            } else {
-              mostrarError('No se encontró información para esta canción.');
-            }
-          })
-          .catch(error => {
-            console.error('Error al cargar covers.json:', error);
-            mostrarError('No se pudo cargar la información de la canción.');
-          });
-      } else {
-        mostrarError('No se especificó un ID de canción.');
-      }
-    });
-
-    // Función para mostrar los detalles de la canción
-    function mostrarDetallesCancion(song) {
-      // Actualizar solo el contenedor #fixedHeader
-      document.getElementById('fixedHeader').innerHTML = `
-        <div class="cover-container">
-          <img class="cover" src="${song.cover}" alt="Carátula">
-        </div>
-        <h1>${song.nombre}</h1>
-      `;
-
-      // Actualizar el audio en el reproductor
-      const audioElement = document.getElementById('audio');
-      if (audioElement) {
-        audioElement.src = song.audio;
-        audioElement.load();
-      }
-    }
-
-    // Función para mostrar errores
-    function mostrarError(message) {
-      document.getElementById('fixedHeader').innerHTML = `<p>${message}</p>`;
-    }
-
     // Variable global de desfase para ajustar el inicio de cada sección
     const DESFASE = 0.2; // Ajusta este valor según el desfase observado (en segundos)
     const MARGEN_VISUAL = 0.5; // margen de tiempo para mantener la selección visual
+    const DESFASE_TEXTO = -0.7; // Desfase en segundos (puedes modificar este valor)
 
     // Obtener etiquetas desde la sección centralizada
     const etiquetasGlobales = {};
@@ -503,6 +503,28 @@
         showError('No se pudo cargar la información de las secciones.');
       });
 
+    // Cargar dinámicamente lyrics.json
+    fetch('lyrics.json')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Error al cargar lyrics.json: ${response.statusText}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        const lyricsData = data[songName];
+        if (lyricsData) {
+          lineas.length = 0; // Limpiar las líneas actuales
+          lyricsData.forEach(linea => lineas.push(linea));
+          renderizarLineas();
+        } else {
+          console.error('No se encontraron letras para esta canción.');
+        }
+      })
+      .catch(error => {
+        console.error('Error al cargar lyrics.json:', error);
+      });
+
     // Ejemplo de colores para cada sección
     const sectionColors = {
       "intro": "#2196F3", // Azul
@@ -515,12 +537,13 @@
     };
 
     // Inicializar elementos del DOM
-    const audio = document.createElement('audio');
-    audio.id = 'audio'; // Asignar un ID sigue siendo útil
-    audio.src = audioUrl;
-    audio.preload = 'auto';
-    document.body.appendChild(audio);
+    const audioElement = document.createElement('audio');
+    audioElement.id = 'audio';
+    audioElement.src = audioUrl;
+    audioElement.preload = 'auto';
+    document.body.appendChild(audioElement);
 
+    const audio = document.getElementById('audio');
     const playPauseBtn = document.getElementById('playPause');
     const rewindBtn = document.getElementById('rewind');
     const forwardBtn = document.getElementById('forward');
@@ -542,7 +565,7 @@
     let pendingPlay = false;
 
     // Mostrar controles cuando el audio esté completamente cargado
-    audio.addEventListener('canplaythrough', () => {
+    audioElement.addEventListener('canplaythrough', () => {
       audioReady = true;
       loadingAudio.style.display = 'none';
       basicControls.style.display = '';
@@ -557,14 +580,14 @@
 
     // Cuando la metadata esté lista, establece el máximo del slider y actualiza la visualización
     seekBar.disabled = true;
-    audio.addEventListener('loadedmetadata', () => {
-      seekBar.max = audio.duration;
+    audioElement.addEventListener('loadedmetadata', () => {
+      seekBar.max = audioElement.duration;
       seekBar.disabled = false;
       actualizarBotonSeleccionado(0);
     });
 
     // Forzar la carga del audio
-    audio.load();
+    audioElement.load();
 
     // Mostrar detalles de la canción
     if (songName) {
@@ -600,228 +623,212 @@
       // Limpiar el contenedor
       contenedor.innerHTML = '';
       currentSectionIndex = null;
-
       secciones.forEach(({ etiqueta, inicio }, index) => {
         const btn = document.createElement('button');
         btn.className = 'section-btn';
-        btn.style.setProperty('--section-color', sectionColors[etiqueta] || "#444");
+        btn.style.setProperty('--section-color', sectionColors[etiqueta] || "#444"); // Color de fondo específico
+        // Distribuir por columnas: primero llena la primera columna, luego la segunda, etc.
         const col = Math.floor(index / maxRows) + 1;
         const row = (index % maxRows) + 1;
         btn.style.gridColumn = col;
         btn.style.gridRow = row;
         btn.setAttribute('data-section-index', index);
         const span = document.createElement('span');
-        span.textContent = etiquetasGlobales[etiqueta] || etiqueta;
+        span.textContent = etiquetasGlobales[etiqueta] || etiqueta; // Usar etiqueta centralizada
         btn.appendChild(span);
-
-        // Evento onclick para actualizar el tiempo del audio
-        btn.onclick = function() {
-          console.log("Section button clicked:", etiqueta, "starts at", inicio, "index", index);
+        btn.onclick = () => {
           audio.pause();
-
-          // Tiempo de destino para audio.currentTime, ajustado con DESFASE y redondeado hacia arriba a 1 decimal
-          const tiempoAudioDestino = Math.max(0, Math.ceil((inicio - DESFASE) * 10) / 10);
-          console.log("Setting audio.currentTime to:", tiempoAudioDestino);
-
-          try {
-            audio.currentTime = tiempoAudioDestino;
-            currentSectionIndex = index;
-            seccionForzadaHasta = inicio;
-            actualizarBotonSeleccionado(audio.currentTime, true);
-
-            if (!isSeeking) {
-              seekBar.value = audio.currentTime;
-            }
-
-            // Asegúrate de que el ícono de play/pausa muestre 'play' ya que está en pausa
-            const icon = document.getElementById('playPauseIcon');
-            if (icon) {
-              icon.innerHTML = `
-                <circle cx="54" cy="54" r="51" fill="white" stroke="#444" stroke-width="6"/>
-                <polygon points="42,33 81,54 42,75" fill="#222"/>
-              `;
-            }
-            if (playPauseBtn) {
-              playPauseBtn.classList.remove('playing');
-            }
-
-          } catch (error) {
-            console.error("Error in section button click handler:", error);
-          }
+          audio.currentTime = Math.max(0, inicio - DESFASE); // Aplica el desfase aquí
+          currentSectionIndex = index;
+          seccionForzadaHasta = inicio; // Fuerza la selección hasta que el audio llegue a este punto
+          actualizarBotonSeleccionado(audio.currentTime, true);
+          // Actualizar el icono de play
+          const icon = document.getElementById('playPauseIcon');
+          icon.innerHTML = `
+            <circle cx="54" cy="54" r="51" fill="white" stroke="#444" stroke-width="6"/>
+            <polygon points="42,33 81,54 42,75" fill="#222"/>
+          `;
         };
-
         contenedor.appendChild(btn);
       });
-
-      // Crear el botón "forward-arrow" para ir a lyrics.html
-      const forwardArrow = document.createElement('a');
-      forwardArrow.className = 'back-arrow';
-      forwardArrow.id = 'forwardArrow';
-      forwardArrow.href = 'lyrics.html';
-      forwardArrow.style.position = 'relative';
-      forwardArrow.style.bottom = 'auto';
-      forwardArrow.style.left = '50%';
-      forwardArrow.style.transform = 'translateX(-50%)';
-      forwardArrow.innerHTML = `
-        <svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
-          <image width="814" height="980" transform="translate(3.78 2) scale(.02)" xlink:href="mic.svg"/>
-        </svg>
-      `;
-      contenedor.insertAdjacentElement('afterend', forwardArrow);
-
-      // Asegurar que el botón "forward-arrow" pase los parámetros necesarios a lyrics.html
-      const params = new URLSearchParams(window.location.search);
-      const song = params.get('song');
-      const cover = params.get('cover');
-      const title = params.get('title');
-      const audioUrlParam = params.get('audio');
-
-      forwardArrow.href = `lyrics.html?song=${encodeURIComponent(song)}&cover=${encodeURIComponent(cover)}&title=${encodeURIComponent(title)}&audio=${encodeURIComponent(audioUrlParam)}`;
-
-      // Verificar si el ID existe en lyrics.json antes de mostrar el botón "forward-arrow"
-      fetch('lyrics.json')
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(`Error al cargar lyrics.json: ${response.statusText}`);
-          }
-          return response.json();
-        })
-        .then(data => {
-          if (data[song]) {
-            forwardArrow.style.display = 'block';
-          } else {
-            forwardArrow.style.display = 'none';
-          }
-        })
-        .catch(error => {
-          console.error('Error al verificar el ID en lyrics.json:', error);
-        });
     }
 
-    // Función para actualizar el botón seleccionado basado en el tiempo actual
+    let scrollTimeout = null; // Variable para controlar el temporizador de scroll
+    let isScrollingSecciones = false; // Variable para rastrear si el usuario está interactuando con el contenedor de secciones
+
+    // Detectar interacción manual con el scroll del contenedor de secciones
+    const seccionesContainer = document.querySelector('.secciones-fijas');
+    seccionesContainer.addEventListener('scroll', (event) => {
+      // Asegurarse de que el evento proviene del contenedor correcto
+      if (event.target !== seccionesContainer) return;
+
+      isScrollingSecciones = true; // Marcar que el usuario está interactuando con el contenedor de secciones
+
+      // Reiniciar el temporizador si el usuario interactúa con el scroll
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
+
+      // Establecer un nuevo temporizador de 3 segundos
+      scrollTimeout = setTimeout(() => {
+        isScrollingSecciones = false; // Marcar que el usuario dejó de interactuar con el contenedor de secciones
+        scrollTimeout = null; // Resetear el temporizador
+
+        const botones = document.querySelectorAll('.section-btn.selected');
+        if (botones.length > 0) {
+          botones[0].scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'center'
+          });
+        }
+      }, 3000); // 3 segundos
+    });
+
+    // Detectar scroll en otros contenedores y evitar conflictos
+    document.addEventListener('scroll', (event) => {
+      // Si el scroll no es del contenedor de secciones, desactivar la marca de interacción
+      if (event.target !== seccionesContainer) {
+        isScrollingSecciones = false;
+        if (scrollTimeout) {
+          clearTimeout(scrollTimeout); // Cancelar cualquier temporizador activo
+          scrollTimeout = null;
+        }
+      }
+    }, true); // Usar captura para detectar scroll en cualquier contenedor
+
     function actualizarBotonSeleccionado(tiempoActual, forzarSeleccion = false) {
-      if (isSeeking && !forzarSeleccion) {
+      if (isSeeking) {
         tiempoActual = parseFloat(seekBar.value);
       }
-
       const secciones = seccionesPorCancion[songName];
-      if (!secciones || secciones.length === 0) {
-        document.querySelectorAll('.section-btn').forEach(btn => btn.classList.remove('selected'));
-        return;
+      if (!secciones) return;
+      const botones = document.querySelectorAll('.section-btn');
+      let ultimaSeccion = 0;
+
+      const tiempoConDesfase = Math.max(0, tiempoActual + DESFASE);
+      for (let i = secciones.length - 1; i >= 0; i--) {
+        if (tiempoConDesfase >= secciones[i].inicio) {
+          ultimaSeccion = i;
+          break;
+        }
       }
 
-      const botones = document.querySelectorAll('.section-btn');
-      let activeSectionIndex = -1;
-
-      const tiempoEfectivoParaComparacion = tiempoActual + DESFASE;
-
-      if (forzarSeleccion && currentSectionIndex !== null && currentSectionIndex < secciones.length) {
-        activeSectionIndex = currentSectionIndex;
-      } else {
-        if (seccionForzadaHasta !== null && currentSectionIndex !== null && currentSectionIndex < secciones.length) {
-          if (tiempoEfectivoParaComparacion < seccionForzadaHasta + MARGEN_VISUAL) {
-            activeSectionIndex = currentSectionIndex;
-          } else {
-            seccionForzadaHasta = null;
-          }
-        }
-
-        if (activeSectionIndex === -1) {
-          for (let i = secciones.length - 1; i >= 0; i--) {
-            if (tiempoEfectivoParaComparacion >= secciones[i].inicio - 0.01) {
-              activeSectionIndex = i;
-              break;
-            }
-          }
-        }
+      if (seccionForzadaHasta !== null && tiempoConDesfase >= seccionForzadaHasta + MARGEN_VISUAL) {
+        seccionForzadaHasta = null;
       }
 
       botones.forEach((btn, index) => {
-        if (index >= secciones.length) return; 
-
-        if (index === activeSectionIndex) {
-          btn.classList.add('selected');
-        } else {
-          btn.classList.remove('selected');
-        }
-
+        btn.classList.remove('selected');
         const seccion = secciones[index];
         const siguienteSeccion = secciones[index + 1];
         let progreso = 0;
 
-        if (activeSectionIndex === -1 && index === 0 && tiempoEfectivoParaComparacion < seccion.inicio) {
-            progreso = 0; 
-        } else if (index < activeSectionIndex) {
+        if (index < ultimaSeccion) {
           progreso = 1;
-        } else if (index === activeSectionIndex) {
+        } else if (index === ultimaSeccion) {
           const duracionSeccion = siguienteSeccion
             ? siguienteSeccion.inicio - seccion.inicio
-            : ((audio.duration && !isNaN(audio.duration)) ? audio.duration : parseFloat(seekBar.max)) - seccion.inicio;
-          if (duracionSeccion > 0) {
-            const tiempoRealEnSeccion = tiempoActual - seccion.inicio;
-            progreso = Math.min(Math.max(tiempoRealEnSeccion / duracionSeccion, 0), 1);
-          } else {
-            progreso = (tiempoEfectivoParaComparacion >= seccion.inicio) ? 1 : 0;
-          }
+            : ((audio.duration && !isNaN(audio.duration)) ? audio.duration : seekBar.max) - seccion.inicio;
+          const tiempoEnSeccion = tiempoConDesfase - seccion.inicio;
+          progreso = Math.min(Math.max(tiempoEnSeccion / duracionSeccion, 0), 1);
         } else {
           progreso = 0;
         }
-        
-        btn.style.setProperty('--progreso', `${progreso * 100}%`);
 
+        btn.style.setProperty('--progreso', `${progreso * 100}%`);
         const span = btn.querySelector('span');
-        if (span) {
-            if (index === activeSectionIndex && progreso >= 0.1) {
-              const progresoTexto = ((progreso - 0.1) / (0.9)) * 100;
-              span.style.setProperty('--progreso-texto', `${Math.max(0, Math.min(progresoTexto, 100))}%`);
-            } else if (index < activeSectionIndex) {
-              span.style.setProperty('--progreso-texto', '100%');
-            } else {
-              span.style.setProperty('--progreso-texto', '0%');
-            }
+        if (index === ultimaSeccion && progreso >= 0.1) {
+          const progresoTexto = ((progreso - 0.1) / (0.9)) * 100;
+          span.style.setProperty('--progreso-texto', `${Math.max(0, Math.min(progresoTexto, 100))}%`);
+        } else if (index < ultimaSeccion) {
+          span.style.setProperty('--progreso-texto', '100%');
+        } else {
+          span.style.setProperty('--progreso-texto', '0%');
+        }
+
+        if (
+          (seccionForzadaHasta !== null && index === currentSectionIndex) ||
+          (seccionForzadaHasta === null && index === ultimaSeccion)
+        ) {
+          btn.classList.add('selected');
+
+          // Centrar la sección activa después de 0.5 segundos durante la reproducción normal
+          if (!isScrollingSecciones && !isSeeking) {
+            setTimeout(() => {
+              btn.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+                inline: 'center'
+              });
+            }, 500); // 0.5 segundos de retraso
+          }
         }
       });
     }
 
+    // Sincronizar el slider con el scroll de las secciones en tiempo real solo durante el movimiento manual
+    seekBar.addEventListener('input', () => {
+      actualizarBotonSeleccionado(seekBar.value);
+    });
+
     // Función para inicializar los controles de audio
     function inicializarControlesAudio() {
+      // Actualizar la barra de progreso y el botón seleccionado
       audio.addEventListener('timeupdate', () => {
         if (!isNaN(audio.duration)) {
           seekBar.max = audio.duration;
           if (!isSeeking) {
             seekBar.value = audio.currentTime;
             actualizarBotonSeleccionado(audio.currentTime);
+            actualizarLineaActiva(audio.currentTime);
           }
         }
       });
+
+      audio.addEventListener('timeupdate', () => {
+        actualizarLineaActiva(audio.currentTime);
+      });
+
+      // Control de la barra de progreso
       seekBar.addEventListener('mousedown', () => { isSeeking = true; });
       seekBar.addEventListener('touchstart', () => { isSeeking = true; });
       seekBar.addEventListener('input', () => {
         actualizarBotonSeleccionado(seekBar.value);
+        actualizarLineaActiva(seekBar.value);
       });
       seekBar.addEventListener('mouseup', () => {
         isSeeking = false;
         audio.currentTime = seekBar.value;
         actualizarBotonSeleccionado(audio.currentTime);
+        actualizarLineaActiva(audio.currentTime);
       });
       seekBar.addEventListener('touchend', () => {
         isSeeking = false;
         audio.currentTime = seekBar.value;
         actualizarBotonSeleccionado(audio.currentTime);
+        actualizarLineaActiva(audio.currentTime);
       });
       seekBar.addEventListener('mouseleave', () => {
         if (isSeeking) {
           isSeeking = false;
           audio.currentTime = seekBar.value;
           actualizarBotonSeleccionado(audio.currentTime);
+          actualizarLineaActiva(audio.currentTime);
         }
       });
+      // Actualizar progreso de secciones en tiempo real mientras se arrastra el slider
       seekBar.addEventListener('touchmove', (e) => {
         actualizarBotonSeleccionado(seekBar.value);
+        actualizarLineaActiva(seekBar.value);
       });
       seekBar.addEventListener('mousemove', (e) => {
-        if (e.buttons) actualizarBotonSeleccionado(seekBar.value);
+        if (e.buttons) {
+          actualizarBotonSeleccionado(seekBar.value);
+          actualizarLineaActiva(seekBar.value);
+        }
       });
+      // Control del botón play/pause
       playPauseBtn.addEventListener('click', () => {
         const icon = document.getElementById('playPauseIcon');
         if (audio.paused) {
@@ -845,8 +852,10 @@
           playPauseBtn.classList.remove('playing');
         }
       });
+      // Asegura que la clase se sincronice si el usuario usa otros métodos para pausar/reproducir
       audio.addEventListener('play', () => playPauseBtn.classList.add('playing'));
       audio.addEventListener('pause', () => playPauseBtn.classList.remove('playing'));
+      // Control del botón rebobinar
       let rewinding = false;
       let lastRewindTimestamp = null;
       function rewindStep(ts) {
@@ -860,6 +869,7 @@
         audio.currentTime = newTime;
         seekBar.value = newTime;
         actualizarBotonSeleccionado(newTime);
+        actualizarLineaActiva(newTime);
         if (rewinding) requestAnimationFrame(rewindStep);
       }
       function startRewind() {
@@ -878,6 +888,7 @@
       rewindBtn.addEventListener('touchstart', function(e) { e.preventDefault(); startRewind(); });
       rewindBtn.addEventListener('touchend', stopRewind);
       rewindBtn.addEventListener('touchcancel', stopRewind);
+      // Control del botón adelantar
       let forwarding = false;
       let lastForwardTimestamp = null;
       function forwardStep(ts) {
@@ -891,6 +902,7 @@
         audio.currentTime = newTime;
         seekBar.value = newTime;
         actualizarBotonSeleccionado(newTime);
+        actualizarLineaActiva(newTime);
         if (forwarding) requestAnimationFrame(forwardStep);
       }
       function startForward() {
@@ -909,23 +921,25 @@
       forwardBtn.addEventListener('touchstart', function(e) { e.preventDefault(); startForward(); });
       forwardBtn.addEventListener('touchend', stopForward);
       forwardBtn.addEventListener('touchcancel', stopForward);
+      // Variables para controlar los intervalos de rebobinar y adelantar
       let isRewinding = false;
       let isForwarding = false;
+      // Atajos de teclado
       document.addEventListener('keydown', (event) => {
         switch (event.key) {
-          case '-':
-            if (!isRewinding) {
+          case '-': // Rebobinar
+            if (!isRewinding) { // Evitar múltiples activaciones
               isRewinding = true;
               rewindBtn.dispatchEvent(new Event('mousedown'));
             }
             break;
-          case '=':
-            if (!isForwarding) {
+          case '=': // Adelantar
+            if (!isForwarding) { // Evitar múltiples activaciones
               isForwarding = true;
               forwardBtn.dispatchEvent(new Event('mousedown'));
             }
             break;
-          case ' ':
+          case ' ': // Play/Pausa
             event.preventDefault();
             playPauseBtn.click();
             document.activeElement.blur();
@@ -961,6 +975,7 @@
       return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
     }
 
+    // Desactivar selección y menú contextual solo en los botones principales en móvil
     function disableContextMenuAndSelection(selector) {
       document.querySelectorAll(selector).forEach(btn => {
         btn.addEventListener('contextmenu', e => e.preventDefault());
@@ -970,53 +985,54 @@
       disableContextMenuAndSelection('#playPause, #rewind, #forward');
     });
 
+    // Obtener los parámetros de la URL
     const urlParams = new URLSearchParams(window.location.search);
     const songId = urlParams.get('song');
     
+    // Configurar el botón de retorno
     const backButton = document.getElementById('backButton');
-    
+    backButton.addEventListener('click', () => {
+      const params = new URLSearchParams({
+        song: songName,
+        cover: cover,
+        title: title,
+        audio: audioUrl
+      });
+      window.location.href = `details.html?${params.toString()}`;
+    });
+
+    // Función para detectar iOS
     function isIOS() {
       return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     }
 
+    // Función para detectar modo app
     function isInStandaloneMode() {
-      return (window.navigator.standalone === true) || 
-             (window.matchMedia('(display-mode: standalone)').matches) || 
+      return (window.navigator.standalone === true) || // iOS Safari
+             (window.matchMedia('(display-mode: standalone)').matches) || // Android Chrome
              (window.matchMedia('(display-mode: fullscreen)').matches);
     }
 
-    backButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      
-      const targetUrl = `index.html?song=${songId}`;
-      
-      if (isIOS() && isInStandaloneMode()) {
-        document.location.href = targetUrl;
-        setTimeout(() => {
-          window.location.replace(targetUrl);
-        }, 100);
-      } else if (isInStandaloneMode()) {
-        window.location.replace(targetUrl);
-      } else {
-        window.location.href = targetUrl;
-      }
-    });
-
+    // Función para forzar el modo fullscreen
     function forceFullscreen() {
       if (document.documentElement.webkitRequestFullscreen) {
         document.documentElement.webkitRequestFullscreen();
       }
+      // Forzar reflow para iOS
       document.body.style.display = 'none';
-      document.body.offsetHeight;
+      document.body.offsetHeight; // Force reflow
       document.body.style.display = '';
+      // Scroll al top
       window.scrollTo(0, 0);
     }
 
+    // Prevenir comportamientos no deseados
     document.addEventListener('touchmove', function(e) {
       if (e.target.closest('.seekbar-touch-area')) return;
       if (e.target.closest('.info')) return;
     }, { passive: true });
 
+    // Añadir al final del <script>
     function adjustTitlePosition() {
       const header = document.querySelector('#fixedHeader h1');
       if (window.matchMedia('(display-mode: standalone)').matches) {
@@ -1026,6 +1042,108 @@
     adjustTitlePosition();
     window.addEventListener('resize', adjustTitlePosition);
 
+    const lineas = [];
+
+    const letraContainer = document.querySelector('.fixed-text-container');
+
+    const SEPARACION_ENTRE_PARRAFOS = 40; // Espaciado entre párrafos (en píxeles)
+    const SEPARACION_ENTRE_TIEMPOS = 12; // Espaciado entre líneas con tiempos diferentes (en píxeles)
+    const SEPARACION_ENTRE_TEXTO_CONTINUO = 0; // Espaciado entre líneas del mismo texto (en píxeles)
+
+    function renderizarLineas() {
+      letraContainer.innerHTML = lineas.map((linea, index) => {
+        const siguienteLinea = lineas[index + 1];
+        let separacion = SEPARACION_ENTRE_TEXTO_CONTINUO; // Por defecto, separación entre texto continuo
+
+        // Si hay un cambio de tiempo, aplica la separación entre tiempos
+        if (siguienteLinea && linea.tiempo !== siguienteLinea.tiempo) {
+          separacion = SEPARACION_ENTRE_TIEMPOS;
+        }
+
+        // Si es un nuevo párrafo (detectado por un `<br>` o salto lógico), aplica la separación entre párrafos
+        if (linea.contenido.includes('<br>')) {
+          separacion = SEPARACION_ENTRE_PARRAFOS;
+        }
+
+        return `
+          <p class="linea" data-index="${index}" style="margin-bottom: ${separacion}px;" onclick="moverACodigoDeTiempo(${linea.tiempo})">
+            ${linea.contenido}
+          </p>
+        `;
+      }).join('');
+    }
+    renderizarLineas();
+
+    function moverACodigoDeTiempo(tiempo) {
+      const tiempoConDesfase = Math.max(0, tiempo + DESFASE); // Aplica el desfase sumándolo
+      audio.currentTime = tiempoConDesfase; // Ajusta el tiempo del audio
+      seekBar.value = tiempoConDesfase; // Actualiza el slider
+      actualizarBotonSeleccionado(tiempoConDesfase); // Actualiza los botones de sección
+      actualizarLineaActiva(tiempoConDesfase); // Actualiza la línea activa
+    }
+
+    // Variables para controlar el scroll manual
+    let scrollTextTimeout = null;
+    let isManualScrolling = false;
+
+    function actualizarLineaActiva(tiempoActual) {
+      const lineasDOM = document.querySelectorAll('.linea');
+      let lineaActiva = null;
+
+      // Ajusta el tiempo actual con el desfase
+      const tiempoConDesfase = tiempoActual - DESFASE_TEXTO;
+
+      // Encuentra la línea correspondiente al tiempo ajustado
+      lineas.forEach((linea, index) => {
+        const siguienteLinea = lineas[index + 1];
+        if (tiempoConDesfase >= linea.tiempo && (!siguienteLinea || tiempoConDesfase < siguienteLinea.tiempo)) {
+          lineaActiva = lineasDOM[index];
+        }
+      });
+
+      // Actualiza la clase activa
+      lineasDOM.forEach(linea => linea.classList.remove('activa'));
+      if (lineaActiva) {
+        lineaActiva.classList.add('activa');
+
+        // Solo centra si no hay scroll manual activo
+        if (!isManualScrolling) {
+          lineaActiva.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+          });
+        }
+      }
+    }
+
+    // Agregar detector de scroll manual en el contenedor de texto
+    document.addEventListener('DOMContentLoaded', () => {
+      const letraContainer = document.querySelector('.fixed-text-container');
+      
+      // Detectar cuando el usuario hace scroll manualmente
+      letraContainer.addEventListener('scroll', () => {
+        isManualScrolling = true;
+        
+        // Cancelar cualquier temporizador existente
+        if (scrollTextTimeout) {
+          clearTimeout(scrollTextTimeout);
+        }
+        
+        // Crear nuevo temporizador
+        scrollTextTimeout = setTimeout(() => {
+          isManualScrolling = false;
+          
+          // Volver a centrar la línea activa después del tiempo de espera
+          const lineaActiva = document.querySelector('.linea.activa');
+          if (lineaActiva) {
+            lineaActiva.scrollIntoView({
+              behavior: 'smooth',
+              block: 'center'
+            });
+          }
+        }, 3000); // 3 segundos de espera
+      });
+    });
   </script>
 </body>
 </html>
