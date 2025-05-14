@@ -75,6 +75,7 @@
       justify-content: center;
       padding: 0px;
       gap: 0px;
+      overflow-y: auto;
     }
     /* Estilos para el slider (input range) */
     #seekBar {
@@ -237,7 +238,15 @@
           return acc;
         }, {});
 
-        generarMiniaturas();
+        generarMiniaturas(); // Primero genera todas las miniaturas
+        
+        // Después de generar las miniaturas, intentar posicionar la miniatura si viene songId de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const songIdFromUrl = urlParams.get('song');
+        if (songIdFromUrl) {
+          console.log(`ID de la canción desde la URL (procesando en cargarMetadatos): ${songIdFromUrl}`);
+          posicionarMiniatura(songIdFromUrl); // Llamar a posicionarMiniatura AQUÍ
+        }
       } catch (error) {
         console.error('Error al cargar los metadatos:', error);
       }
@@ -394,7 +403,7 @@
     });
 
     window.addEventListener('DOMContentLoaded', () => {
-      cargarMetadatos();
+      cargarMetadatos(); // Esto ahora también se encargará del posicionamiento inicial de la miniatura
 
       const savedAudio   = localStorage.getItem('selectedAudio')   || `${folders[1]}/1.mp3`;
       const savedCover   = localStorage.getItem('selectedCover')   || `${folders[2]}/cover1.jpeg`;
@@ -420,7 +429,7 @@
       }
 
       if (coversConGuitarra.includes(coverIndex)) {
-        audioAlt.src = savedAudio.replace('.mp3', '_sg.mp3'); // Solo si tiene versión sin guitarra
+        audioAlt.src = savedAudio.replace('.mp3', '_sg.mp3'); 
         audioAlt.preload = 'auto';
         audioAlt.load();
       }
@@ -458,71 +467,52 @@
         window.location.href = `details.html?${params.toString()}`;
       });
 
-      /* Añadir event listener para cambios de orientación */
-      window.addEventListener('resize', function() {
-        adjustThumbnailsLayout();
-      });
-
-      function adjustThumbnailsLayout() {
-        const isPortrait = window.innerHeight > window.innerWidth;
-        const miniaturasContainer = document.getElementById('miniaturasContainer');
-        
-        if (isPortrait) {
-          miniaturasContainer.style.justifyContent = 'center';
-          miniaturasContainer.style.gap = '0px';
-        } else {
-          miniaturasContainer.style.justifyContent = 'flex-start';
-          miniaturasContainer.style.gap = '0px';
-        }
-      }
-
-      adjustThumbnailsLayout();
-
-      const urlParams = new URLSearchParams(window.location.search);
-      const savedTimeFromURL = urlParams.get('time');
-      const savedTimeFromStorage = localStorage.getItem('audioCurrentTime');
-      const timeToSet = savedTimeFromURL || savedTimeFromStorage;
-
-      if (timeToSet) {
-        const parsedTime = parseFloat(timeToSet);
-        let attempts = 0;
-        const maxAttempts = 10;
-
-        const setAudioTime = () => {
-          if (currentAudio.readyState >= HTMLMediaElement.HAVE_METADATA) {
-            currentAudio.currentTime = parsedTime;
-            console.log(`Tiempo establecido: ${parsedTime} segundos.`);
-          } else {
-            attempts++;
-            if (attempts < maxAttempts) {
-              console.log(`Intento ${attempts}: Audio no listo, reintentando...`);
-              setTimeout(setAudioTime, 300);
-            } else {
-              console.error("No se pudo establecer el tiempo después de varios intentos.");
-            }
-          }
-        };
-
-        const handleLoadedMetadata = () => {
-          currentAudio.currentTime = parsedTime;
-          currentAudio.removeEventListener('loadedmetadata', handleLoadedMetadata);
-        };
-        const handleCanPlay = () => {
-          currentAudio.currentTime = parsedTime;
-          currentAudio.removeEventListener('canplay', handleCanPlay);
-        };
-
-        currentAudio.addEventListener('loadedmetadata', handleLoadedMetadata);
-        currentAudio.addEventListener('canplay', handleCanPlay);
-        currentAudio.load();
-
-        setAudioTime();
-      }
-
       window.addEventListener('beforeunload', () => {
         localStorage.setItem('audioCurrentTime', currentAudio.currentTime.toString());
       });
     });
+
+    // Función para posicionar la miniatura en la tercera posición
+    function posicionarMiniatura(songId) {
+      const miniaturasContainer = document.getElementById('miniaturasContainer'); 
+      if (!miniaturasContainer) {
+        console.error("miniaturasContainer no encontrado");
+        return;
+      }
+      const miniaturas = Array.from(miniaturasContainer.children);
+
+      if (miniaturas.length === 0) {
+        console.warn("No hay miniaturas en el contenedor para posicionar.");
+        return;
+      }
+
+      const targetFileName = `cover${songId}.jpeg`; 
+
+      const targetMiniatura = miniaturas.find((miniatura) => {
+        const backgroundImage = miniatura.style.backgroundImage;
+        
+        console.log("Comparando valores:");
+        console.log("backgroundImage:", backgroundImage);
+        console.log("targetFileName:", targetFileName);
+
+        const fileNameMatch = backgroundImage.match(/cover\d+\.jpeg/); 
+        return fileNameMatch && fileNameMatch[0] === targetFileName;
+      });
+
+      if (targetMiniatura) {
+        const miniaturaHeight = targetMiniatura.offsetHeight;
+        const targetScrollTop = targetMiniatura.offsetTop - miniaturaHeight * 2; 
+        
+        // Aplicar el scrollTop con un pequeño retraso para asegurar que el DOM esté listo
+        setTimeout(() => {
+          miniaturasContainer.scrollTop = Math.max(0, targetScrollTop);
+          console.log(`Miniatura con archivo ${targetFileName} posicionada en la tercera posición. ScrollTop aplicado: ${miniaturasContainer.scrollTop}`);
+        }, 50); 
+
+      } else {
+        console.log(`No se encontró la miniatura con archivo ${targetFileName}.`);
+      }
+    }
   </script>
 </body>
 </html>

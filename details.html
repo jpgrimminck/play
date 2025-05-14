@@ -972,6 +972,7 @@
 
     const urlParams = new URLSearchParams(window.location.search);
     const songId = urlParams.get('song');
+    const miniScrollParam = urlParams.get('miniScroll'); // <--- NUEVO: Obtener el miniScroll original
     
     const backButton = document.getElementById('backButton');
     
@@ -988,18 +989,13 @@
     backButton.addEventListener('click', (e) => {
       e.preventDefault();
       
-      const targetUrl = `index.html?song=${songId}`;
-      
-      if (isIOS() && isInStandaloneMode()) {
-        document.location.href = targetUrl;
-        setTimeout(() => {
-          window.location.replace(targetUrl);
-        }, 100);
-      } else if (isInStandaloneMode()) {
-        window.location.replace(targetUrl);
-      } else {
-        window.location.href = targetUrl;
+      // Usar localStorage en lugar de parámetros URL
+      if (miniScrollParam) {
+        localStorage.setItem('miniScrollPosition', miniScrollParam);
       }
+      
+      // Navegar de forma simple
+      window.location.href = `index.html?song=${songId}`;
     });
 
     function forceFullscreen() {
