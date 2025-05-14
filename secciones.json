@@ -628,7 +628,7 @@
     { "etiqueta": "coda", "inicio": 96.6 },
     { "etiqueta": "instrumental", "inicio": 112.7 },
     { "etiqueta": "coro", "inicio": 127.7 },
-    { "etiqueta": "coro", "inicio": 141.8 },
+    { "etiqueta": "coro", "inicio": 141.8 }
   ],
   "7": [
     { "etiqueta": "intro", "inicio": 0.3 },
