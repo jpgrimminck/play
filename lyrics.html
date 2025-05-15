@@ -127,23 +127,27 @@
       transform: translateX(-5px);
     }
     button.section-btn {
-      margin: 5px;
-      padding: 7px 15px;
-      font-size: 14px;
-      background: #444;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      width: 75px;
-      transition: background-color 0.3s;
-      user-select: none;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      box-sizing: border-box;
       position: relative;
-      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 60px; /* Alto mínimo fijo para todos los botones */
+      height: 60px; /* Alto fijo para todos los botones */
+      width: 100px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem; /* Tamaño de fuente fijo */
+      font-weight: 500;
+      text-align: center;
+      cursor: pointer;
+      padding: 10px;
+      background-color: var(--section-color); /* Color de fondo según la etiqueta */
+      overflow: hidden; /* Evita que el texto se desborde */
+      touch-action: manipulation; /* Mejora la respuesta táctil */
+      -webkit-tap-highlight-color: transparent; /* Elimina el resaltado en dispositivos táctiles */
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     button.section-btn::before {
       content: '';
@@ -156,9 +160,9 @@
       background-image: linear-gradient(to right, var(--section-color, #444) var(--progreso, 0%), #444 var(--progreso, 0%));
     }
     button.section-btn span {
-      position: relative;
       z-index: 2;
       display: block;
+      width: 100%; /* Asegura que el span ocupe todo el ancho disponible */
       background: linear-gradient(to right, 
         #000 0%,
         #000 var(--progreso-texto, 0%),
@@ -168,6 +172,9 @@
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+      white-space: nowrap; /* Evita saltos de línea */
+      overflow: hidden; /* Oculta el texto que se desborda */
+      text-overflow: ellipsis; /* Muestra puntos suspensivos si el texto es muy largo */
     }
     button.section-btn span.active {
       color: #000;
@@ -271,7 +278,7 @@
       align-items: center;
       width: 100%;
       margin: 20px 0;
-      height: 150px;
+      height: 120px; /* Reduced height since seekbar is hidden */
     }
     .player-row {
       display: flex;
@@ -419,7 +426,7 @@
   </div>
   <div class="controles-fijos">
     <div class="basic-controls">
-      <div class="seekbar-touch-area">
+      <div class="seekbar-touch-area" style="display: none;">
         <input type="range" id="seekBar" value="0" min="0" step="0.1">
       </div>
       <div class="player-row">
@@ -462,6 +469,15 @@
     const DESFASE = 0.2; // Ajusta este valor según el desfase observado (en segundos)
     const MARGEN_VISUAL = 0.5; // margen de tiempo para mantener la selección visual
     const DESFASE_TEXTO = -0.7; // Desfase en segundos (puedes modificar este valor)
+    
+    // Configuración para comportamiento consistente entre dispositivos
+    const CONFIG = {
+      scrollBehavior: 'smooth',  // Usar 'auto' en lugar de 'smooth' para mayor consistencia
+      scrollDelay: 50,         // Pequeño retraso para permitir que el DOM se actualice
+      buttonHeight: 60,        // Altura fija para todos los botones de secciones
+      mobileScrollOffset: 100, // Ajuste de posición para dispositivos móviles
+      showSeekbar: false       // Ocultar la barra de progreso (seekbar)
+    };
 
     // Obtener etiquetas desde la sección centralizada
     const etiquetasGlobales = {};
@@ -569,6 +585,13 @@
       audioReady = true;
       loadingAudio.style.display = 'none';
       basicControls.style.display = '';
+      
+      // Aplicar configuración de visibilidad del seekbar
+      const seekbarArea = document.querySelector('.seekbar-touch-area');
+      if (seekbarArea) {
+        seekbarArea.style.display = CONFIG.showSeekbar ? 'flex' : 'none';
+      }
+      
       if (document.getElementById('secciones').children.length > 0) {
         playerControls.style.display = 'block';
       }
@@ -753,15 +776,28 @@
         ) {
           btn.classList.add('selected');
 
-          // Centrar la sección activa después de 0.5 segundos durante la reproducción normal
+          // Centrar la sección activa después de un breve retraso durante la reproducción normal
           if (!isScrollingSecciones && !isSeeking) {
             setTimeout(() => {
+              // Usar scrollIntoView con comportamiento consistente
               btn.scrollIntoView({
-                behavior: 'smooth',
+                behavior: CONFIG.scrollBehavior,
                 block: 'center',
                 inline: 'center'
               });
-            }, 500); // 0.5 segundos de retraso
+              
+              // Ajuste adicional para mayor consistencia entre dispositivos
+              setTimeout(() => {
+                if (window.innerWidth <= 768) { // Si es un dispositivo móvil
+                  const container = document.querySelector('.secciones-fijas');
+                  if (container) {
+                    // Calcular la posición óptima de scroll 
+                    const targetScrollLeft = btn.offsetLeft - (container.clientWidth / 2) + (btn.offsetWidth / 2);
+                    container.scrollLeft = targetScrollLeft;
+                  }
+                }
+              }, CONFIG.scrollDelay);
+            }, 300); // Retraso ligeramente mayor para asegurar que el DOM esté listo
           }
         }
       });
@@ -774,60 +810,66 @@
 
     // Función para inicializar los controles de audio
     function inicializarControlesAudio() {
-      // Actualizar la barra de progreso y el botón seleccionado
+      // Actualizar la barra de progreso (si está visible) y el botón seleccionado
       audio.addEventListener('timeupdate', () => {
         if (!isNaN(audio.duration)) {
-          seekBar.max = audio.duration;
-          if (!isSeeking) {
-            seekBar.value = audio.currentTime;
-            actualizarBotonSeleccionado(audio.currentTime);
-            actualizarLineaActiva(audio.currentTime);
+          // Actualizar el seekBar solo si está visible
+          if (CONFIG.showSeekbar) {
+            seekBar.max = audio.duration;
+            if (!isSeeking) {
+              seekBar.value = audio.currentTime;
+            }
           }
-        }
-      });
-
-      audio.addEventListener('timeupdate', () => {
-        actualizarLineaActiva(audio.currentTime);
-      });
-
-      // Control de la barra de progreso
-      seekBar.addEventListener('mousedown', () => { isSeeking = true; });
-      seekBar.addEventListener('touchstart', () => { isSeeking = true; });
-      seekBar.addEventListener('input', () => {
-        actualizarBotonSeleccionado(seekBar.value);
-        actualizarLineaActiva(seekBar.value);
-      });
-      seekBar.addEventListener('mouseup', () => {
-        isSeeking = false;
-        audio.currentTime = seekBar.value;
-        actualizarBotonSeleccionado(audio.currentTime);
-        actualizarLineaActiva(audio.currentTime);
-      });
-      seekBar.addEventListener('touchend', () => {
-        isSeeking = false;
-        audio.currentTime = seekBar.value;
-        actualizarBotonSeleccionado(audio.currentTime);
-        actualizarLineaActiva(audio.currentTime);
-      });
-      seekBar.addEventListener('mouseleave', () => {
-        if (isSeeking) {
-          isSeeking = false;
-          audio.currentTime = seekBar.value;
+          // Siempre actualizar los botones y líneas activas
           actualizarBotonSeleccionado(audio.currentTime);
           actualizarLineaActiva(audio.currentTime);
         }
       });
-      // Actualizar progreso de secciones en tiempo real mientras se arrastra el slider
-      seekBar.addEventListener('touchmove', (e) => {
-        actualizarBotonSeleccionado(seekBar.value);
-        actualizarLineaActiva(seekBar.value);
-      });
-      seekBar.addEventListener('mousemove', (e) => {
-        if (e.buttons) {
+
+      // Control de la barra de progreso (solo si está visible)
+      if (CONFIG.showSeekbar) {
+        seekBar.addEventListener('mousedown', () => { isSeeking = true; });
+        seekBar.addEventListener('touchstart', () => { isSeeking = true; });
+        seekBar.addEventListener('input', () => {
           actualizarBotonSeleccionado(seekBar.value);
           actualizarLineaActiva(seekBar.value);
-        }
-      });
+        });
+      }
+      if (CONFIG.showSeekbar) {
+        seekBar.addEventListener('mouseup', () => {
+          isSeeking = false;
+          audio.currentTime = seekBar.value;
+          actualizarBotonSeleccionado(audio.currentTime);
+          actualizarLineaActiva(audio.currentTime);
+        });
+        seekBar.addEventListener('touchend', () => {
+          isSeeking = false;
+          audio.currentTime = seekBar.value;
+          actualizarBotonSeleccionado(audio.currentTime);
+          actualizarLineaActiva(audio.currentTime);
+        });
+      }
+      if (CONFIG.showSeekbar) {
+        seekBar.addEventListener('mouseleave', () => {
+          if (isSeeking) {
+            isSeeking = false;
+            audio.currentTime = seekBar.value;
+            actualizarBotonSeleccionado(audio.currentTime);
+            actualizarLineaActiva(audio.currentTime);
+          }
+        });
+        // Actualizar progreso de secciones en tiempo real mientras se arrastra el slider
+        seekBar.addEventListener('touchmove', (e) => {
+          actualizarBotonSeleccionado(seekBar.value);
+          actualizarLineaActiva(seekBar.value);
+        });
+        seekBar.addEventListener('mousemove', (e) => {
+          if (e.buttons) {
+            actualizarBotonSeleccionado(seekBar.value);
+            actualizarLineaActiva(seekBar.value);
+          }
+        });
+      }
       // Control del botón play/pause
       playPauseBtn.addEventListener('click', () => {
         const icon = document.getElementById('playPauseIcon');
@@ -1108,10 +1150,22 @@
 
         // Solo centra si no hay scroll manual activo
         if (!isManualScrolling) {
+          // Usar comportamiento consistente para el scroll
           lineaActiva.scrollIntoView({
-            behavior: 'smooth',
+            behavior: CONFIG.scrollBehavior,
             block: 'center'
           });
+          
+          // Ajuste adicional para dispositivos móviles
+          setTimeout(() => {
+            if (window.innerWidth <= 768 && lineaActiva.offsetTop > 0) { 
+              const container = document.querySelector('.fixed-text-container');
+              if (container) {
+                // Aplicar un ajuste fino a la posición de scroll
+                container.scrollTop = lineaActiva.offsetTop - (container.clientHeight / 2) + (lineaActiva.offsetHeight / 2);
+              }
+            }
+          }, CONFIG.scrollDelay);
         }
       }
     }
