@@ -1,5 +1,5 @@
 {
-  "totalCovers": 72,
+  "totalCovers": 76,
   "covers": [
     {"id": 1, "nombre": "Día de Enero", "artista": "Shakira"},
     {"id": 2, "nombre": "Hey Jude", "artista": "Beatles"},
@@ -72,6 +72,10 @@
     {"id": 69, "nombre": "Hey Jude", "artista": "Patricia y Pedro"},
     {"id": 70, "nombre": "El Cigarrito", "artista": "Juanita y Juan Pablo"},
     {"id": 71, "nombre": "Jasmine Flower", "artista": "Folklore Chino"},
-    {"id": 72, "nombre": "Llueve sobre la ciudad", "artista": "Los Bunkers"}
+    {"id": 72, "nombre": "Llueve sobre la ciudad", "artista": "Los Bunkers"},
+    {"id": 73, "nombre": "Día de enero", "artista": "Josefa"},
+    {"id": 74, "nombre": "Faded", "artista": "Agustín"},
+    {"id": 75, "nombre": "Cumpleaños feliz", "artista": "Emma"},
+    {"id": 76, "nombre": "Never grow up (Taylor's version)", "artista": "Taylor Swift"}
   ]
 }

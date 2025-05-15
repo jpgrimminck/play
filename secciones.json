@@ -1,4 +1,47 @@
 {
+"76": [
+    { "etiqueta": "intro", "inicio": 0 },
+    { "etiqueta": "estrofa", "inicio": 15.3 },
+    { "etiqueta": "pre-coro", "inicio": 30.9 },
+    { "etiqueta": "coro", "inicio": 46.2 },
+    { "etiqueta": "coro", "inicio": 61.7 },
+    { "etiqueta": "instrumental", "inicio": 75 },
+    { "etiqueta": "estrofa", "inicio": 92.3 },
+    { "etiqueta": "pre-coro", "inicio": 107.6 },
+    { "etiqueta": "coro", "inicio": 122.9 },
+    { "etiqueta": "coro", "inicio": 138.5 },
+    { "etiqueta": "instrumental", "inicio": 151.3 },
+    { "etiqueta": "puente", "inicio": 161.2 },
+    { "etiqueta": "estrofa", "inicio": 192 },
+    { "etiqueta": "instrumental", "inicio": 207.6 },
+    { "etiqueta": "coro", "inicio": 219 }
+],
+"75": [
+    { "etiqueta": "intro", "inicio": 0 },
+    { "etiqueta": "estrofa", "inicio": 12.9 },
+    { "etiqueta": "estrofa", "inicio": 38.4 },
+    { "etiqueta": "estrofa", "inicio": 62.9 },
+    { "etiqueta": "estrofa", "inicio": 87.7 },
+    { "etiqueta": "estrofa", "inicio": 111.9 },
+    { "etiqueta": "coda", "inicio": 131.6 }
+],
+"74": [
+    { "etiqueta": "intro", "inicio": 0 },
+    { "etiqueta": "coro", "inicio": 27 },
+    { "etiqueta": "coro", "inicio": 55.2 }
+],
+"73": [
+    { "etiqueta": "intro", "inicio": 0 },
+    { "etiqueta": "estrofa", "inicio": 11 },
+    { "etiqueta": "estrofa", "inicio": 28.4 },
+    { "etiqueta": "pre-coro", "inicio": 46.3 },
+    { "etiqueta": "coro", "inicio": 59.3 },
+    { "etiqueta": "instrumental", "inicio": 76.4 },
+    { "etiqueta": "estrofa", "inicio": 95.9 },
+    { "etiqueta": "pre-coro", "inicio": 114.2 },
+    { "etiqueta": "coro", "inicio": 127.2 },
+    { "etiqueta": "coro", "inicio": 144.3 }
+  ],
   "72": [
     { "etiqueta": "intro", "inicio": 0 },
     { "etiqueta": "estrofa", "inicio": 9 },
