@@ -563,7 +563,7 @@
     { "etiqueta": "intro", "inicio": 0 },
     { "etiqueta": "estrofa", "inicio": 25.5 },
     { "etiqueta": "coro", "inicio": 48 },
-    { "etiqueta": "estrofa", "inicio": 67.3 },
+    { "etiqueta": "estrofa", "inicio": 69 },
     { "etiqueta": "coro", "inicio": 90.8 },
     { "etiqueta": "puente", "inicio": 111.9 },
     { "etiqueta": "instrumental", "inicio": 134.3 },
