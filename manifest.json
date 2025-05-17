@@ -1,7 +1,7 @@
 {
-  "name": "Reproductor de Música",
-  "short_name": "Música",
-  "description": "Reproductor de música con secciones",
+  "name": "Play",
+  "short_name": "Play",
+  "description": "Plataforma de ensayo musical",
   "start_url": ".",
   "display": "fullscreen",
   "orientation": "portrait",
