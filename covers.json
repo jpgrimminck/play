@@ -1,5 +1,5 @@
 {
-  "totalCovers": 76,
+  "totalCovers": 77,
   "covers": [
     {"id": 1, "nombre": "Día de Enero", "artista": "Shakira"},
     {"id": 2, "nombre": "Hey Jude", "artista": "Beatles"},
@@ -76,6 +76,7 @@
     {"id": 73, "nombre": "Día de enero", "artista": "Josefa"},
     {"id": 74, "nombre": "Faded", "artista": "Agustín"},
     {"id": 75, "nombre": "Cumpleaños feliz", "artista": "Emma"},
-    {"id": 76, "nombre": "Never grow up (Taylor's version)", "artista": "Taylor Swift"}
+    {"id": 76, "nombre": "Never grow up (Taylor's version)", "artista": "Taylor Swift"},
+    {"id": 77, "nombre": "Muerte en Hawai", "artista": "Juan"}
   ]
 }
