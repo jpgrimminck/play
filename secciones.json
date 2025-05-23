@@ -1,4 +1,15 @@
 {
+"78": [
+    { "etiqueta": "intro", "inicio": 0 },
+    { "etiqueta": "estrofa", "inicio": 17 },
+    { "etiqueta": "estrofa", "inicio": 42.7 },
+    { "etiqueta": "coro", "inicio": 67.7 },
+    { "etiqueta": "coro", "inicio": 92.4 },
+    { "etiqueta": "instrumental", "inicio": 104.8 },
+    { "etiqueta": "coro", "inicio": 119.9 },
+    { "etiqueta": "coro", "inicio": 144.3 },
+    { "etiqueta": "coda", "inicio": 156.6 }
+],
 "77": [
     { "etiqueta": "intro", "inicio": 0 },
     { "etiqueta": "estrofa", "inicio": 14.7 },
