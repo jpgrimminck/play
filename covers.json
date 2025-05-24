@@ -1,5 +1,5 @@
 {
-  "totalCovers": 78,
+  "totalCovers": 79,
   "covers": [
     {"id": 1, "nombre": "Día de Enero", "artista": "Shakira", "tipo": "b"},
     {"id": 2, "nombre": "Hey Jude", "artista": "Beatles", "tipo": "b"},
@@ -78,6 +78,7 @@
     {"id": 75, "nombre": "Cumpleaños feliz", "artista": "Emma", "tipo": "a"},
     {"id": 76, "nombre": "Never grow up (Taylor's version)", "artista": "Taylor Swift", "tipo": "b"},
     {"id": 77, "nombre": "Muerte en Hawai", "artista": "Juan", "tipo": "c"},
-    {"id": 78, "nombre": "La media vuelta", "artista": "Juan Pablo", "tipo": "c"}
+    {"id": 78, "nombre": "La media vuelta", "artista": "Juan Pablo", "tipo": "c"},
+    {"id": 79, "nombre": "Back to december (Clara's version)", "artista": "Clarita", "tipo": "c"}
   ]
 }
