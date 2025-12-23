@@ -103,6 +103,20 @@
     if (userId) {
       baseUrl.searchParams.set('id', userId);
     }
+
+    // If this login widget is running outside /usuarios/practice (e.g. embedded on the root player),
+    // include a return URL so the songs page back button can return to the correct place.
+    try {
+      const path = window.location.pathname || '';
+      const runningInsideUsuariosPractice = path.includes('/usuarios/practice');
+      if (!runningInsideUsuariosPractice) {
+        const currentUrl = new URL(window.location.href);
+        currentUrl.hash = '';
+        baseUrl.searchParams.set('return', currentUrl.toString());
+      }
+    } catch (e) {
+      // ignore
+    }
     return baseUrl.toString();
   }
 

@@ -660,11 +660,16 @@ function buildEmptyStateElement() {
 function setupBackLink() {
   const backLink = document.getElementById('back-to-songs');
   if (!backLink) return;
+
+  const returnParam = state.urlParams ? state.urlParams.get('return') : null;
+  const targetUrl = new URL('../songs/index.html', window.location.href);
   if (state.userId) {
-    backLink.href = `../songs/index.html?id=${encodeURIComponent(state.userId)}`;
-  } else {
-    backLink.href = '../songs/index.html';
+    targetUrl.searchParams.set('id', state.userId);
   }
+  if (returnParam) {
+    targetUrl.searchParams.set('return', returnParam);
+  }
+  backLink.href = targetUrl.toString();
 }
 
 function handleWindowResize() {

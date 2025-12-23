@@ -34,6 +34,7 @@ import {
 
 const supabase = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
 const urlParams = new URLSearchParams(window.location.search);
+const returnParam = urlParams.get('return');
 
 function getStoredUserId() {
   try {
@@ -445,6 +446,9 @@ async function loadSongs() {
         if (selectedUserId) {
           audioParams.set('id', selectedUserId);
         }
+        if (returnParam) {
+          audioParams.set('return', returnParam);
+        }
         songElement.href = `../audios/audios.html?${audioParams.toString()}`;
         songElement.className = 'song-card';
         const statusTag = song.statusTag;
@@ -681,6 +685,18 @@ document.addEventListener('DOMContentLoaded', function () {
     e.preventDefault();
     exitEraseMode();
     const params = new URLSearchParams(window.location.search);
+    const returnParam = params.get('return');
+    if (returnParam) {
+      try {
+        const returnUrl = new URL(returnParam, window.location.href);
+        if (returnUrl.origin === window.location.origin) {
+          window.location.replace(returnUrl.toString());
+          return;
+        }
+      } catch (err) {
+        // ignore and fall back to default behavior
+      }
+    }
     const id = params.get('id') || selectedUserId;
     const target = id ? `../index.html?id=${encodeURIComponent(id)}` : '../index.html';
     window.location.replace(target);
