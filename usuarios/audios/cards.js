@@ -1,0 +1,741 @@
+import {
+  initializePlaybackControls,
+  prepareAudioPlayer,
+  togglePlayback,
+  seekPlayback,
+  stopCurrentAudio,
+  clearPlaybackCache,
+  setCardControlsVisibility,
+  setButtonPlaying,
+  getPlaybackCache,
+  getCurrentAudioCard,
+  getSeekOffsetSeconds,
+  applyWaveformPosition
+} from './controls.js';
+import {
+  buildWaveformState,
+  refreshWaveformMetrics,
+  resetWaveformState,
+  populateWaveformFromSource,
+  getVisualizerMode
+} from './visualizer.js';
+import {
+  initializeStatusModule,
+  initSongStatusControls,
+  refreshSongStatusUi,
+  setNormalizedUserId
+} from './status.js';
+import {
+  initializeUploadModule,
+  initRecorderControls,
+  setDefaultRecorderStatus,
+  updateRecorderUi,
+  renderPendingUploads,
+  resumePendingUploads
+} from './upload.js';
+
+const AUDIO_BUCKET = 'audios';
+const AUDIO_SONG_COLUMN_CANDIDATES = ['relational_song_id', 'song_id', 'cancion_id'];
+const SEEK_OFFSET_SECONDS = 3;
+const SHOW_AUDIO_EXTENSION = false; // Set to false to hide audio extensions in the UI
+
+const state = {
+  supabase: null,
+  urlParams: null,
+  userId: null,
+  title: null,
+  songIdParam: null,
+  normalizedUserId: null,
+  currentSongIdResolved: null,
+  audiosSongColumn: 'relational_song_id',
+  audiosChannel: null,
+  audiosRefreshTimeout: null,
+  currentExpandedCard: null
+};
+
+function coerceNumericId(value) {
+  if (value === null || value === undefined) return value;
+  if (typeof value === 'number') {
+    return Number.isFinite(value) ? value : value;
+  }
+  if (typeof value === 'string' && /^\d+$/.test(value)) {
+    const asNumber = Number(value);
+    return Number.isSafeInteger(asNumber) ? asNumber : value;
+  }
+  return value;
+}
+
+function isColumnMissingError(error) {
+  if (!error) return false;
+  const code = error.code || error?.details?.code;
+  const message = String(error.message || error.details || '').toLowerCase();
+  return code === '42703' || (message.includes('column') && message.includes('does not exist'));
+}
+
+async function probeSongByTitle(titleStr) {
+  if (!titleStr) return null;
+  try {
+    const { data, error } = await state.supabase
+      .from('songs')
+      .select('id, title, artists ( name )')
+      .ilike('title', titleStr)
+      .limit(1)
+      .single();
+    if (!error && data) {
+      return { id: data.id, title: data.title, raw: data };
+    }
+  } catch (err) {
+    console.debug('probeSongByTitle: songs table lookup failed:', err?.message || err);
+  }
+  return null;
+}
+
+async function fetchAndApplySongTitle(songId) {
+  if (!songId) return null;
+  const idVal = Number.isFinite(Number(songId)) ? Number(songId) : songId;
+
+  const candidates = [
+    { table: 'songs', select: 'id, title, artists ( name )', getTitle: (d) => d.title },
+    { table: 'canciones', select: 'id, nombres_canciones ( titulo ), artistas ( nombre )', getTitle: (d) => d.nombres_canciones?.titulo }
+  ];
+
+  for (const c of candidates) {
+    try {
+      const { data, error } = await state.supabase
+        .from(c.table)
+        .select(c.select)
+        .eq('id', idVal)
+        .limit(1)
+        .single();
+
+      if (!error && data) {
+        const songTitle = c.getTitle(data) || state.urlParams.get('title') || 'Pistas de práctica';
+        applyPageTitle(songTitle);
+        state.currentSongIdResolved = data?.id || null;
+        return { id: data.id, title: songTitle, raw: data };
+      }
+    } catch (err) {
+      console.debug(`probe ${c.table} failed:`, err?.message || err, err?.code || null);
+      continue;
+    }
+  }
+
+  const fallback = state.urlParams.get('title') || 'Pistas de práctica';
+  applyPageTitle(fallback);
+  return null;
+}
+
+function applyPageTitle(titleText) {
+  const headerH1 = document.querySelector('header h1');
+  const mainH2 = document.querySelector('main h2');
+  if (headerH1) headerH1.textContent = titleText;
+  if (mainH2) mainH2.textContent = titleText;
+  try {
+    document.title = `${titleText} — Stitch Design`;
+  } catch (e) {
+    // ignore
+  }
+}
+
+function showPageTitleLoading() {
+  const headerH1 = document.querySelector('header h1');
+  if (headerH1) {
+    headerH1.innerHTML = '<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span>';
+  }
+}
+
+async function fetchSongAudiosByCandidates(songId) {
+  let lastError = null;
+  for (const column of AUDIO_SONG_COLUMN_CANDIDATES) {
+    try {
+      const { data, error } = await state.supabase
+        .from('audios')
+        .select('id, name, url, uploader_id, is_private')
+        .eq(column, songId)
+        .order('name', { ascending: true });
+
+      if (error) {
+        if (isColumnMissingError(error)) {
+          continue;
+        }
+        lastError = error;
+        continue;
+      }
+
+      return { audios: data || [], columnUsed: column };
+    } catch (err) {
+      if (isColumnMissingError(err)) {
+        continue;
+      }
+      lastError = err;
+    }
+  }
+
+  return { audios: [], columnUsed: state.audiosSongColumn, error: lastError };
+}
+
+function collapseCurrentCard() {
+  if (!state.currentExpandedCard) return;
+  const card = state.currentExpandedCard;
+  const activeCard = getCurrentAudioCard();
+  if (activeCard === card) {
+    stopCurrentAudio();
+  }
+  const audioId = card.dataset?.audioId ? Number(card.dataset.audioId) : null;
+  if (audioId && getPlaybackCache().has(audioId)) {
+    const cached = getPlaybackCache().get(audioId);
+    if (cached?.waveform) {
+      resetWaveformState(cached.waveform);
+    }
+  }
+  card.classList.remove('audio-card--expanded');
+  setCardControlsVisibility(card, false);
+  state.currentExpandedCard = null;
+}
+
+function expandCard(card) {
+  if (!card) return;
+  if (state.currentExpandedCard === card) return;
+  collapseCurrentCard();
+  card.classList.add('audio-card--expanded');
+  setCardControlsVisibility(card, true);
+  const audioId = card.dataset?.audioId ? Number(card.dataset.audioId) : null;
+  if (audioId && getPlaybackCache().has(audioId)) {
+    const cached = getPlaybackCache().get(audioId);
+    if (cached?.waveform) {
+      refreshWaveformMetrics(cached.waveform);
+      resetWaveformState(cached.waveform);
+      if (!cached.waveformData?.values?.length) {
+        populateWaveformFromSource(cached).catch((err) => {
+          console.debug('No se pudo generar la forma de onda al expandir la tarjeta', audioId, err?.message || err);
+        });
+      }
+    }
+  }
+  state.currentExpandedCard = card;
+}
+
+function scheduleAudiosRefresh(payload) {
+  // Handle DELETE with animation
+  if (payload && payload.eventType === 'DELETE' && payload.old?.id) {
+    const deletedId = payload.old.id;
+    const card = document.querySelector(`.audio-card[data-audio-id="${deletedId}"]`);
+    if (card) {
+      // Add deleting animation class
+      card.classList.add('audio-card--deleting');
+      // Remove card after animation completes (0.4s sweep + 0.4s fade)
+      setTimeout(() => {
+        card.remove();
+        // Update count or show empty state if needed
+        const container = document.getElementById('audio-cards');
+        if (container && container.querySelectorAll('.audio-card').length === 0) {
+          container.innerHTML = '<p class="text-gray-400 text-center py-8">No hay audios disponibles</p>';
+        }
+      }, 800);
+      return;
+    }
+  }
+  
+  // For INSERT and UPDATE, do a full refresh
+  if (state.audiosRefreshTimeout) {
+    clearTimeout(state.audiosRefreshTimeout);
+  }
+  state.audiosRefreshTimeout = setTimeout(() => {
+    state.audiosRefreshTimeout = null;
+    loadAudios({ skipRealtimeSetup: true });
+  }, 150);
+}
+
+function initAudiosRealtime() {
+  if (!state.currentSongIdResolved) return;
+
+  if (state.audiosChannel) {
+    state.supabase.removeChannel(state.audiosChannel);
+    state.audiosChannel = null;
+  }
+
+  state.audiosChannel = state.supabase
+    .channel(`audios_song_${state.currentSongIdResolved}`)
+    .on('postgres_changes', {
+      event: '*',
+      schema: 'public',
+      table: 'audios',
+      filter: `${state.audiosSongColumn || 'relational_song_id'}=eq.${state.currentSongIdResolved}`
+    }, scheduleAudiosRefresh);
+
+  state.audiosChannel.subscribe((status) => {
+    if (status === 'CHANNEL_ERROR') {
+      console.error('Error suscribiéndose a cambios de audios en tiempo real');
+    }
+  });
+}
+
+function buildAudioCard(audio, options = {}) {
+  const { showPrivacyIcon = false } = options;
+  const container = document.createElement('div');
+  container.className = 'audio-card flex flex-col gap-4 rounded-lg bg-gray-800 p-4';
+  container.dataset.audioId = audio.id;
+  const formatLabel = (() => {
+    if (!SHOW_AUDIO_EXTENSION) return null;
+    const rawUrl = typeof audio.url === 'string' ? audio.url : '';
+    if (!rawUrl.includes('.')) return null;
+    const withoutQuery = rawUrl.split('?')[0];
+    const extension = withoutQuery.split('.').pop();
+    if (!extension) return null;
+    const normalized = extension.trim().toLowerCase();
+    if (!normalized || normalized.length > 5) return null;
+    return normalized;
+  })();
+  const isPrivate = audio.is_private === true;
+  const privacyIcon = showPrivacyIcon
+    ? (isPrivate 
+        ? '<span class="audio-card__private-icon" title="Private audio"><span class="material-symbols-outlined">lock</span></span>'
+        : '<span class="audio-card__public-icon" title="Public audio"><span class="material-symbols-outlined">lock_open</span></span>')
+    : '';
+  const seekSeconds = Math.abs(getSeekOffsetSeconds()) || Math.abs(SEEK_OFFSET_SECONDS);
+  container.innerHTML = `
+    <div class="audio-card__header">
+      <p class="audio-card__title text-lg font-semibold text-white">
+        ${privacyIcon}
+        ${audio.name || 'Audio sin nombre'}
+        ${formatLabel ? `<span class="ml-2 inline-flex items-center rounded-full bg-gray-700 px-2 py-0.5 text-[0.6rem] font-semibold uppercase tracking-wide text-blue-300 audio-card__format">${formatLabel}</span>` : ''}
+      </p>
+      <div class="audio-card__controls" data-role="controls">
+        <button type="button" class="flex items-center justify-center rounded-full bg-gray-700 text-white transition-colors hover:bg-gray-600" data-role="rewind-button" aria-label="Retroceder ${seekSeconds} segundos" title="Retroceder ${seekSeconds} segundos">
+          <span class="material-symbols-outlined text-3xl">fast_rewind</span>
+        </button>
+        <button type="button" class="flex items-center justify-center rounded-full bg-[var(--primary-color)] text-white" data-role="play-button" aria-label="Reproducir o pausar" title="Reproducir o pausar">
+          <span class="material-symbols-outlined text-4xl">play_arrow</span>
+        </button>
+        <button type="button" class="flex items-center justify-center rounded-full bg-gray-700 text-white transition-colors hover:bg-gray-600" data-role="forward-button" aria-label="Avanzar ${seekSeconds} segundos" title="Avanzar ${seekSeconds} segundos">
+          <span class="material-symbols-outlined text-3xl">fast_forward</span>
+        </button>
+      </div>
+    </div>
+    <div class="waveform" data-role="waveform" data-visualizer="waveform">
+      <div class="waveform-viewport" data-role="waveform-viewport">
+        <div class="waveform-content" data-role="waveform-content"></div>
+      </div>
+    </div>
+    <div class="audio-slider" data-visualizer="slider">
+      <div class="audio-slider__track" data-role="slider-track">
+        <div class="audio-slider__fill" data-role="slider-fill"></div>
+      </div>
+    </div>
+  `;
+
+  const visualizerMode = getVisualizerMode();
+  container.dataset.visualizerMode = visualizerMode;
+  container.querySelectorAll('[data-visualizer]').forEach((element) => {
+    if (!element) return;
+    if (element.dataset.visualizer === visualizerMode) {
+      element.removeAttribute('hidden');
+    } else {
+      element.setAttribute('hidden', 'true');
+    }
+  });
+  return container;
+}
+
+async function loadAudios(options = {}) {
+  const { skipRealtimeSetup = false } = options;
+
+  // Mostrar loading mientras se carga el título
+  showPageTitleLoading();
+
+  // Ensure we have a user ID, falling back to local storage if needed
+  if (!state.normalizedUserId) {
+    const stored = getStoredUserId();
+    if (stored) {
+      state.normalizedUserId = stored;
+      state.userId = stored;
+      setNormalizedUserId(stored);
+    }
+  }
+
+  const headingEl = document.querySelector('h2');
+  let headingTitle = state.title || '';
+  let songId = state.songIdParam ? Number(state.songIdParam) : null;
+  let songRecord = null;
+  let userName = null;
+
+  try {
+    // Fetch current user's name if userId is available
+    if (state.normalizedUserId) {
+      try {
+        const { data: userData, error: userError } = await state.supabase
+          .from('users')
+          .select('name')
+          .eq('id', state.normalizedUserId)
+          .single();
+        
+        if (!userError && userData) {
+          userName = userData.name;
+        }
+      } catch (err) {
+        console.debug('Could not fetch user name:', err);
+      }
+    }
+    if (songId) {
+      try {
+        const probed = await fetchAndApplySongTitle(songId);
+        if (probed) {
+          songRecord = probed.raw || probed;
+          songId = probed.id || songId;
+          if (!headingTitle && probed.title) headingTitle = probed.title;
+        } else {
+          songId = null;
+        }
+      } catch (err) {
+        console.error('Error obteniendo canción por ID:', err);
+        songId = null;
+      }
+    }
+
+    if (!songId && state.title) {
+      try {
+        const probed = await probeSongByTitle(state.title);
+        if (probed) {
+          songRecord = probed.raw || probed;
+          songId = probed.id || songId;
+          headingTitle = probed.title || headingTitle;
+        }
+      } catch (err) {
+        console.error('Error obteniendo canción por título:', err);
+      }
+    }
+
+    if (!songRecord && headingTitle) {
+      try {
+        const probed = await probeSongByTitle(headingTitle);
+        if (probed) {
+          songRecord = probed.raw || probed;
+          songId = probed.id || songId;
+          if (!headingTitle && probed.title) headingTitle = probed.title;
+        }
+      } catch (err) {
+        console.error('Error obteniendo nombre de canción (probe):', err);
+      }
+    }
+
+    if (!songRecord || !songId) {
+      console.warn('No se encontró la canción para cargar audios.');
+      setDefaultRecorderStatus();
+      updateRecorderUi();
+      await refreshSongStatusUi(null);
+      renderEmptyState();
+      return;
+    }
+
+    if (headingEl && headingTitle) {
+      headingEl.textContent = headingTitle;
+    }
+
+    const previousSongId = state.currentSongIdResolved;
+    state.currentSongIdResolved = songId;
+    setDefaultRecorderStatus();
+    updateRecorderUi();
+    await refreshSongStatusUi(songId);
+
+    const { audios, columnUsed, error: audiosError } = await fetchSongAudiosByCandidates(songId);
+    if (columnUsed) {
+      state.audiosSongColumn = columnUsed;
+    }
+    if (audiosError) {
+      console.error('Error obteniendo audios:', audiosError);
+    }
+
+    const container = document.querySelector('.space-y-4');
+    container.innerHTML = '';
+
+    // Filter out private audios that don't belong to the current user
+    const visibleAudios = (audios || []).filter((audio) => {
+      // Public audios are always visible
+      if (!audio.is_private) return true;
+      // Private audios are only visible to their creator
+      return state.normalizedUserId && String(audio.uploader_id) === String(state.normalizedUserId);
+    });
+
+    if (visibleAudios.length === 0) {
+      container.appendChild(buildEmptyStateElement());
+      clearPlaybackCache();
+      collapseCurrentCard();
+      updateRecorderUi();
+      setDefaultRecorderStatus();
+
+      if (!skipRealtimeSetup && (previousSongId !== state.currentSongIdResolved || !state.audiosChannel)) {
+        initAudiosRealtime();
+      }
+      return;
+    }
+
+  clearPlaybackCache();
+  collapseCurrentCard();
+
+    const seekSeconds = Math.abs(getSeekOffsetSeconds()) || Math.abs(SEEK_OFFSET_SECONDS);
+
+    // Split audios into user's uploads and others
+    const userAudios = [];
+    const otherAudios = [];
+    
+    visibleAudios.forEach((audio) => {
+      // Use string comparison to handle potential type mismatches (string vs number)
+      if (state.normalizedUserId && String(audio.uploader_id) === String(state.normalizedUserId)) {
+        userAudios.push(audio);
+      } else {
+        otherAudios.push(audio);
+      }
+    });
+
+    // Sort both arrays alphabetically by name
+    const sortByName = (a, b) => {
+      const nameA = (a.name || '').toLowerCase();
+      const nameB = (b.name || '').toLowerCase();
+      return nameA.localeCompare(nameB);
+    };
+    
+    userAudios.sort(sortByName);
+    otherAudios.sort(sortByName);
+
+    // Render user's uploads section
+    if (userAudios.length > 0) {
+      const userSection = document.createElement('div');
+      userSection.className = 'mb-6';
+      const userLabel = userName ? `Audios de ${userName}` : 'Uploaded by you';
+      userSection.innerHTML = `<h3 class="text-2xl font-semibold text-white mb-3">${userLabel}</h3>`;
+      container.appendChild(userSection);
+      
+      userAudios.forEach((audio) => {
+        const audioElement = buildAudioCard(audio, { showPrivacyIcon: true });
+        const playButton = audioElement.querySelector('[data-role="play-button"]');
+        const rewindButton = audioElement.querySelector('[data-role="rewind-button"]');
+        const forwardButton = audioElement.querySelector('[data-role="forward-button"]');
+        const waveformViewport = audioElement.querySelector('[data-role="waveform-viewport"]');
+        const waveformContent = audioElement.querySelector('[data-role="waveform-content"]');
+        const sliderTrack = audioElement.querySelector('[data-role="slider-track"]');
+        const sliderFill = audioElement.querySelector('[data-role="slider-fill"]');
+        const visualizerMode = getVisualizerMode();
+        const visualizerElements = visualizerMode === 'slider'
+          ? { viewportEl: sliderTrack, contentEl: sliderFill }
+          : { viewportEl: waveformViewport, contentEl: waveformContent };
+
+        if (visualizerElements.viewportEl && visualizerElements.contentEl) {
+          buildWaveformState(visualizerElements, audio.id);
+        }
+
+        playButton.addEventListener('click', (event) => {
+          event.stopPropagation();
+          expandCard(audioElement);
+          togglePlayback(playButton, audio, visualizerElements);
+        });
+        if (seekSeconds > 0) {
+          rewindButton.addEventListener('click', async (event) => {
+            event.stopPropagation();
+            expandCard(audioElement);
+            await seekPlayback(audio, -seekSeconds, visualizerElements);
+          });
+          forwardButton.addEventListener('click', async (event) => {
+            event.stopPropagation();
+            expandCard(audioElement);
+            await seekPlayback(audio, seekSeconds, visualizerElements);
+          });
+        } else {
+          rewindButton.disabled = true;
+          forwardButton.disabled = true;
+        }
+
+        prepareAudioPlayer(audio, null, visualizerElements)
+          .catch((err) => {
+            console.debug('No se pudo preparar la forma de onda para el audio', audio.id, err?.message || err);
+          });
+
+        audioElement.addEventListener('click', (event) => {
+          if (event.target.closest('[data-role="play-button"], [data-role="rewind-button"], [data-role="forward-button"], .audio-card__controls')) return;
+          if (state.currentExpandedCard === audioElement) {
+            collapseCurrentCard();
+            return;
+          }
+          expandCard(audioElement);
+        });
+
+        container.appendChild(audioElement);
+      });
+    }
+
+    // Render other users' uploads section
+    if (otherAudios.length > 0) {
+      const otherSection = document.createElement('div');
+      otherSection.className = 'mb-6';
+      otherSection.innerHTML = '<h3 class="text-2xl font-semibold text-white mb-3">Otros usuarios</h3>';
+      container.appendChild(otherSection);
+      
+      otherAudios.forEach((audio) => {
+        const audioElement = buildAudioCard(audio);
+      const playButton = audioElement.querySelector('[data-role="play-button"]');
+      const rewindButton = audioElement.querySelector('[data-role="rewind-button"]');
+      const forwardButton = audioElement.querySelector('[data-role="forward-button"]');
+      const waveformViewport = audioElement.querySelector('[data-role="waveform-viewport"]');
+      const waveformContent = audioElement.querySelector('[data-role="waveform-content"]');
+      const sliderTrack = audioElement.querySelector('[data-role="slider-track"]');
+      const sliderFill = audioElement.querySelector('[data-role="slider-fill"]');
+      const visualizerMode = getVisualizerMode();
+      const visualizerElements = visualizerMode === 'slider'
+        ? { viewportEl: sliderTrack, contentEl: sliderFill }
+        : { viewportEl: waveformViewport, contentEl: waveformContent };
+
+      if (visualizerElements.viewportEl && visualizerElements.contentEl) {
+        buildWaveformState(visualizerElements, audio.id);
+      }
+
+      playButton.addEventListener('click', (event) => {
+        event.stopPropagation();
+        expandCard(audioElement);
+        togglePlayback(playButton, audio, visualizerElements);
+      });
+      if (seekSeconds > 0) {
+        rewindButton.addEventListener('click', async (event) => {
+          event.stopPropagation();
+          expandCard(audioElement);
+          await seekPlayback(audio, -seekSeconds, visualizerElements);
+        });
+        forwardButton.addEventListener('click', async (event) => {
+          event.stopPropagation();
+          expandCard(audioElement);
+          await seekPlayback(audio, seekSeconds, visualizerElements);
+        });
+      } else {
+        rewindButton.disabled = true;
+        forwardButton.disabled = true;
+      }
+
+      prepareAudioPlayer(audio, null, visualizerElements)
+        .catch((err) => {
+          console.debug('No se pudo preparar la forma de onda para el audio', audio.id, err?.message || err);
+        });
+
+      audioElement.addEventListener('click', (event) => {
+        if (event.target.closest('[data-role="play-button"], [data-role="rewind-button"], [data-role="forward-button"], .audio-card__controls')) return;
+        if (state.currentExpandedCard === audioElement) {
+          collapseCurrentCard();
+          return;
+        }
+        expandCard(audioElement);
+      });
+
+      container.appendChild(audioElement);
+      });
+    }
+
+    setDefaultRecorderStatus();
+    updateRecorderUi();
+    
+    // Render any pending uploads and attempt to resume them
+    renderPendingUploads();
+    resumePendingUploads();
+
+    if (!skipRealtimeSetup && (previousSongId !== state.currentSongIdResolved || !state.audiosChannel)) {
+      initAudiosRealtime();
+    }
+  } catch (err) {
+    console.error('Error general al cargar audios:', err);
+    setDefaultRecorderStatus();
+    updateRecorderUi();
+  }
+}
+
+function renderEmptyState() {
+  const container = document.querySelector('.space-y-4');
+  if (!container) return;
+  container.innerHTML = '';
+  container.appendChild(buildEmptyStateElement());
+}
+
+function buildEmptyStateElement() {
+  const emptyState = document.createElement('div');
+  emptyState.className = 'rounded-lg bg-gray-800 p-6 text-center text-gray-400';
+  emptyState.textContent = 'Aún no hay pistas registradas para esta canción.';
+  return emptyState;
+}
+
+function setupBackLink() {
+  const backLink = document.getElementById('back-to-songs');
+  if (!backLink) return;
+  if (state.userId) {
+    backLink.href = `../songs/index.html?id=${encodeURIComponent(state.userId)}`;
+  } else {
+    backLink.href = '../songs/index.html';
+  }
+}
+
+function handleWindowResize() {
+  getPlaybackCache().forEach((cacheEntry) => {
+    if (!cacheEntry || !cacheEntry.waveform) return;
+    refreshWaveformMetrics(cacheEntry.waveform);
+    const currentTime = cacheEntry.waveform.lastCurrentTime ?? cacheEntry.player?.currentTime ?? 0;
+    const duration = cacheEntry.waveform.duration ?? cacheEntry.player?.duration ?? 0;
+    applyWaveformPosition(cacheEntry.waveform, currentTime, duration);
+  });
+}
+
+function handleBeforeUnload() {
+  clearPlaybackCache();
+  if (state.audiosChannel) {
+    state.supabase.removeChannel(state.audiosChannel);
+    state.audiosChannel = null;
+  }
+}
+
+function getStoredUserId() {
+  try {
+    const raw = window.localStorage.getItem('usuarios:authorizedProfile');
+    if (!raw) return null;
+    const payload = JSON.parse(raw);
+    return payload?.userId || null;
+  } catch (e) {
+    return null;
+  }
+}
+
+export function initializeCards(options = {}) {
+  state.supabase = options.supabase;
+  state.urlParams = options.urlParams || new URLSearchParams(window.location.search);
+  state.userId = options.userId ?? state.urlParams.get('id') ?? getStoredUserId();
+  state.title = options.title ?? state.urlParams.get('title');
+  state.songIdParam = options.songIdParam ?? state.urlParams.get('songId');
+  // Do not coerce user ID to number, keep it as is to match songs.js behavior
+  state.normalizedUserId = state.userId;
+
+  initializePlaybackControls({
+    supabase: state.supabase,
+    audioBucket: AUDIO_BUCKET,
+    seekOffsetSeconds: SEEK_OFFSET_SECONDS
+  });
+
+  initializeStatusModule({
+    supabase: state.supabase,
+    normalizedUserId: state.normalizedUserId,
+    getCurrentSongId: () => state.currentSongIdResolved
+  });
+
+  initializeUploadModule({
+    supabase: state.supabase,
+    audioBucket: AUDIO_BUCKET,
+    getSongId: () => state.currentSongIdResolved,
+    getAudiosSongColumn: () => state.audiosSongColumn,
+    reloadAudios: (opts) => loadAudios(opts),
+    getUserParam: () => state.userId
+  });
+
+  setupBackLink();
+
+  setNormalizedUserId(state.normalizedUserId);
+  initSongStatusControls();
+  initRecorderControls();
+  setDefaultRecorderStatus();
+  updateRecorderUi();
+
+  loadAudios();
+
+  window.addEventListener('resize', handleWindowResize);
+  window.addEventListener('beforeunload', handleBeforeUnload);
+}

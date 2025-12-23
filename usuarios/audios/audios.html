@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+  <link rel="preload" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Inter%3Awght%40400%3B500%3B700%3B900&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" as="style" onload="this.rel='stylesheet'" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+  <title>Stitch Design</title>
+  <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="./audios.css" />
+</head>
+<body class="bg-gray-900 audio-page">
+  <div class="relative flex h-auto min-h-screen w-full flex-col bg-gray-900 justify-between group/design-root" style="font-family: Inter, 'Noto Sans', sans-serif;">
+    <div>
+      <header class="sticky top-0 z-10 bg-gray-900/80 backdrop-blur-sm" style="height: 60px;">
+        <div class="flex items-center gap-2 p-4">
+          <a href="../songs/index.html" id="back-to-songs" class="text-white flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/10 transition-colors">
+            <span class="material-symbols-outlined text-2xl">arrow_back</span>
+          </a>
+          <h1 class="flex-1 text-left text-xl font-bold text-white"><span class="loading-dots"><span>.</span><span>.</span><span>.</span></span></h1>
+          <div data-song-status-container hidden>
+            <button type="button" class="song-status-button" data-song-status-button disabled>Not started</button>
+          </div>
+        </div>
+      </header>
+      <main class="p-4">
+        <div class="space-y-4"></div>
+        <section class="recorder-section" data-recorder-section>
+          <div class="recorder-section__dynamic" data-recorder-dynamic>
+            <div class="recorder-section__timer recorder-section__timer--hidden" data-recorder-timer>0:00</div>
+            <div class="recorder-section__toggle-row recorder-section__toggle-row--hidden" data-recorder-toggle-row>
+              <button type="button" class="recorder-privacy-toggle" data-recorder-privacy-toggle>
+                <span class="material-symbols-outlined">lock_open</span>
+                <span class="recorder-privacy-toggle__label">PUBLIC</span>
+              </button>
+            </div>
+            <label class="recorder-section__label recorder-section__label--hidden" data-recorder-title-label>
+              <input type="text" class="recorder-section__input" placeholder="Ingrese título" data-recorder-field="title" />
+            </label>
+            <div class="recorder-section__preview recorder-section__preview--hidden" data-recorder-preview>
+              <audio data-recorder-audio hidden preload="metadata"></audio>
+              <div class="recorder-preview__slider" data-recorder-slider>
+                <div class="recorder-preview__slider-track">
+                  <div class="recorder-preview__slider-fill" data-recorder-fill></div>
+                </div>
+              </div>
+              <span class="recorder-preview__time" data-recorder-time>0:00</span>
+            </div>
+          </div>
+          <div class="recorder-section__controls">
+            <button type="button" class="recorder-button-erase" data-recorder-action="discard" hidden>
+              <span class="material-symbols-outlined">delete</span>
+            </button>
+            <button type="button" class="recorder-button recorder-button--primary recorder-button--round" data-recorder-action="toggle">Grabar</button>
+            <button type="button" class="recorder-button-play" data-recorder-play hidden>
+              <span class="material-symbols-outlined">play_arrow</span>
+            </button>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <input id="audio-file-input" type="file" accept="audio/*" class="hidden" />
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../config.js"></script>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

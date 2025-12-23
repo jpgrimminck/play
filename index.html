@@ -19,6 +19,7 @@
   <!-- Estilos -->
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="auth-widget.css">
 
   
   <meta name="mobile-web-app-capable" content="yes">
@@ -28,6 +29,44 @@
 </head>
 
 <body>
+  <!-- Usuarios auth widget (non-blocking overlay) -->
+  <div class="auth-widget" aria-label="Sesión">
+    <div class="auth-panel">
+      <button id="practicar-btn" class="practice-btn-base practice-btn-state-1">Practicar</button>
+      <div class="email-container" aria-label="Email">
+        <table class="email-table">
+          <tbody>
+            <tr>
+              <td class="email-label">Email</td>
+              <td class="email-value" id="stored-email">X</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <button id="logout-btn" type="button">Logout</button>
+    </div>
+
+    <div id="modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+      <div class="modal-content">
+        <label for="email-input" class="input-label">Email</label>
+        <input id="email-input" type="email" placeholder="Ingresa tu email" autocomplete="email">
+        <button id="solicitar-btn" type="button">
+          <div id="progress" class="progress-bar"></div>
+          <span id="btn-text" class="btn-text">Enviar</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="pending-modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+      <div class="modal-content">
+        <div style="margin-bottom: 1rem;">
+          <p>El administrador te dará acceso pronto...</p>
+        </div>
+        <button id="pending-volver-btn" type="button">Volver</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ===========================  ESTRUCTURA HTML  =========================== -->
   <div class="container">
     <!-- Barra lateral -->
@@ -67,5 +106,10 @@
 
   <!-- ==============================  SCRIPTS  =============================== -->
   <script src="script.js"></script>
+
+  <!-- Usuarios login widget (Supabase approval flow) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="usuarios/config.js"></script>
+  <script src="usuarios/practice/practice.js"></script>
 </body>
 </html>
