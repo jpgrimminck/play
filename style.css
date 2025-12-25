@@ -325,6 +325,7 @@ html, body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 16px;
 }
 
 /* Email/logout panel centered and low (below play button) */
@@ -368,8 +369,8 @@ html, body {
 
 /* Botón play / pausa redondo */
 #playPause {
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   border: none;
   border-radius: 50%;
   background: white;
