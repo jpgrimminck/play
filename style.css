@@ -272,17 +272,15 @@ html, body {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; 
+  justify-content: space-evenly;
   align-items: center;
-  gap: 20px;
+  gap: 0;
   position: relative;
   overflow: hidden;
   background-color: #363739; /* o #ff6666 como tenías antes */
   
-  /* Mantenemos el padding-top de 160px si es parte de tu diseño,
-     var(--sat) probablemente será 0px ahora. */
-  padding-top: 160px; /* O calc(160px + var(--sat, 0px)); si quieres mantener la variable por si acaso */
-    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+  padding-top: calc(12px + env(safe-area-inset-top));
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
   /* padding-bottom: var(--sab, 0px); */ /* Ya no es crucial si env() es 0px */
   /* Si necesitas un padding inferior específico por diseño, añádelo aquí */
   /* padding-bottom: 20px; */ /* Ejemplo */
@@ -293,11 +291,7 @@ html, body {
 
 /* Top controls row: keeps Practicar + arrow perfectly aligned */
 .top-controls {
-  position: absolute;
-  top: calc(12px + env(safe-area-inset-top));
-  left: 0;
-  right: 0;
-  z-index: 6;
+  position: static;
   display: grid;
   grid-template-columns: 48px minmax(0, 1fr) 48px;
   align-items: center;
@@ -329,7 +323,7 @@ html, body {
 /* Email/logout panel centered and low (below play button) */
 .main .auth-widget {
   position: static;
-  margin-top: auto;
+  margin-top: 0;
   width: 100%;
   display: flex;
   justify-content: center;
