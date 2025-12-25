@@ -260,12 +260,7 @@ function moveSongToSection(songId, oldStatus, newStatus) {
   updateSectionCount(container, oldStatus);
   updateSectionCount(container, newStatus);
   
-  // Remove empty old section
-  if (oldSection && oldSection.children.length === 0) {
-    const oldHeader = container.querySelector(`.songs-section-header[data-status="${oldStatus}"]`);
-    if (oldHeader) oldHeader.remove();
-    oldSection.remove();
-  }
+  // Don't remove empty sections - keep all three status sections visible
   
   // Smooth scroll to the moved card
   setTimeout(() => scrollSongIntoView(songId), 100);
@@ -281,6 +276,26 @@ function updateSectionCount(container, status) {
     const count = section.querySelectorAll('.song-card').length;
     const countEl = header.querySelector('.songs-section-count');
     if (countEl) countEl.textContent = count;
+    
+    // Update empty state message
+    const emptyMessage = section.querySelector('.songs-section-empty');
+    if (count === 0) {
+      // Add empty message if not present
+      if (!emptyMessage) {
+        const statusConfig = STATUS_SECTIONS.find(s => s.status === status);
+        if (statusConfig) {
+          const newEmptyMessage = document.createElement('div');
+          newEmptyMessage.className = 'songs-section-empty';
+          newEmptyMessage.textContent = `No hay canciones en ${statusConfig.label.toLowerCase()}`;
+          section.appendChild(newEmptyMessage);
+        }
+      }
+    } else {
+      // Remove empty message if present
+      if (emptyMessage) {
+        emptyMessage.remove();
+      }
+    }
   }
 }
 
@@ -417,10 +432,9 @@ async function loadSongs() {
     ];
 
     statusSections.forEach(({ status, label, icon }) => {
-      const sectionSongs = songsByStatus[status];
-      if (!sectionSongs || sectionSongs.length === 0) return;
+      const sectionSongs = songsByStatus[status] || [];
 
-      // Create section header
+      // Create section header (always show, even if empty)
       const sectionHeader = document.createElement('div');
       sectionHeader.className = 'songs-section-header';
       sectionHeader.dataset.status = status;
@@ -431,7 +445,7 @@ async function loadSongs() {
       `;
       container.appendChild(sectionHeader);
 
-      // Create section container for songs
+      // Create section container for songs (always create, even if empty)
       const sectionContainer = document.createElement('div');
       sectionContainer.className = 'songs-section';
       sectionContainer.dataset.status = status;
@@ -539,6 +553,14 @@ async function loadSongs() {
         }
         sectionContainer.appendChild(songElement);
       });
+
+      // Add empty state message if no songs
+      if (sectionSongs.length === 0) {
+        const emptyMessage = document.createElement('div');
+        emptyMessage.className = 'songs-section-empty';
+        emptyMessage.textContent = `No hay canciones en ${label.toLowerCase()}`;
+        sectionContainer.appendChild(emptyMessage);
+      }
 
       container.appendChild(sectionContainer);
     });

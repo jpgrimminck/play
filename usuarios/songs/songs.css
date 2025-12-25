@@ -354,6 +354,10 @@ body, html {
 /*  border: 2px solid yellow !important; /* DEBUG: Song card */ 
 }
 
+.songs-section .song-card:last-child {
+  border-bottom: none;
+}
+
 .song-card:hover {
   background-color: rgba(255, 255, 255, 0.05);
 
@@ -602,8 +606,7 @@ body, html {
 }
 
 .song-arrow-btn:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
+  display: none;
 }
 
 .song-arrow-btn .material-symbols-outlined {
@@ -839,4 +842,18 @@ body, html {
   display: flex;
   flex-direction: column;
   margin-bottom: 0.5rem;
+  border-bottom: 1px solid #1f2937;
+  min-height: 3rem;
+}
+
+.songs-section:last-child {
+  border-bottom: none;
+}
+
+.songs-section-empty {
+  padding: 2rem 1rem;
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.875rem;
+  font-style: italic;
 }
