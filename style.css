@@ -167,6 +167,8 @@ html, body {
 /* ====================================================================== */
 .sidebar {
   width: 100px;
+  min-width: 100px;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -292,12 +294,14 @@ html, body {
 /* Top controls row: keeps Practicar + arrow perfectly aligned */
 .top-controls {
   position: static;
-  display: grid;
-  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  gap: 10px;
   pointer-events: none;
   padding-left: calc(20px + env(safe-area-inset-left));
   padding-right: calc(20px + env(safe-area-inset-right));
+  width: 100%;
 }
 
 .top-controls .practice-btn-base,
@@ -305,16 +309,19 @@ html, body {
   pointer-events: auto;
 }
 
+.top-controls .top-controls-spacer {
+  display: none;
+}
+
 .top-controls .practice-btn-base {
-  width: min(200px, 100%);
-  max-width: 100%;
-  min-width: 0;
-  justify-self: center;
+  width: 140px;
+  max-width: calc(100% - 68px);
+  flex-shrink: 1;
   height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 12px;
+  padding: 0 16px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -454,7 +461,7 @@ html, body {
   display: none;
   align-items: center;
   justify-content: center;
-  justify-self: end;
+  flex-shrink: 0;
 }
 
 .details-arrow:hover {
