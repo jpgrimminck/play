@@ -1,13 +1,11 @@
 /* Scoped login widget styles for root index.html (does not touch body or existing player layout) */
 
 .auth-widget {
-  position: fixed;
-  top: 12px;
-  right: 12px;
+  position: static;
   z-index: 2000;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   gap: 8px;
   pointer-events: none;
 }
@@ -31,8 +29,8 @@
   display: none !important;
 }
 
-.auth-widget .practice-btn-base {
-  width: 100%;
+.practice-btn-base {
+  box-sizing: border-box;
   font-weight: 700;
   padding: 10px 12px;
   border-radius: 8px;
@@ -44,12 +42,16 @@
   color: rgba(209, 213, 219, 0.95);
 }
 
-.auth-widget .practice-btn-base:hover {
+.auth-widget .practice-btn-base {
+  width: 100%;
+}
+
+.practice-btn-base:hover {
   filter: brightness(1.1);
 }
 
-.auth-widget .practice-btn-state-2,
-.auth-widget .practice-btn-state-3 {
+.practice-btn-state-2,
+.practice-btn-state-3 {
   color: #111827;
 }
 
@@ -159,9 +161,9 @@
   color: #111827;
 }
 
-.auth-widget .progress-bar,
-.auth-widget .progress-bar-yellow,
-.auth-widget .progress-bar-blue {
+.progress-bar,
+.progress-bar-yellow,
+.progress-bar-blue {
   position: absolute;
   left: 0;
   top: 0;
@@ -170,19 +172,19 @@
   width: 0;
 }
 
-.auth-widget .progress-bar {
+.progress-bar {
   background-color: rgba(234, 179, 8, 0.95);
 }
 
-.auth-widget .progress-bar-yellow {
+.progress-bar-yellow {
   background-color: rgba(234, 179, 8, 0.95);
 }
 
-.auth-widget .progress-bar-blue {
+.progress-bar-blue {
   background-color: rgba(59, 130, 246, 0.95);
 }
 
-.auth-widget .btn-text {
+.btn-text {
   position: relative;
   z-index: 10;
 }
