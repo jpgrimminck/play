@@ -4,6 +4,8 @@
   const supabase = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
   const LOCAL_AUTH_STORAGE_KEY = 'usuarios:authorizedProfile';
   const PRACTICE_BUTTON_VISIBLE = true;
+  // Toggle this to hide/show the email + logout panel (modals still work).
+  const AUTH_PANEL_VISIBLE = false;
 
   let localAuthorizedProfile = null;
   let clientIp = null;
@@ -24,6 +26,12 @@
     const practiceBtn = document.getElementById('practicar-btn');
     if (!practiceBtn) return;
     practiceBtn.style.display = PRACTICE_BUTTON_VISIBLE ? 'block' : 'none';
+  }
+
+  function updateAuthPanelVisibility() {
+    const panel = document.querySelector('.auth-widget .auth-panel');
+    if (!panel) return;
+    panel.style.display = AUTH_PANEL_VISIBLE ? '' : 'none';
   }
 
   function updateEmailDisplay() {
@@ -136,6 +144,7 @@
       }
     };
     updatePracticeButtonVisibility();
+    updateAuthPanelVisibility();
     updateEmailDisplay();
   }
 
@@ -168,6 +177,7 @@
 
     localResolution = `${window.screen.width}x${window.screen.height}`;
     updatePracticeButtonVisibility();
+    updateAuthPanelVisibility();
     updateEmailDisplay();
   }
 
@@ -212,6 +222,7 @@
       sessionPendingRequestIds.delete(options.requestId);
     }
     updatePracticeButtonVisibility();
+    updateAuthPanelVisibility();
     updateEmailDisplay();
   }
 
@@ -707,6 +718,7 @@
 
 
     updatePracticeButtonVisibility();
+    updateAuthPanelVisibility();
     updateEmailDisplay();
     restoreLocalAuthorization();
     checkApproval();
