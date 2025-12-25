@@ -465,10 +465,6 @@ html, body {
   flex-shrink: 0;
 }
 
-.details-arrow:hover {
-  transform: translateX(5px);
-}
-
 .details-arrow.show {
   display: flex;
 }
