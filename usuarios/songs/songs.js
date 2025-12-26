@@ -463,7 +463,7 @@ async function loadSongs() {
         if (returnParam) {
           audioParams.set('return', returnParam);
         }
-        songElement.href = `../audios/audios.html?${audioParams.toString()}`;
+        songElement.href = `/usuarios/audios/audios.html?${audioParams.toString()}`;
         songElement.className = 'song-card';
         const statusTag = song.statusTag;
         const canMoveUp = statusTag > 1;
