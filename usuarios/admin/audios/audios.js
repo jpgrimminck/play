@@ -193,27 +193,9 @@ async function updateStats() {
   // Calculate total size from file URLs
   let totalSize = 0;
   
-  // Get sizes from storage for all filtered audios
-  const sizePromises = filteredAudios.map(async (audio) => {
-    if (!audio.url) return 0;
-    try {
-      const publicUrl = getPublicUrl(audio.url);
-      const response = await fetch(publicUrl, { method: 'HEAD' });
-      const size = parseInt(response.headers.get('content-length') || '0');
-      return size;
-    } catch {
-      return 0;
-    }
-  });
-  
-  try {
-    const sizes = await Promise.all(sizePromises);
-    totalSize = sizes.reduce((sum, size) => sum + size, 0);
-  } catch (e) {
-    console.error('Error calculating sizes:', e);
-  }
-  
-  statSizeEl.textContent = formatBytes(totalSize);
+  // Note: File size calculation disabled because bucket requires authentication for HEAD requests
+  // Would need to use .download() for each file which is too slow for stats
+  statSizeEl.textContent = '--';
 }
 
 // =====================
@@ -300,11 +282,12 @@ function renderAudioList() {
   audioListEl.innerHTML = filteredAudios.map(audio => {
     const format = getFormatBadge(audio.url);
     const userName = getUserName(audio.uploader_id);
-    const publicUrl = getPublicUrl(audio.url);
+    // Use raw URL if it's already a full URL, otherwise build it
+    const audioUrl = audio.url && audio.url.startsWith('http') ? audio.url : getPublicUrl(audio.url);
     
     return `
       <div class="audio-item" data-id="${audio.id}">
-        <button class="play-btn" data-url="${publicUrl}" data-id="${audio.id}">
+        <button class="play-btn" data-url="${audioUrl}" data-id="${audio.id}">
           <svg class="play-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
             <polygon points="5 3 19 12 5 21 5 3"/>
           </svg>
@@ -338,7 +321,7 @@ function renderAudioList() {
 // PLAY FUNCTIONALITY
 // =====================
 
-function handlePlayClick(e) {
+async function handlePlayClick(e) {
   e.stopPropagation();
   const btn = e.currentTarget;
   const url = btn.dataset.url;
@@ -363,33 +346,56 @@ function handlePlayClick(e) {
     }
   }
   
-  // Create and play new audio
-  const audio = new Audio(url);
-  audio.dataset.audioId = audioId;
+  // Extract path from full URL if needed
+  let audioPath = url;
+  if (url && url.startsWith('https://')) {
+    // Extract path from URL like: https://.../storage/v1/object/public/audios/audios/file.wav
+    // We want just: audios/file.wav
+    const match = url.match(/\/storage\/v1\/object\/public\/audios\/(.+)$/);
+    if (match) {
+      audioPath = match[1];
+    }
+  }
   
-  audio.addEventListener('ended', () => {
-    btn.querySelector('.play-icon').style.display = '';
-    btn.querySelector('.pause-icon').style.display = 'none';
-    btn.classList.remove('playing');
-    currentlyPlayingAudio = null;
-  });
-  
-  audio.addEventListener('error', (e) => {
-    console.error('Error playing audio:', e);
-    btn.querySelector('.play-icon').style.display = '';
-    btn.querySelector('.pause-icon').style.display = 'none';
-    btn.classList.remove('playing');
-    currentlyPlayingAudio = null;
-  });
-  
-  audio.play().then(() => {
+  try {
+    // Download the file from Supabase storage
+    const { data, error } = await supabase.storage.from('audios').download(audioPath);
+    
+    if (error) {
+      console.error('Error downloading audio:', error);
+      return;
+    }
+    
+    // Create object URL from blob
+    const blobUrl = URL.createObjectURL(data);
+    const audio = new Audio(blobUrl);
+    audio.dataset.audioId = audioId;
+    
+    audio.addEventListener('ended', () => {
+      btn.querySelector('.play-icon').style.display = '';
+      btn.querySelector('.pause-icon').style.display = 'none';
+      btn.classList.remove('playing');
+      currentlyPlayingAudio = null;
+      URL.revokeObjectURL(blobUrl);
+    });
+    
+    audio.addEventListener('error', (e) => {
+      console.error('Error playing audio:', e);
+      btn.querySelector('.play-icon').style.display = '';
+      btn.querySelector('.pause-icon').style.display = 'none';
+      btn.classList.remove('playing');
+      currentlyPlayingAudio = null;
+      URL.revokeObjectURL(blobUrl);
+    });
+    
+    await audio.play();
     btn.querySelector('.play-icon').style.display = 'none';
     btn.querySelector('.pause-icon').style.display = '';
     btn.classList.add('playing');
     currentlyPlayingAudio = audio;
-  }).catch(err => {
+  } catch (err) {
     console.error('Error playing audio:', err);
-  });
+  }
 }
 
 // =====================
