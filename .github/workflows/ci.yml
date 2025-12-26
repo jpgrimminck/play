@@ -17,5 +17,5 @@ jobs:
         run: |
           ls -la
           test -f README.md
-          test -f admin/index.html
+          test -f admin-songs/index.html
           echo "OK"
