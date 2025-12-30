@@ -1242,14 +1242,9 @@ export function initAddSongModal(exitEraseMode) {
     isFirstTimeModal = document.body.classList.contains('songs-empty');
     const modalTitle = document.querySelector('#add-song-modal h2');
     
-    // Ajustar título según si es primera vez
-    if (modalTitle) {
-      modalTitle.textContent = isFirstTimeModal 
-        ? 'Agrega tu primera canción para empezar a practicar' 
-        : 'Otras Canciones';
-    }
-    
     const fetchToken = ++modalSongsFetchToken;
+    let hasAnySongsInDatabase = false;
+    
     try {
       const list = await fetchLibrarySongs();
       if (modalSongsFetchToken !== fetchToken) {
@@ -1257,6 +1252,7 @@ export function initAddSongModal(exitEraseMode) {
         return;
       }
       renderSuggestedSongs._lastList = list.length ? list : [];
+      hasAnySongsInDatabase = list.length > 0;
       renderSuggestedSongs(handleSuggestionSelect);
     } catch {
       if (modalSongsFetchToken !== fetchToken) {
@@ -1264,7 +1260,25 @@ export function initAddSongModal(exitEraseMode) {
         return;
       }
       renderSuggestedSongs._lastList = [];
+      hasAnySongsInDatabase = false;
       renderSuggestedSongs(handleSuggestionSelect);
+    }
+    
+    // Si no hay canciones en la base de datos en absoluto, entrar en modo crear automáticamente
+    if (!hasAnySongsInDatabase) {
+      // Ajustar título para indicar que el usuario debe crear una canción
+      if (modalTitle) {
+        modalTitle.textContent = 'Crea tu primera canción';
+      }
+      // Entrar en modo crear automáticamente
+      setCreateMode(true);
+    } else {
+      // Ajustar título según si es primera vez
+      if (modalTitle) {
+        modalTitle.textContent = isFirstTimeModal 
+          ? 'Agrega tu primera canción para empezar a practicar' 
+          : 'Otras Canciones';
+      }
     }
     
     // Quitar loading del FAB
