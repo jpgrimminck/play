@@ -148,9 +148,9 @@ window.updateFabState = updateFabState;
 
 // Status section configuration
 const STATUS_SECTIONS = [
-  { status: 1, label: 'Not started', icon: 'radio_button_unchecked' },
-  { status: 2, label: 'Practicing', icon: 'pace' },
-  { status: 3, label: 'Completed', icon: 'check_circle' }
+  { status: 1, label: 'No iniciado', icon: 'radio_button_unchecked' },
+  { status: 2, label: 'En práctica', icon: 'pace' },
+  { status: 3, label: 'Completado', icon: 'check_circle' }
 ];
 
 /**
@@ -426,9 +426,9 @@ async function loadSongs() {
 
     // Render each status section
     const statusSections = [
-      { status: 1, label: 'Not started', icon: 'radio_button_unchecked' },
-      { status: 2, label: 'Practicing', icon: 'pace' },
-      { status: 3, label: 'Completed', icon: 'check_circle' }
+      { status: 1, label: 'No iniciado', icon: 'radio_button_unchecked' },
+      { status: 2, label: 'En práctica', icon: 'pace' },
+      { status: 3, label: 'Completado', icon: 'check_circle' }
     ];
 
     statusSections.forEach(({ status, label, icon }) => {
