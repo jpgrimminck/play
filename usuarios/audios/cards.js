@@ -529,16 +529,97 @@ async function loadAudios(options = {}) {
           togglePlayback(playButton, audio, visualizerElements);
         });
         if (seekSeconds > 0) {
-          rewindButton.addEventListener('click', async (event) => {
+          // Hold-down continuous rewind functionality
+          let rewinding = false;
+          let lastRewindTimestamp = null;
+          function rewindStep(ts) {
+            if (!rewinding) return;
+            if (!lastRewindTimestamp) lastRewindTimestamp = ts;
+            const elapsed = ts - lastRewindTimestamp;
+            lastRewindTimestamp = ts;
+            const rewindSpeedPerSecond = 5;
+            const rewindAmount = (rewindSpeedPerSecond / 1000) * elapsed;
+            const cached = getPlaybackCache().get(audio.id);
+            if (cached && cached.player) {
+              const newTime = Math.max(cached.player.currentTime - rewindAmount, 0);
+              cached.player.currentTime = newTime;
+              if (cached.waveform) {
+                applyWaveformPosition(cached.waveform, newTime, cached.player.duration);
+              }
+            }
+            if (rewinding) requestAnimationFrame(rewindStep);
+          }
+          function startRewind() {
+            if (rewinding) return;
+            rewinding = true;
+            lastRewindTimestamp = null;
+            requestAnimationFrame(rewindStep);
+          }
+          function stopRewind() {
+            rewinding = false;
+            lastRewindTimestamp = null;
+          }
+          rewindButton.addEventListener('mousedown', (event) => {
             event.stopPropagation();
             expandCard(audioElement);
-            await seekPlayback(audio, -seekSeconds, visualizerElements);
+            startRewind();
           });
-          forwardButton.addEventListener('click', async (event) => {
+          rewindButton.addEventListener('mouseup', stopRewind);
+          rewindButton.addEventListener('mouseleave', stopRewind);
+          rewindButton.addEventListener('touchstart', (event) => {
+            event.preventDefault();
             event.stopPropagation();
             expandCard(audioElement);
-            await seekPlayback(audio, seekSeconds, visualizerElements);
+            startRewind();
           });
+          rewindButton.addEventListener('touchend', stopRewind);
+          rewindButton.addEventListener('touchcancel', stopRewind);
+
+          // Hold-down continuous forward functionality
+          let forwarding = false;
+          let lastForwardTimestamp = null;
+          function forwardStep(ts) {
+            if (!forwarding) return;
+            if (!lastForwardTimestamp) lastForwardTimestamp = ts;
+            const elapsed = ts - lastForwardTimestamp;
+            lastForwardTimestamp = ts;
+            const forwardSpeedPerSecond = 5;
+            const forwardAmount = (forwardSpeedPerSecond / 1000) * elapsed;
+            const cached = getPlaybackCache().get(audio.id);
+            if (cached && cached.player) {
+              const newTime = Math.min(cached.player.currentTime + forwardAmount, cached.player.duration || 0);
+              cached.player.currentTime = newTime;
+              if (cached.waveform) {
+                applyWaveformPosition(cached.waveform, newTime, cached.player.duration);
+              }
+            }
+            if (forwarding) requestAnimationFrame(forwardStep);
+          }
+          function startForward() {
+            if (forwarding) return;
+            forwarding = true;
+            lastForwardTimestamp = null;
+            requestAnimationFrame(forwardStep);
+          }
+          function stopForward() {
+            forwarding = false;
+            lastForwardTimestamp = null;
+          }
+          forwardButton.addEventListener('mousedown', (event) => {
+            event.stopPropagation();
+            expandCard(audioElement);
+            startForward();
+          });
+          forwardButton.addEventListener('mouseup', stopForward);
+          forwardButton.addEventListener('mouseleave', stopForward);
+          forwardButton.addEventListener('touchstart', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            expandCard(audioElement);
+            startForward();
+          });
+          forwardButton.addEventListener('touchend', stopForward);
+          forwardButton.addEventListener('touchcancel', stopForward);
         } else {
           rewindButton.disabled = true;
           forwardButton.disabled = true;
@@ -593,6 +674,98 @@ async function loadAudios(options = {}) {
         togglePlayback(playButton, audio, visualizerElements);
       });
       if (seekSeconds > 0) {
+        // Hold-down continuous rewind functionality
+        let rewinding = false;
+        let lastRewindTimestamp = null;
+        function rewindStep(ts) {
+          if (!rewinding) return;
+          if (!lastRewindTimestamp) lastRewindTimestamp = ts;
+          const elapsed = ts - lastRewindTimestamp;
+          lastRewindTimestamp = ts;
+          const rewindSpeedPerSecond = 5;
+          const rewindAmount = (rewindSpeedPerSecond / 1000) * elapsed;
+          const cached = getPlaybackCache().get(audio.id);
+          if (cached && cached.player) {
+            const newTime = Math.max(cached.player.currentTime - rewindAmount, 0);
+            cached.player.currentTime = newTime;
+            if (cached.waveform) {
+              applyWaveformPosition(cached.waveform, newTime, cached.player.duration);
+            }
+          }
+          if (rewinding) requestAnimationFrame(rewindStep);
+        }
+        function startRewind() {
+          if (rewinding) return;
+          rewinding = true;
+          lastRewindTimestamp = null;
+          requestAnimationFrame(rewindStep);
+        }
+        function stopRewind() {
+          rewinding = false;
+          lastRewindTimestamp = null;
+        }
+        rewindButton.addEventListener('mousedown', (event) => {
+          event.stopPropagation();
+          expandCard(audioElement);
+          startRewind();
+        });
+        rewindButton.addEventListener('mouseup', stopRewind);
+        rewindButton.addEventListener('mouseleave', stopRewind);
+        rewindButton.addEventListener('touchstart', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          expandCard(audioElement);
+          startRewind();
+        });
+        rewindButton.addEventListener('touchend', stopRewind);
+        rewindButton.addEventListener('touchcancel', stopRewind);
+
+        // Hold-down continuous forward functionality
+        let forwarding = false;
+        let lastForwardTimestamp = null;
+        function forwardStep(ts) {
+          if (!forwarding) return;
+          if (!lastForwardTimestamp) lastForwardTimestamp = ts;
+          const elapsed = ts - lastForwardTimestamp;
+          lastForwardTimestamp = ts;
+          const forwardSpeedPerSecond = 5;
+          const forwardAmount = (forwardSpeedPerSecond / 1000) * elapsed;
+          const cached = getPlaybackCache().get(audio.id);
+          if (cached && cached.player) {
+            const newTime = Math.min(cached.player.currentTime + forwardAmount, cached.player.duration || 0);
+            cached.player.currentTime = newTime;
+            if (cached.waveform) {
+              applyWaveformPosition(cached.waveform, newTime, cached.player.duration);
+            }
+          }
+          if (forwarding) requestAnimationFrame(forwardStep);
+        }
+        function startForward() {
+          if (forwarding) return;
+          forwarding = true;
+          lastForwardTimestamp = null;
+          requestAnimationFrame(forwardStep);
+        }
+        function stopForward() {
+          forwarding = false;
+          lastForwardTimestamp = null;
+        }
+        forwardButton.addEventListener('mousedown', (event) => {
+          event.stopPropagation();
+          expandCard(audioElement);
+          startForward();
+        });
+        forwardButton.addEventListener('mouseup', stopForward);
+        forwardButton.addEventListener('mouseleave', stopForward);
+        forwardButton.addEventListener('touchstart', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          expandCard(audioElement);
+          startForward();
+        });
+        forwardButton.addEventListener('touchend', stopForward);
+        forwardButton.addEventListener('touchcancel', stopForward);
+
         rewindButton.addEventListener('click', async (event) => {
           event.stopPropagation();
           expandCard(audioElement);

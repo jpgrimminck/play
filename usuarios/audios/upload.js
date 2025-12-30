@@ -280,19 +280,93 @@ function buildPendingUploadCard(pendingUpload) {
   }
   
   if (rewindButton) {
-    rewindButton.addEventListener('click', (event) => {
+    // Hold-down continuous rewind functionality
+    let rewinding = false;
+    let lastRewindTimestamp = null;
+    function rewindStep(ts) {
+      if (!rewinding) return;
+      if (!lastRewindTimestamp) lastRewindTimestamp = ts;
+      const elapsed = ts - lastRewindTimestamp;
+      lastRewindTimestamp = ts;
+      const rewindSpeedPerSecond = 5;
+      const rewindAmount = (rewindSpeedPerSecond / 1000) * elapsed;
+      const newTime = Math.max(audio.currentTime - rewindAmount, 0);
+      audio.currentTime = newTime;
+      if (sliderFill && audio.duration) {
+        sliderFill.style.width = `${(newTime / audio.duration) * 100}%`;
+      }
+      if (rewinding) requestAnimationFrame(rewindStep);
+    }
+    function startRewind() {
+      if (rewinding) return;
+      rewinding = true;
+      lastRewindTimestamp = null;
+      requestAnimationFrame(rewindStep);
+    }
+    function stopRewind() {
+      rewinding = false;
+      lastRewindTimestamp = null;
+    }
+    rewindButton.addEventListener('mousedown', (event) => {
       event.stopPropagation();
       expandPendingCard();
-      audio.currentTime = Math.max(0, audio.currentTime - seekSeconds);
+      startRewind();
     });
+    rewindButton.addEventListener('mouseup', stopRewind);
+    rewindButton.addEventListener('mouseleave', stopRewind);
+    rewindButton.addEventListener('touchstart', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      expandPendingCard();
+      startRewind();
+    });
+    rewindButton.addEventListener('touchend', stopRewind);
+    rewindButton.addEventListener('touchcancel', stopRewind);
   }
   
   if (forwardButton) {
-    forwardButton.addEventListener('click', (event) => {
+    // Hold-down continuous forward functionality
+    let forwarding = false;
+    let lastForwardTimestamp = null;
+    function forwardStep(ts) {
+      if (!forwarding) return;
+      if (!lastForwardTimestamp) lastForwardTimestamp = ts;
+      const elapsed = ts - lastForwardTimestamp;
+      lastForwardTimestamp = ts;
+      const forwardSpeedPerSecond = 5;
+      const forwardAmount = (forwardSpeedPerSecond / 1000) * elapsed;
+      const newTime = Math.min(audio.currentTime + forwardAmount, audio.duration || 0);
+      audio.currentTime = newTime;
+      if (sliderFill && audio.duration) {
+        sliderFill.style.width = `${(newTime / audio.duration) * 100}%`;
+      }
+      if (forwarding) requestAnimationFrame(forwardStep);
+    }
+    function startForward() {
+      if (forwarding) return;
+      forwarding = true;
+      lastForwardTimestamp = null;
+      requestAnimationFrame(forwardStep);
+    }
+    function stopForward() {
+      forwarding = false;
+      lastForwardTimestamp = null;
+    }
+    forwardButton.addEventListener('mousedown', (event) => {
       event.stopPropagation();
       expandPendingCard();
-      audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + seekSeconds);
+      startForward();
     });
+    forwardButton.addEventListener('mouseup', stopForward);
+    forwardButton.addEventListener('mouseleave', stopForward);
+    forwardButton.addEventListener('touchstart', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      expandPendingCard();
+      startForward();
+    });
+    forwardButton.addEventListener('touchend', stopForward);
+    forwardButton.addEventListener('touchcancel', stopForward);
   }
   
   audio.addEventListener('ended', () => {
