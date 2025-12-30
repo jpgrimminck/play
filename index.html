@@ -19,6 +19,7 @@
   <!-- Estilos -->
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="auth-widget.css">
 
   
   <meta name="mobile-web-app-capable" content="yes">
@@ -37,6 +38,17 @@
 
     <!-- Sección principal -->
     <div class="main">
+      <div class="top-controls" aria-label="Acciones">
+        <div class="top-controls-spacer" aria-hidden="true"></div>
+        <button id="practicar-btn" class="practice-btn-base practice-btn-state-1">Practicar</button>
+        <a id="detailsArrow" class="details-arrow" title="Ver detalles">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 4l8 8-8 8" stroke="#4a9eff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <div class="top-controls-spacer" aria-hidden="true"></div>
+      </div>
+
       <button id="guitarraBtn"><span style="font-size:28px;">🎸</span></button>
       <div class="caratula" id="cover"></div>
       <div class="info">
@@ -45,15 +57,45 @@
       </div>
       <input type="range" id="seekBar" value="0" min="0" step="1">
       <button id="playPause"><div id="icon" class="icon play-icon"></div></button>
+
+      <!-- Usuarios auth widget (email/logout + modals) -->
+      <div class="auth-widget" aria-label="Sesión">
+        <div class="auth-panel">
+          <div class="email-container" aria-label="Email">
+            <table class="email-table">
+              <tbody>
+                <tr>
+                  <td class="email-label">Email</td>
+                  <td class="email-value" id="stored-email">X</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <button id="logout-btn" type="button">Logout</button>
+        </div>
+
+        <div id="modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+          <div class="modal-content">
+            <label for="email-input" class="input-label">Email</label>
+            <input id="email-input" type="email" placeholder="Ingresa tu email" autocomplete="email">
+            <button id="solicitar-btn" type="button">
+              <div id="progress" class="progress-bar"></div>
+              <span id="btn-text" class="btn-text">Enviar</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="pending-modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+          <div class="modal-content">
+            <div style="margin-bottom: 1rem;">
+              <p>El administrador te dará acceso pronto...</p>
+            </div>
+            <button id="pending-volver-btn" type="button">Volver</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-
-  <!-- Botón de detalles -->
-  <a id="detailsArrow" class="details-arrow" title="Ver detalles">
-    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M8 4l8 8-8 8" stroke="#4a9eff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </a>
 
   <!-- Etiqueta de versión -->
   <div class="version" id="version-btn" style="cursor: pointer; user-select: none;">
@@ -67,5 +109,10 @@
 
   <!-- ==============================  SCRIPTS  =============================== -->
   <script src="script.js"></script>
+
+  <!-- Usuarios login widget (Supabase approval flow) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="usuarios/config.js"></script>
+  <script src="usuarios/practice/practice.js"></script>
 </body>
 </html>

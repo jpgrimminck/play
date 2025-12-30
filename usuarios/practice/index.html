@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sesión</title>
+  <link rel="stylesheet" href="/usuarios/styles.css">
+  <link rel="stylesheet" href="/usuarios/practice/practice.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../config.js"></script>
+</head>
+<body class="">
+  <div class="main-container">
+    <button id="practicar-btn" class="practice-btn-base practice-btn-state-1">
+      Practicar
+    </button>
+    <div class="email-container">
+      <table class="email-table">
+        <tbody>
+          <tr>
+            <td class="email-label">Email</td>
+            <td class="email-value" id="stored-email">X</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  <button id="logout-btn">
+      Logout
+    </button>
+  </div>
+
+  <div id="modal" class="modal-overlay hidden">
+    <div class="modal-content">
+  <label for="email-input" class="input-label">Email</label>
+  <input id="email-input" type="email" placeholder="Ingresa tu email">
+      <button id="solicitar-btn">
+        <div id="progress" class="progress-bar"></div>
+        <span id="btn-text" class="btn-text">Enviar</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="pending-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <div style="margin-bottom: 1rem;">
+        <p>El administrador te dará acceso pronto...</p>
+      </div>
+      <button id="pending-volver-btn">Volver</button>
+    </div>
+  </div>
+
+  <script src="practice.js"></script>
+</body>
+</html>

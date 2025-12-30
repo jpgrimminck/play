@@ -1,0 +1,21 @@
+name: CI (static)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, testing ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  sanity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Sanity check (list key paths)
+        run: |
+          ls -la
+          test -f README.md
+          test -f admin-songs/index.html
+          echo "OK"
