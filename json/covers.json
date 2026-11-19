@@ -1,138 +1,805 @@
 {
-  "totalCovers": 132,
+  "totalCovers": 133,
   "covers": [
-    {"id": 1, "nombre": "Día de Enero", "artista": "Shakira", "tipo": "y"},
-    {"id": 2, "nombre": "Hey Jude", "artista": "Beatles", "tipo": "y"},
-    {"id": 3, "nombre": "The Scientist", "artista": "Coldplay", "tipo": "y"},
-    {"id": 4, "nombre": "Shake it Off", "artista": "Taylor Swift", "tipo": "y"},
-    {"id": 5, "nombre": "Main Theme", "artista": "Gravity Falls", "tipo": "y"},
-    {"id": 6, "nombre": "Riptide", "artista": "Vance Joy", "tipo": "y"},
-    {"id": 7, "nombre": "El Camión de Samu", "artista": "Hermanos", "tipo": "i"},
-    {"id": 8, "nombre": "Capaz", "artista": "Alleh & Yorghaki", "tipo": "y"},
-    {"id": 9, "nombre": "Drive", "artista": "Incubus", "tipo": "y"},
-    {"id": 10, "nombre": "Back to december (Taylor's Version)", "artista": "Taylor Swift", "tipo": "y"},
-    {"id": 11, "nombre": "Gravity Falls", "artista": "Pedro y Clemente", "tipo": "c"},
-    {"id": 12, "nombre": "Burrito Sabanero", "artista": "Borja y Max", "tipo": "c"},
-    {"id": 13, "nombre": "I'm still standing", "artista": "Clemente", "tipo": "c"},
-    {"id": 14, "nombre": "Diente blanco, No te vayas!", "artista": "Clemente y Celeste", "tipo": "c"},
-    {"id": 15, "nombre": "Don't Stop Believin'", "artista": "Journey", "tipo": "y"},
-    {"id": 16, "nombre": "All of me", "artista": "John Legend", "tipo": "y"},
-    {"id": 17, "nombre": "Somewhere Only we Know", "artista": "Keane", "tipo": "y"},
-    {"id": 18, "nombre": "Someone like You", "artista": "Adele", "tipo": "y"},
-    {"id": 19, "nombre": "Podré ir a Europa", "artista": "Martín y Emma", "tipo": "i"},
-    {"id": 20, "nombre": "Muerte en Hawaii", "artista": "Calle 13", "tipo": "y"},
-    {"id": 21, "nombre": "Popó, Así me llamo yo", "artista": "Martín y Emma", "tipo": "i"},
-    {"id": 22, "nombre": "Osito Gominola", "artista": "Samuel", "tipo": "c"},
-    {"id": 23, "nombre": "Ritmo Sideral", "artista": "Clemente", "tipo": "c"},
-    {"id": 24, "nombre": "Pepita", "artista": "Samuel", "tipo": "c"},
-    {"id": 25, "nombre": "De Bebé a Niño", "artista": "Emma", "tipo": "i"},
-    {"id": 26, "nombre": "Steve's Lava Chicken", "artista": "Minecraft", "tipo": "y"},
-    {"id": 27, "nombre": "In the Stars", "artista": "Benson Boone", "tipo": "y"},
-    {"id": 28, "nombre": "Something just like This", "artista": "The Chainsmokers & Coldplay", "tipo": "y"},
-    {"id": 29, "nombre": "Zorba", "artista": "El Griego", "tipo": "y"},
-    {"id": 30, "nombre": "Chiu Chiu", "artista": "Borja", "tipo": "c"},
-    {"id": 31, "nombre": "Cuando sea mayor", "artista": "Josefa", "tipo": "c"},
-    {"id": 32, "nombre": "Danke Danke", "artista": "Emma", "tipo": "c"},
-    {"id": 33, "nombre": "Do re mi fa sol", "artista": "Bernardo", "tipo": "c"},
-    {"id": 34, "nombre": "El colegio es para aprender", "artista": "Emma", "tipo": "i"},
-    {"id": 35, "nombre": "Enchanted", "artista": "Clarita", "tipo": "c"},
-    {"id": 36, "nombre": "Estrellita", "artista": "Rafael", "tipo": "c"},
-    {"id": 37, "nombre": "Gallo Pelado", "artista": "Borja", "tipo": "c"},
-    {"id": 38, "nombre": "Gohstbuster", "artista": "Clemente", "tipo": "c"},
-    {"id": 39, "nombre": "Jurassic Park", "artista": "Clemente", "tipo": "c"},
-    {"id": 40, "nombre": "La jardinera", "artista": "Lucas", "tipo": "c"},
-    {"id": 41, "nombre": "La Maldita Roberta", "artista": "Martín", "tipo": "i"},
-    {"id": 42, "nombre": "Long Live", "artista": "Clarita", "tipo": "c"},
-    {"id": 43, "nombre": "Milo el doctor", "artista": "Pedro", "tipo": "c"},
-    {"id": 44, "nombre": "Piratas del caribe", "artista": "Raimundo", "tipo": "c"},
-    {"id": 45, "nombre": "Polka de los perros", "artista": "Clemente", "tipo": "c"},
-    {"id": 46, "nombre": "Schwarz und weiss", "artista": "Martín", "tipo": "c"},
-    {"id": 47, "nombre": "Sky full of stars", "artista": "Josefa", "tipo": "c"},
-    {"id": 48, "nombre": "Solsito porfavor", "artista": "Emma", "tipo": "i"},
-    {"id": 49, "nombre": "Star Wars", "artista": "Lucas", "tipo": "c"},
-    {"id": 50, "nombre": "Thunderstruck", "artista": "Lucas", "tipo": "c"},
-    {"id": 51, "nombre": "Yo nunca vi televisión", "artista": "Martín", "tipo": "c"},
-    {"id": 52, "nombre": "Yo vendo unos ojos negros", "artista": "Eduardo", "tipo": "c"},
-    {"id": 53, "nombre": "Jurassic Park", "artista": "Agustín", "tipo": "c"},
-    {"id": 54, "nombre": "Los monitos", "artista": "Josefa y Emilio", "tipo": "i"},
-    {"id": 55, "nombre": "Perdonarte para que", "artista": "Clarita", "tipo": "c"},
-    {"id": 56, "nombre": "Rodolfo el Reno", "artista": "Josefa", "tipo": "c"},
-    {"id": 57, "nombre": "With you", "artista": "Clarita", "tipo": "i"},
-    {"id": 58, "nombre": "El mas pequeño", "artista": "Samuel", "tipo": "c"},
-    {"id": 59, "nombre": "I Don't Care", "artista": "Max", "tipo": "c"},
-    {"id": 60, "nombre": "Bundle of Joy", "artista": "Florencia", "tipo": "c"},
-    {"id": 61, "nombre": "Himno a la Alegría", "artista": "Grupo Musical", "tipo": "y"},
-    {"id": 62, "nombre": "Message in a Battle", "artista": "The Police", "tipo": "y"},
-    {"id": 63, "nombre": "Faded", "artista": "Alan Walker", "tipo": "y"},
-    {"id": 64, "nombre": "Theme Song", "artista": "Piratas del Caribe", "tipo": "y"},
-    {"id": 65, "nombre": "Maguito Explosivo", "artista": "31 Minutos", "tipo": "y"},
-    {"id": 66, "nombre": "Panamericana", "artista": "Max Segers", "tipo": "y"},
-    {"id": 67, "nombre": "Rin del Angelito", "artista": "Violeta Parra", "tipo": "y"},
-    {"id": 68, "nombre": "Main Theme", "artista": "Mario Bross", "tipo": "y"},
-    {"id": 69, "nombre": "Hey Jude", "artista": "Patricia y Pedro", "tipo": "c"},
-    {"id": 70, "nombre": "El Cigarrito", "artista": "Juanita y Juan Pablo", "tipo": "c"},
-    {"id": 71, "nombre": "Jasmine Flower", "artista": "Folklore Chino", "tipo": "y"},
-    {"id": 72, "nombre": "Llueve sobre la ciudad", "artista": "Los Bunkers", "tipo": "y"},
-    {"id": 73, "nombre": "Día de enero", "artista": "Josefa", "tipo": "c"},
-    {"id": 74, "nombre": "Faded", "artista": "Agustín", "tipo": "c"},
-    {"id": 75, "nombre": "Cumpleaños feliz", "artista": "Emma", "tipo": "c"},
-    {"id": 76, "nombre": "Never grow up (Taylor's version)", "artista": "Taylor Swift", "tipo": "y"},
-    {"id": 77, "nombre": "Muerte en Hawai", "artista": "Juan", "tipo": "c"},
-    {"id": 78, "nombre": "La media vuelta", "artista": "Juan Pablo", "tipo": "c"},
-    {"id": 79, "nombre": "Back to december (Clara's version)", "artista": "Clarita", "tipo": "c"},
-    {"id": 80, "nombre": "Minueto en Sol", "artista": "Martín", "tipo": "c"},
-    {"id": 81, "nombre": "Maguito Explosivo", "artista": "Clemente y Pedro", "tipo": "c"},
-    {"id": 82, "nombre": "Mix tonadas Tradicionales", "artista": "Los huasos del camino viejo", "tipo": "y"},
-    {"id": 83, "nombre": "Tralalero Tralalá", "artista": "Juan, Lucas y Mateo", "tipo": "c"},
-    {"id": 84, "nombre": "Coconut", "artista": "Samuel", "tipo": "i"},
-    {"id": 85, "nombre": "Miau Miau", "artista": "Samuel y Francisco", "tipo": "c"},
-    {"id": 86, "nombre": "Yo vengo de san Rosendo", "artista": "Eduardo", "tipo": "c"},
-    {"id": 87, "nombre": "La Media Vuelta", "artista": "Eduardo", "tipo": "c"},
-    {"id": 88, "nombre": "Te aviso, te anuncio", "artista": "Josefa", "tipo": "c"},
-    {"id": 89, "nombre": "Es war eine Mutter", "artista": "Emma y Martín", "tipo": "c"},
-    {"id": 90, "nombre": "Piratas del Caribe", "artista": "Agustín", "tipo": "c"},
-    {"id": 91, "nombre": "Capaz", "artista": "Eli y Ame", "tipo": "c"},
-    {"id": 92, "nombre": "Llueve sobre la ciudad", "artista": "Josefa y Emilio", "tipo": "c"},
-    {"id": 93, "nombre": "Panamericana", "artista": "Max", "tipo": "c"},
-    {"id": 94, "nombre": "Chipi Chipi", "artista": "Charly García", "tipo": "y"},
-    {"id": 95, "nombre": "Pedro's Lava Chicken", "artista": "Pedro", "tipo": "c"},
-    {"id": 96, "nombre": "Fast Car", "artista": "Tracy Chapman", "tipo": "y"},
-    {"id": 97, "nombre": "Los pollitos dicen", "artista": "Violetta", "tipo": "c"},
-    {"id": 98, "nombre": "American Idiot", "artista": "Green Day", "tipo": "y"},
-    {"id": 99, "nombre": "APT", "artista": "ROSÉ y Bruno Mars", "tipo": "y"},
-    {"id": 100, "nombre": "Never Grow Up", "artista": "Clarita", "tipo": "c"},
-    {"id": 101, "nombre": "Supa Good", "artista": "Clemente", "tipo": "c"},
-    {"id": 102, "nombre": "Piratas del caribe", "artista": "Lucas", "tipo": "c"},
-    {"id": 103, "nombre": "Soy Enigma", "artista": "SuperThings", "tipo": "y"},
-    {"id": 104, "nombre": "Let it be", "artista": "Dante", "tipo": "c"},
-    {"id": 105, "nombre": "Inevitable", "artista": "Josefa", "tipo": "c"},
-    {"id": 106, "nombre": "Agustín Lava's Chicken", "artista": "Agustín", "tipo": "c"},
-    {"id": 107, "nombre": "Better than Revenge", "artista": "Taylor Swift", "tipo": "y"},
-    {"id": 108, "nombre": "Fly me to the moon", "artista": "Frank Sinatra", "tipo": "y"},
-    {"id": 109, "nombre": "In the stars", "artista": "Martín", "tipo": "c"},
-    {"id": 110, "nombre": "Las pelotitas", "artista": "Juan, Mateo y Lucas", "tipo": "i"},
-    {"id": 111, "nombre": "Bombardino Crocrodrilo", "artista": "Juan", "tipo": "c"},
-    {"id": 112, "nombre": "All I want for Christmas", "artista": "Josefa", "tipo": "c"},
-    {"id": 113, "nombre": "Piratas del caribe", "artista": "Samu y Berna", "tipo": "c"},
-    {"id": 114, "nombre": "Better than Revenge", "artista": "Clarita", "tipo": "c"},
-    {"id": 115, "nombre": "Betti Caro", "artista": "Emma", "tipo": "i"},
-    {"id": 116, "nombre": "Chocolate", "artista": "Josefa", "tipo": "c"},
-    {"id": 117, "nombre": "Cerf Volant", "artista": "Josefa", "tipo": "c"},
-    {"id": 118, "nombre": "Red", "artista": "Taylor Swift", "tipo": "y"},
-    {"id": 119, "nombre": "Que bonita va", "artista": "Los huasos del camino viejo", "tipo": "y"},
-    {"id": 120, "nombre": "Los viejos estandartes ", "artista": "Los cuatro cuartos", "tipo": "y"},
-    {"id": 121, "nombre": "Piratas del Caribe", "artista": "Clemente y Santiago", "tipo": "c"},
-    {"id": 122, "nombre": "Red", "artista": "Clarita", "tipo": "c"},
-    {"id": 123, "nombre": "Tralalero Tralalá", "artista": "Agustín", "tipo": "c"},
-    {"id": 124, "nombre": "I got a feeling", "artista": "Lucas", "tipo": "c"},
-    {"id": 125, "nombre": "Navidad", "artista": "Pedro", "tipo": "c"},
-    {"id": 126, "nombre": "Riptide", "artista": "Clarita", "tipo": "c"},
-    {"id": 127, "nombre": "Soy Enigma", "artista": "Lucas", "tipo": "c"},
-    {"id": 128, "nombre": "La Familia", "artista": "Juan", "tipo": "i"},
-    {"id": 129, "nombre": "Ciega, Sordo, Muda", "artista": "Josefa", "tipo": "c"},
-    {"id": 130, "nombre": "Montagem Xonada", "artista": "Agustín", "tipo": "c"},
-    {"id": 131, "nombre": "This is me", "artista": "Clarita", "tipo": "c"},
-    {"id": 132, "nombre": "Nos siguen pegando abajo", "artista": "Toño", "tipo": "c"}
-    
+    {
+      "id": 1,
+      "nombre": "Día de Enero",
+      "artista": "Shakira",
+      "tipo": "y"
+    },
+    {
+      "id": 2,
+      "nombre": "Hey Jude",
+      "artista": "Beatles",
+      "tipo": "y"
+    },
+    {
+      "id": 3,
+      "nombre": "The Scientist",
+      "artista": "Coldplay",
+      "tipo": "y"
+    },
+    {
+      "id": 4,
+      "nombre": "Shake it Off",
+      "artista": "Taylor Swift",
+      "tipo": "y"
+    },
+    {
+      "id": 5,
+      "nombre": "Main Theme",
+      "artista": "Gravity Falls",
+      "tipo": "y"
+    },
+    {
+      "id": 6,
+      "nombre": "Riptide",
+      "artista": "Vance Joy",
+      "tipo": "y"
+    },
+    {
+      "id": 7,
+      "nombre": "El Camión de Samu",
+      "artista": "Hermanos",
+      "tipo": "i"
+    },
+    {
+      "id": 8,
+      "nombre": "Capaz",
+      "artista": "Alleh & Yorghaki",
+      "tipo": "y"
+    },
+    {
+      "id": 9,
+      "nombre": "Drive",
+      "artista": "Incubus",
+      "tipo": "y"
+    },
+    {
+      "id": 10,
+      "nombre": "Back to december (Taylor's Version)",
+      "artista": "Taylor Swift",
+      "tipo": "y"
+    },
+    {
+      "id": 11,
+      "nombre": "Gravity Falls",
+      "artista": "Pedro y Clemente",
+      "tipo": "c"
+    },
+    {
+      "id": 12,
+      "nombre": "Burrito Sabanero",
+      "artista": "Borja y Max",
+      "tipo": "c"
+    },
+    {
+      "id": 13,
+      "nombre": "I'm still standing",
+      "artista": "Clemente",
+      "tipo": "c"
+    },
+    {
+      "id": 14,
+      "nombre": "Diente blanco, No te vayas!",
+      "artista": "Clemente y Celeste",
+      "tipo": "c"
+    },
+    {
+      "id": 15,
+      "nombre": "Don't Stop Believin'",
+      "artista": "Journey",
+      "tipo": "y"
+    },
+    {
+      "id": 16,
+      "nombre": "All of me",
+      "artista": "John Legend",
+      "tipo": "y"
+    },
+    {
+      "id": 17,
+      "nombre": "Somewhere Only we Know",
+      "artista": "Keane",
+      "tipo": "y"
+    },
+    {
+      "id": 18,
+      "nombre": "Someone like You",
+      "artista": "Adele",
+      "tipo": "y"
+    },
+    {
+      "id": 19,
+      "nombre": "Podré ir a Europa",
+      "artista": "Martín y Emma",
+      "tipo": "i"
+    },
+    {
+      "id": 20,
+      "nombre": "Muerte en Hawaii",
+      "artista": "Calle 13",
+      "tipo": "y"
+    },
+    {
+      "id": 21,
+      "nombre": "Popó, Así me llamo yo",
+      "artista": "Martín y Emma",
+      "tipo": "i"
+    },
+    {
+      "id": 22,
+      "nombre": "Osito Gominola",
+      "artista": "Samuel",
+      "tipo": "c"
+    },
+    {
+      "id": 23,
+      "nombre": "Ritmo Sideral",
+      "artista": "Clemente",
+      "tipo": "c"
+    },
+    {
+      "id": 24,
+      "nombre": "Pepita",
+      "artista": "Samuel",
+      "tipo": "c"
+    },
+    {
+      "id": 25,
+      "nombre": "De Bebé a Niño",
+      "artista": "Emma",
+      "tipo": "i"
+    },
+    {
+      "id": 26,
+      "nombre": "Steve's Lava Chicken",
+      "artista": "Minecraft",
+      "tipo": "y"
+    },
+    {
+      "id": 27,
+      "nombre": "In the Stars",
+      "artista": "Benson Boone",
+      "tipo": "y"
+    },
+    {
+      "id": 28,
+      "nombre": "Something just like This",
+      "artista": "The Chainsmokers & Coldplay",
+      "tipo": "y"
+    },
+    {
+      "id": 29,
+      "nombre": "Zorba",
+      "artista": "El Griego",
+      "tipo": "y"
+    },
+    {
+      "id": 30,
+      "nombre": "Chiu Chiu",
+      "artista": "Borja",
+      "tipo": "c"
+    },
+    {
+      "id": 31,
+      "nombre": "Cuando sea mayor",
+      "artista": "Josefa",
+      "tipo": "c"
+    },
+    {
+      "id": 32,
+      "nombre": "Danke Danke",
+      "artista": "Emma",
+      "tipo": "c"
+    },
+    {
+      "id": 33,
+      "nombre": "Do re mi fa sol",
+      "artista": "Bernardo",
+      "tipo": "c"
+    },
+    {
+      "id": 34,
+      "nombre": "El colegio es para aprender",
+      "artista": "Emma",
+      "tipo": "i"
+    },
+    {
+      "id": 35,
+      "nombre": "Enchanted",
+      "artista": "Clarita",
+      "tipo": "c"
+    },
+    {
+      "id": 36,
+      "nombre": "Estrellita",
+      "artista": "Rafael",
+      "tipo": "c"
+    },
+    {
+      "id": 37,
+      "nombre": "Gallo Pelado",
+      "artista": "Borja",
+      "tipo": "c"
+    },
+    {
+      "id": 38,
+      "nombre": "Gohstbuster",
+      "artista": "Clemente",
+      "tipo": "c"
+    },
+    {
+      "id": 39,
+      "nombre": "Jurassic Park",
+      "artista": "Clemente",
+      "tipo": "c"
+    },
+    {
+      "id": 40,
+      "nombre": "La jardinera",
+      "artista": "Lucas",
+      "tipo": "c"
+    },
+    {
+      "id": 41,
+      "nombre": "La Maldita Roberta",
+      "artista": "Martín",
+      "tipo": "i"
+    },
+    {
+      "id": 42,
+      "nombre": "Long Live",
+      "artista": "Clarita",
+      "tipo": "c"
+    },
+    {
+      "id": 43,
+      "nombre": "Milo el doctor",
+      "artista": "Pedro",
+      "tipo": "c"
+    },
+    {
+      "id": 44,
+      "nombre": "Piratas del caribe",
+      "artista": "Raimundo",
+      "tipo": "c"
+    },
+    {
+      "id": 45,
+      "nombre": "Polka de los perros",
+      "artista": "Clemente",
+      "tipo": "c"
+    },
+    {
+      "id": 46,
+      "nombre": "Schwarz und weiss",
+      "artista": "Martín",
+      "tipo": "c"
+    },
+    {
+      "id": 47,
+      "nombre": "Sky full of stars",
+      "artista": "Josefa",
+      "tipo": "c"
+    },
+    {
+      "id": 48,
+      "nombre": "Solsito porfavor",
+      "artista": "Emma",
+      "tipo": "i"
+    },
+    {
+      "id": 49,
+      "nombre": "Star Wars",
+      "artista": "Lucas",
+      "tipo": "c"
+    },
+    {
+      "id": 50,
+      "nombre": "Thunderstruck",
+      "artista": "Lucas",
+      "tipo": "c"
+    },
+    {
+      "id": 51,
+      "nombre": "Yo nunca vi televisión",
+      "artista": "Martín",
+      "tipo": "c"
+    },
+    {
+      "id": 52,
+      "nombre": "Yo vendo unos ojos negros",
+      "artista": "Eduardo",
+      "tipo": "c"
+    },
+    {
+      "id": 53,
+      "nombre": "Jurassic Park",
+      "artista": "Agustín",
+      "tipo": "c"
+    },
+    {
+      "id": 54,
+      "nombre": "Los monitos",
+      "artista": "Josefa y Emilio",
+      "tipo": "i"
+    },
+    {
+      "id": 55,
+      "nombre": "Perdonarte para que",
+      "artista": "Clarita",
+      "tipo": "c"
+    },
+    {
+      "id": 56,
+      "nombre": "Rodolfo el Reno",
+      "artista": "Josefa",
+      "tipo": "c"
+    },
+    {
+      "id": 57,
+      "nombre": "With you",
+      "artista": "Clarita",
+      "tipo": "i"
+    },
+    {
+      "id": 58,
+      "nombre": "El mas pequeño",
+      "artista": "Samuel",
+      "tipo": "c"
+    },
+    {
+      "id": 59,
+      "nombre": "I Don't Care",
+      "artista": "Max",
+      "tipo": "c"
+    },
+    {
+      "id": 60,
+      "nombre": "Bundle of Joy",
+      "artista": "Florencia",
+      "tipo": "c"
+    },
+    {
+      "id": 61,
+      "nombre": "Himno a la Alegría",
+      "artista": "Grupo Musical",
+      "tipo": "y"
+    },
+    {
+      "id": 62,
+      "nombre": "Message in a Battle",
+      "artista": "The Police",
+      "tipo": "y"
+    },
+    {
+      "id": 63,
+      "nombre": "Faded",
+      "artista": "Alan Walker",
+      "tipo": "y"
+    },
+    {
+      "id": 64,
+      "nombre": "Theme Song",
+      "artista": "Piratas del Caribe",
+      "tipo": "y"
+    },
+    {
+      "id": 65,
+      "nombre": "Maguito Explosivo",
+      "artista": "31 Minutos",
+      "tipo": "y"
+    },
+    {
+      "id": 66,
+      "nombre": "Panamericana",
+      "artista": "Max Segers",
+      "tipo": "y"
+    },
+    {
+      "id": 67,
+      "nombre": "Rin del Angelito",
+      "artista": "Violeta Parra",
+      "tipo": "y"
+    },
+    {
+      "id": 68,
+      "nombre": "Main Theme",
+      "artista": "Mario Bross",
+      "tipo": "y"
+    },
+    {
+      "id": 69,
+      "nombre": "Hey Jude",
+      "artista": "Patricia y Pedro",
+      "tipo": "c"
+    },
+    {
+      "id": 70,
+      "nombre": "El Cigarrito",
+      "artista": "Juanita y Juan Pablo",
+      "tipo": "c"
+    },
+    {
+      "id": 71,
+      "nombre": "Jasmine Flower",
+      "artista": "Folklore Chino",
+      "tipo": "y"
+    },
+    {
+      "id": 72,
+      "nombre": "Llueve sobre la ciudad",
+      "artista": "Los Bunkers",
+      "tipo": "y"
+    },
+    {
+      "id": 73,
+      "nombre": "Día de enero",
+      "artista": "Josefa",
+      "tipo": "c"
+    },
+    {
+      "id": 74,
+      "nombre": "Faded",
+      "artista": "Agustín",
+      "tipo": "c"
+    },
+    {
+      "id": 75,
+      "nombre": "Cumpleaños feliz",
+      "artista": "Emma",
+      "tipo": "c"
+    },
+    {
+      "id": 76,
+      "nombre": "Never grow up (Taylor's version)",
+      "artista": "Taylor Swift",
+      "tipo": "y"
+    },
+    {
+      "id": 77,
+      "nombre": "Muerte en Hawai",
+      "artista": "Juan",
+      "tipo": "c"
+    },
+    {
+      "id": 78,
+      "nombre": "La media vuelta",
+      "artista": "Juan Pablo",
+      "tipo": "c"
+    },
+    {
+      "id": 79,
+      "nombre": "Back to december (Clara's version)",
+      "artista": "Clarita",
+      "tipo": "c"
+    },
+    {
+      "id": 80,
+      "nombre": "Minueto en Sol",
+      "artista": "Martín",
+      "tipo": "c"
+    },
+    {
+      "id": 81,
+      "nombre": "Maguito Explosivo",
+      "artista": "Clemente y Pedro",
+      "tipo": "c"
+    },
+    {
+      "id": 82,
+      "nombre": "Mix tonadas Tradicionales",
+      "artista": "Los huasos del camino viejo",
+      "tipo": "y"
+    },
+    {
+      "id": 83,
+      "nombre": "Tralalero Tralalá",
+      "artista": "Juan, Lucas y Mateo",
+      "tipo": "c"
+    },
+    {
+      "id": 84,
+      "nombre": "Coconut",
+      "artista": "Samuel",
+      "tipo": "i"
+    },
+    {
+      "id": 85,
+      "nombre": "Miau Miau",
+      "artista": "Samuel y Francisco",
+      "tipo": "c"
+    },
+    {
+      "id": 86,
+      "nombre": "Yo vengo de san Rosendo",
+      "artista": "Eduardo",
+      "tipo": "c"
+    },
+    {
+      "id": 87,
+      "nombre": "La Media Vuelta",
+      "artista": "Eduardo",
+      "tipo": "c"
+    },
+    {
+      "id": 88,
+      "nombre": "Te aviso, te anuncio",
+      "artista": "Josefa",
+      "tipo": "c"
+    },
+    {
+      "id": 89,
+      "nombre": "Es war eine Mutter",
+      "artista": "Emma y Martín",
+      "tipo": "c"
+    },
+    {
+      "id": 90,
+      "nombre": "Piratas del Caribe",
+      "artista": "Agustín",
+      "tipo": "c"
+    },
+    {
+      "id": 91,
+      "nombre": "Capaz",
+      "artista": "Eli y Ame",
+      "tipo": "c"
+    },
+    {
+      "id": 92,
+      "nombre": "Llueve sobre la ciudad",
+      "artista": "Josefa y Emilio",
+      "tipo": "c"
+    },
+    {
+      "id": 93,
+      "nombre": "Panamericana",
+      "artista": "Max",
+      "tipo": "c"
+    },
+    {
+      "id": 94,
+      "nombre": "Chipi Chipi",
+      "artista": "Charly García",
+      "tipo": "y"
+    },
+    {
+      "id": 95,
+      "nombre": "Pedro's Lava Chicken",
+      "artista": "Pedro",
+      "tipo": "c"
+    },
+    {
+      "id": 96,
+      "nombre": "Fast Car",
+      "artista": "Tracy Chapman",
+      "tipo": "y"
+    },
+    {
+      "id": 97,
+      "nombre": "Los pollitos dicen",
+      "artista": "Violetta",
+      "tipo": "c"
+    },
+    {
+      "id": 98,
+      "nombre": "American Idiot",
+      "artista": "Green Day",
+      "tipo": "y"
+    },
+    {
+      "id": 99,
+      "nombre": "APT",
+      "artista": "ROSÉ y Bruno Mars",
+      "tipo": "y"
+    },
+    {
+      "id": 100,
+      "nombre": "Never Grow Up",
+      "artista": "Clarita",
+      "tipo": "c"
+    },
+    {
+      "id": 101,
+      "nombre": "Supa Good",
+      "artista": "Clemente",
+      "tipo": "c"
+    },
+    {
+      "id": 102,
+      "nombre": "Piratas del caribe",
+      "artista": "Lucas",
+      "tipo": "c"
+    },
+    {
+      "id": 103,
+      "nombre": "Soy Enigma",
+      "artista": "SuperThings",
+      "tipo": "y"
+    },
+    {
+      "id": 104,
+      "nombre": "Let it be",
+      "artista": "Dante",
+      "tipo": "c"
+    },
+    {
+      "id": 105,
+      "nombre": "Inevitable",
+      "artista": "Josefa",
+      "tipo": "c"
+    },
+    {
+      "id": 106,
+      "nombre": "Agustín Lava's Chicken",
+      "artista": "Agustín",
+      "tipo": "c"
+    },
+    {
+      "id": 107,
+      "nombre": "Better than Revenge",
+      "artista": "Taylor Swift",
+      "tipo": "y"
+    },
+    {
+      "id": 108,
+      "nombre": "Fly me to the moon",
+      "artista": "Frank Sinatra",
+      "tipo": "y"
+    },
+    {
+      "id": 109,
+      "nombre": "In the stars",
+      "artista": "Martín",
+      "tipo": "c"
+    },
+    {
+      "id": 110,
+      "nombre": "Las pelotitas",
+      "artista": "Juan, Mateo y Lucas",
+      "tipo": "i"
+    },
+    {
+      "id": 111,
+      "nombre": "Bombardino Crocrodrilo",
+      "artista": "Juan",
+      "tipo": "c"
+    },
+    {
+      "id": 112,
+      "nombre": "All I want for Christmas",
+      "artista": "Josefa",
+      "tipo": "c"
+    },
+    {
+      "id": 113,
+      "nombre": "Piratas del caribe",
+      "artista": "Samu y Berna",
+      "tipo": "c"
+    },
+    {
+      "id": 114,
+      "nombre": "Better than Revenge",
+      "artista": "Clarita",
+      "tipo": "c"
+    },
+    {
+      "id": 115,
+      "nombre": "Betti Caro",
+      "artista": "Emma",
+      "tipo": "i"
+    },
+    {
+      "id": 116,
+      "nombre": "Chocolate",
+      "artista": "Josefa",
+      "tipo": "c"
+    },
+    {
+      "id": 117,
+      "nombre": "Cerf Volant",
+      "artista": "Josefa",
+      "tipo": "c"
+    },
+    {
+      "id": 118,
+      "nombre": "Red",
+      "artista": "Taylor Swift",
+      "tipo": "y"
+    },
+    {
+      "id": 119,
+      "nombre": "Que bonita va",
+      "artista": "Los huasos del camino viejo",
+      "tipo": "y"
+    },
+    {
+      "id": 120,
+      "nombre": "Los viejos estandartes ",
+      "artista": "Los cuatro cuartos",
+      "tipo": "y"
+    },
+    {
+      "id": 121,
+      "nombre": "Piratas del Caribe",
+      "artista": "Clemente y Santiago",
+      "tipo": "c"
+    },
+    {
+      "id": 122,
+      "nombre": "Red",
+      "artista": "Clarita",
+      "tipo": "c"
+    },
+    {
+      "id": 123,
+      "nombre": "Tralalero Tralalá",
+      "artista": "Agustín",
+      "tipo": "c"
+    },
+    {
+      "id": 124,
+      "nombre": "I got a feeling",
+      "artista": "Lucas",
+      "tipo": "c"
+    },
+    {
+      "id": 125,
+      "nombre": "Navidad",
+      "artista": "Pedro",
+      "tipo": "c"
+    },
+    {
+      "id": 126,
+      "nombre": "Riptide",
+      "artista": "Clarita",
+      "tipo": "c"
+    },
+    {
+      "id": 127,
+      "nombre": "Soy Enigma",
+      "artista": "Lucas",
+      "tipo": "c"
+    },
+    {
+      "id": 128,
+      "nombre": "La Familia",
+      "artista": "Juan",
+      "tipo": "i"
+    },
+    {
+      "id": 129,
+      "nombre": "Ciega, Sordo, Muda",
+      "artista": "Josefa",
+      "tipo": "c"
+    },
+    {
+      "id": 130,
+      "nombre": "Montagem Xonada",
+      "artista": "Agustín",
+      "tipo": "c"
+    },
+    {
+      "id": 131,
+      "nombre": "This is me",
+      "artista": "Clarita",
+      "tipo": "c"
+    },
+    {
+      "id": 132,
+      "nombre": "Nos siguen pegando abajo",
+      "artista": "Toño",
+      "tipo": "c"
+    },
+    {
+      "id": 133,
+      "nombre": "Black or White",
+      "artista": "Josefa",
+      "tipo": "c",
+      "uploadedAt": "2026-11-19T21:04:28.806Z",
+      "uploadId": "d1e64b74-f60f-40ba-aa0c-86ac82b2ff9f"
+    }
   ]
 }
