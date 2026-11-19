@@ -1,4 +1,5 @@
 import { createRemoteJWKSet, jwtVerify } from 'jose';
+import { cookieValue, SESSION_COOKIE, sessionUser, requireSameOrigin } from './upload-session.js';
 import { randomUUID } from 'node:crypto';
 import { HttpError, ownerClaims, readTicket, signTicket } from './upload-core.js';
 export const REPO = 'jpgrimminck/play';
@@ -7,15 +8,20 @@ const keys = createRemoteJWKSet(new URL('https://www.googleapis.com/oauth2/v3/ce
 export function configuration() {
   return { clientId: process.env.GOOGLE_CLIENT_ID || '', ready: ['GOOGLE_CLIENT_ID','SONG_UPLOAD_GITHUB_TOKEN','SONG_UPLOAD_SECRET','BLOB_READ_WRITE_TOKEN'].every(k => !!process.env[k]) && process.env.SONG_UPLOAD_SECRET.length >= 32 };
 }
-export async function authenticate(token) {
+export async function authenticate(token, expectedNonce) {
   if (!configuration().ready) throw new HttpError(503, 'Falta configurar el acceso de Google y la conexión de subida.');
   if (typeof token !== 'string' || token.length > 8192) throw new HttpError(401, 'Ingresa con Google para continuar.');
   let payload;
   try { ({ payload } = await jwtVerify(token, keys, { algorithms: ['RS256'], issuer: ['accounts.google.com','https://accounts.google.com'], audience: process.env.GOOGLE_CLIENT_ID, maxTokenAge: '1h', requiredClaims: ['exp', 'iat', 'sub', 'email', 'email_verified'] })); }
   catch { throw new HttpError(401, 'Tu sesión venció. Vuelve a ingresar con Google.'); }
+  if (expectedNonce !== undefined && (!expectedNonce || payload.nonce !== expectedNonce)) throw new HttpError(401, 'Recarga la página y vuelve a ingresar con Google.');
   return ownerClaims(payload, process.env.SONG_UPLOAD_OWNER_EMAIL || 'grimminck@gmail.com');
 }
-export function bearer(req) { return req.headers.authorization?.replace(/^Bearer /, ''); }
+export async function authenticateRequest(req) {
+  if (!configuration().ready) throw new HttpError(503, 'Falta configurar el acceso de Google y la conexión de subida.');
+  if (!['GET','HEAD'].includes(req.method)) requireSameOrigin(req);
+  return sessionUser(cookieValue(req, SESSION_COOKIE), process.env.SONG_UPLOAD_SECRET, process.env.SONG_UPLOAD_OWNER_EMAIL || 'grimminck@gmail.com');
+}
 export function ticketFor(user) { const data = { id: randomUUID(), sub: user.sub, exp: Date.now() + 3600000 }; return { ticket: signTicket(data, process.env.SONG_UPLOAD_SECRET), uploadId: data.id }; }
 export function checkTicket(ticket, user) { return readTicket(ticket, process.env.SONG_UPLOAD_SECRET, user.sub); }
 export async function github(path, options = {}) {
@@ -33,7 +39,8 @@ export async function catalogAtHead() {
 export function route(method, action) { return async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
   res.setHeader('X-Content-Type-Options','nosniff');
-  if (req.method !== method) { res.setHeader('Allow', method); return res.status(405).json({ error: 'Método no permitido.' }); }
-  try { return res.status(200).json(await action(req)); }
+  const methods = Array.isArray(method) ? method : [method];
+  if (!methods.includes(req.method)) { res.setHeader('Allow', methods.join(', ')); return res.status(405).json({ error: 'Método no permitido.' }); }
+  try { return res.status(200).json(await action(req, res)); }
   catch (error) { return res.status(error.status || 500).json({ error: error.status ? error.message : 'No se pudo completar la operación. Puedes reintentar.' }); }
 }; }

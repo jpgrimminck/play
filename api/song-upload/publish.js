@@ -1,5 +1,5 @@
 import { del, get, head } from '@vercel/blob';
-import { authenticate, bearer, checkTicket, catalogAtHead, github, postGithub, route, REPO, BRANCH } from '../../server/song-upload.js';
+import { authenticateRequest, checkTicket, catalogAtHead, github, postGithub, route, REPO, BRANCH } from '../../server/song-upload.js';
 import { appendSong, metadata, HttpError, MAX_AUDIO, uploadPath, validMedia } from '../../server/upload-core.js';
 async function readMedia(url, ticket, kind) {
   let parsed; try { parsed = new URL(url); } catch { throw new HttpError(400,'Archivo inválido.'); }
@@ -14,7 +14,7 @@ async function readMedia(url, ticket, kind) {
 }
 export const config = { maxDuration: 300 };
 export default route('POST', async req => {
-  const user = await authenticate(bearer(req));
+  const user = await authenticateRequest(req);
   const ticket = checkTicket(req.body?.ticket, user);
   const meta = metadata(req.body || {});
   const snapshot = await catalogAtHead();

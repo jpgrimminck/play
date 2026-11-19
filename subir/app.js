@@ -1,13 +1,13 @@
 import { upload } from '@vercel/blob/client';
 const $ = id => document.getElementById(id);
-let credential = '', coverBlob = null, audioFile = null, audioReady = false, busy = false, pending = null;
+let coverBlob = null, audioFile = null, audioReady = false, busy = false, pending = null;
 let photoVersion = 0, audioVersion = 0, coverObjectUrl = '', audioObjectUrl = '';
 const status = message => { $('status').textContent = message; };
 async function api(path, { method = 'GET', body } = {}) {
-  const response = await fetch(`/api/song-upload/${path}`, { method, headers: { ...(credential ? { Authorization: `Bearer ${credential}` } : {}), ...(body ? { 'Content-Type': 'application/json' } : {}) }, body: body ? JSON.stringify(body) : undefined, cache: 'no-store' });
+  const response = await fetch(`/api/song-upload/${path}`, { method, credentials: 'same-origin', headers: { ...(body ? { 'Content-Type': 'application/json' } : {}) }, body: body ? JSON.stringify(body) : undefined, cache: 'no-store' });
   const data = await response.json().catch(() => ({ error: 'El servidor no pudo responder. Vuelve a intentar.' }));
   if (!response.ok) {
-    if (response.status === 401) { credential = ''; $('workspace').hidden = true; $('login').hidden = false; }
+    if (response.status === 401) { $('workspace').hidden = true; $('login').hidden = false; }
     throw new Error(data.error || 'No se pudo completar la operación.');
   }
   return data;
@@ -31,13 +31,12 @@ async function latest() {
   finally { $('refresh').disabled = false; }
 }
 async function signIn(response) {
-  credential = response.credential;
   try {
-    const { user } = await api('session', { method: 'POST' });
+    const { user } = await api('session', { method: 'POST', body: { credential: response.credential } });
     $('account').textContent = user.email;
     $('login').hidden = true; $('workspace').hidden = false; status('');
     await latest();
-  } catch (e) { credential = ''; status(e.message); }
+  } catch (e) { status(e.message); }
 }
 function clearPending() { pending = null; $('confirmed').checked = false; $('result').replaceChildren(); }
 $('title').addEventListener('input', () => { $('preview-title').textContent = $('title').value || 'Nombre de la canción'; clearPending(); });
@@ -83,11 +82,17 @@ $('audio').addEventListener('change', () => {
 for (const id of ['preview-audio']) $(id).addEventListener('play', () => { document.querySelectorAll('audio').forEach(a => { if(a !== $(id)) a.pause(); }); });
 document.addEventListener('play', event => { if (event.target.tagName === 'AUDIO') document.querySelectorAll('audio').forEach(a => { if (a !== event.target) a.pause(); }); }, true);
 $('refresh').addEventListener('click', latest);
-$('logout').addEventListener('click', () => {
+$('logout').addEventListener('click', async () => {
   if (busy) return;
-  credential = ''; pending = null; document.querySelectorAll('audio').forEach(a => a.pause());
-  $('workspace').hidden = true; $('login').hidden = false; status('');
-  window.google?.accounts.id.disableAutoSelect();
+  $('logout').disabled = true;
+  try {
+    await api('session', { method: 'DELETE' });
+    pending = null; document.querySelectorAll('audio').forEach(a => a.pause());
+    $('workspace').hidden = true; $('login').hidden = false; status('');
+    window.google?.accounts.id.disableAutoSelect();
+    await initialize();
+  } catch (e) { status(e.message); }
+  finally { $('logout').disabled = false; }
 });
 $('song-form').addEventListener('submit', async event => {
   event.preventDefault(); if (busy) return;
@@ -96,7 +101,7 @@ $('song-form').addEventListener('submit', async event => {
   busy = true; $('fields').disabled = true; $('publish').disabled = true; $('logout').disabled = true; $('progress').hidden = false; status('');
   try {
     if (!pending) pending = await api('prepare', { method: 'POST' });
-    const options = { access: 'private', handleUploadUrl: '/api/song-upload/blob', clientPayload: JSON.stringify({ credential, ticket: pending.ticket }), multipart: true };
+    const options = { access: 'private', handleUploadUrl: '/api/song-upload/blob', clientPayload: JSON.stringify({ ticket: pending.ticket }), multipart: true };
     if (!pending.coverUrl) {
       $('result').textContent = 'Subiendo carátula…';
       pending.coverUrl = (await upload(`song-staging/${pending.uploadId}/cover.jpeg`, coverBlob, { ...options, contentType: 'image/jpeg', onUploadProgress: ({ percentage }) => { $('progress').value = percentage * .1; } })).url;
@@ -122,11 +127,18 @@ $('song-form').addEventListener('submit', async event => {
 });
 async function initialize() {
   try {
+    const { user } = await api('session');
+    if (user) {
+      $('account').textContent = `${user.email} · Sesión recordada en este navegador`;
+      $('login').hidden = true; $('workspace').hidden = false; status('');
+      await latest();
+      return;
+    }
     const config = await api('config');
     if (!config.ready) { status('Esta página está preparada. Falta activar Google y la conexión privada de subida en el alojamiento.'); return; }
     const start = Date.now();
     while (!window.google?.accounts?.id) { if (Date.now() - start > 15000) throw new Error('No se pudo cargar Google. Revisa tu conexión y recarga la página.'); await new Promise(r => setTimeout(r,100)); }
-    window.google.accounts.id.initialize({ client_id: config.clientId, callback: signIn, auto_select: false });
+    window.google.accounts.id.initialize({ client_id: config.clientId, nonce: config.nonce, callback: signIn, auto_select: false });
     window.google.accounts.id.renderButton($('google-button'), { type:'standard', theme:'outline', size:'large', text:'signin_with', locale:'es' });
   } catch(e) { status(e.message); }
 }

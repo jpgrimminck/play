@@ -77,8 +77,10 @@ test('Google JWT verification checks signature, audience, expiry and owner', asy
   t.after(()=>{globalThis.fetch=originalFetch;for(const k of ['GOOGLE_CLIENT_ID','SONG_UPLOAD_GITHUB_TOKEN','SONG_UPLOAD_SECRET','BLOB_READ_WRITE_TOKEN','SONG_UPLOAD_OWNER_EMAIL']){if(originalEnv[k]===undefined)delete process.env[k];else process.env[k]=originalEnv[k];}});
   Object.assign(process.env,{GOOGLE_CLIENT_ID:'test-google-client',SONG_UPLOAD_GITHUB_TOKEN:'test-token',SONG_UPLOAD_SECRET:secret,BLOB_READ_WRITE_TOKEN:'test-blob',SONG_UPLOAD_OWNER_EMAIL:'grimminck@gmail.com'});
   globalThis.fetch=async url=>{assert.equal(String(url),'https://www.googleapis.com/oauth2/v3/certs');return new Response(JSON.stringify({keys:[jwk]}),{headers:{'Content-Type':'application/json'}});};
-  const token=async ({email='grimminck@gmail.com',audience='test-google-client',expiry='1h'}={})=>new SignJWT({email,email_verified:true}).setProtectedHeader({alg:'RS256',kid:jwk.kid}).setIssuer('https://accounts.google.com').setAudience(audience).setSubject('google-user').setIssuedAt().setExpirationTime(expiry).sign(privateKey);
-  assert.equal((await authenticate(await token())).email,'grimminck@gmail.com');
+  const token=async ({email='grimminck@gmail.com',audience='test-google-client',expiry='1h'}={})=>new SignJWT({email,email_verified:true,nonce:'expected-login-nonce'}).setProtectedHeader({alg:'RS256',kid:jwk.kid}).setIssuer('https://accounts.google.com').setAudience(audience).setSubject('google-user').setIssuedAt().setExpirationTime(expiry).sign(privateKey);
+  assert.equal((await authenticate(await token(), 'expected-login-nonce')).email,'grimminck@gmail.com');
+  await assert.rejects(authenticate(await token(), 'wrong-nonce'),{status:401});
+  await assert.rejects(authenticate(await token(), ''),{status:401});
   await assert.rejects(authenticate(await token({email:'someone@gmail.com'})),{status:403});
   await assert.rejects(authenticate(await token({audience:'wrong-client'})),{status:401});
   await assert.rejects(authenticate(await token({expiry:'-1h'})),{status:401});

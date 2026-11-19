@@ -1,2 +1,3 @@
 import { configuration, route } from '../../server/song-upload.js';
-export default route('GET', async () => configuration());
+import { loginNonce } from '../../server/upload-session.js';
+export default route('GET', async (req, res) => ({ ...configuration(), nonce: loginNonce(res) }));
