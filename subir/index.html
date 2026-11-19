@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Subir una canción · GrimmInck</title>
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="stylesheet" href="/subir/style.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="/subir/app.js" type="module"></script>
+</head>
+<body>
+  <header><a class="brand" href="/">Grimm<span>Inck</span><small>ESTUDIO DE CANCIONES</small></a><a href="/">Abrir reproductor</a></header>
+  <main>
+    <section id="login" class="login">
+      <p class="eyebrow">TU MÚSICA, EN UN SOLO LUGAR</p>
+      <h1>Una nueva canción<br>empieza aquí.</h1>
+      <p>Elige la carátula, escucha tu audio y agrégalo a GrimmInck.</p>
+      <div class="signin"><div id="google-button"></div></div>
+      <p class="muted">Ingresa con tu cuenta de Google para continuar.<br>Solo Juan Pablo puede publicar canciones.</p>
+    </section>
+    <section id="workspace" hidden>
+      <div class="welcome"><div><p class="eyebrow">ACCESO EXCLUSIVO</p><h1>Solo tú, Juan Pablo, estás autorizado a subir canciones a la plataforma.</h1><p id="account" class="muted"></p></div><button type="button" id="logout" class="secondary">Cerrar sesión</button></div>
+      <div class="layout">
+        <aside class="panel latest"><p class="eyebrow">ÚLTIMA CANCIÓN DEL CATÁLOGO</p><div id="latest-content"><p>Cargando la última canción…</p></div><button type="button" class="text-button" id="refresh">Actualizar última canción</button></aside>
+        <section class="panel editor"><p class="eyebrow">NUEVA CANCIÓN</p><h2>Prepara tu próxima canción.</h2><p class="muted">Revisa cómo se verá y escúchala antes de publicar.</p>
+          <form id="song-form">
+            <fieldset id="fields"><div class="metadata"><label>Nombre de la canción<input id="title" name="nombre" required maxlength="160" placeholder="¿Cómo se llama?"></label><label>Artista o alumno<input id="artist" name="artista" required maxlength="160" placeholder="Nombre del artista o alumno"></label></div>
+            <label>Tipo de canción<select id="type" name="tipo"><option value="c">Cover</option><option value="i">Inédita</option><option value="y">YouTube</option></select></label>
+            <div class="upload-grid"><label class="dropzone">Carátula<span class="upload-title">Elige una foto</span><span class="muted">JPG, PNG o WebP · hasta 20 MB</span><input id="photo" type="file" accept="image/jpeg,image/png,image/webp" required><span class="muted">Se recortará al centro en formato cuadrado.</span></label><label class="dropzone">Audio<span class="upload-title">Elige tu MP3</span><span class="muted">MP3 · hasta 30 MB</span><input id="audio" type="file" accept="audio/mpeg,.mp3" required><span class="muted">El audio se conserva sin modificar.</span></label></div>
+            <div class="preview"><div class="artwork empty" id="artwork"><span>Tu carátula<br>aparecerá aquí</span><img id="preview-image" alt="Vista previa de la carátula" hidden></div><div class="preview-info"><p class="eyebrow">ASÍ QUEDARÁ</p><h3 id="preview-title">Nombre de la canción</h3><p id="preview-artist">Artista o alumno</p><audio id="preview-audio" controls preload="metadata" hidden></audio><p id="audio-help" class="muted">Carga un audio para escucharlo aquí.</p></div></div>
+            <label class="confirmation"><input type="checkbox" id="confirmed" required>Revisé la carátula y escuché el audio. Están listos para publicar.</label></fieldset>
+            <div class="publish-row"><button class="primary" id="publish" type="submit">Publicar canción</button><span class="muted">Se agregará a grimminck.cl.</span></div>
+          </form>
+          <progress id="progress" max="100" value="0" hidden></progress>
+          <div id="result" aria-live="polite"></div>
+        </section>
+      </div>
+    </section>
+    <p id="status" role="status" aria-live="polite"></p>
+  </main>
+  <footer>GrimmInck · Un espacio para hacer música.</footer>
+</body>
+</html>
