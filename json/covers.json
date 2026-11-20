@@ -1,5 +1,5 @@
 {
-  "totalCovers": 134,
+  "totalCovers": 135,
   "covers": [
     {
       "id": 1,
@@ -808,6 +808,14 @@
       "tipo": "c",
       "uploadedAt": "2026-11-20T20:07:30.930Z",
       "uploadId": "80dd6569-9a51-4d83-86d8-8fc474aef732"
+    },
+    {
+      "id": 135,
+      "nombre": "Für Elise",
+      "artista": "Juan José",
+      "tipo": "c",
+      "uploadedAt": "2026-11-20T21:50:31.728Z",
+      "uploadId": "81e18124-4802-43c6-ab77-f7ac85883ee6"
     }
   ]
 }
