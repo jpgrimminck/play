@@ -1,5 +1,5 @@
 {
-  "totalCovers": 135,
+  "totalCovers": 136,
   "covers": [
     {
       "id": 1,
@@ -816,6 +816,14 @@
       "tipo": "c",
       "uploadedAt": "2026-11-20T21:50:31.728Z",
       "uploadId": "81e18124-4802-43c6-ab77-f7ac85883ee6"
+    },
+    {
+      "id": 136,
+      "nombre": "Mario Bross",
+      "artista": "Juan José",
+      "tipo": "c",
+      "uploadedAt": "2026-11-20T21:55:21.245Z",
+      "uploadId": "3bfefba8-f055-47b1-a43f-52b1a02dcfd3"
     }
   ]
 }
