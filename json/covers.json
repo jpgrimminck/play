@@ -1,5 +1,5 @@
 {
-  "totalCovers": 133,
+  "totalCovers": 134,
   "covers": [
     {
       "id": 1,
@@ -800,6 +800,14 @@
       "tipo": "c",
       "uploadedAt": "2026-11-19T21:04:28.806Z",
       "uploadId": "d1e64b74-f60f-40ba-aa0c-86ac82b2ff9f"
+    },
+    {
+      "id": 134,
+      "nombre": "Argentina",
+      "artista": "Agustín",
+      "tipo": "c",
+      "uploadedAt": "2026-11-20T20:07:30.930Z",
+      "uploadId": "80dd6569-9a51-4d83-86d8-8fc474aef732"
     }
   ]
 }
