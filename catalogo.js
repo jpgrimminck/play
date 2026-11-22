@@ -25,14 +25,6 @@ function enlaceCancion(cancion) {
   return direccion;
 }
 
-function urlDetalles(cancion) {
-  const params = new URLSearchParams({
-    song: cancion.id, title: cancion.nombre, cover: urlCaratula(cancion.id).slice(1),
-    audio: urlAudio(cancion.id).slice(1), time: actual?.id === cancion.id ? Math.floor(audio.currentTime || 0) : 0
-  });
-  return '/html/details.html?' + params;
-}
-
 function tarjeta(cancion, destacada) {
   const boton = document.createElement('button');
   boton.type = 'button';
@@ -77,7 +69,6 @@ function dibujarCatalogo(nombre) {
   el('heroArtist').textContent = destacada.artista;
   el('heroCover').src = urlCaratula(destacada.id);
   el('heroArt').setAttribute('aria-label', 'Abrir reproductor de ' + destacada.nombre);
-  el('heroDetails').href = urlDetalles(destacada);
   el('heroNotice').textContent = '';
   el('filterName').textContent = alumno || 'Todos los alumnos';
   el('recentGrid').replaceChildren(...resto.slice(0, 3).map(cancion => tarjeta(cancion, true)));
@@ -105,8 +96,6 @@ function seleccionar(cancion) {
   el('nowTitle').textContent = cancion.nombre;
   el('nowPlaying').setAttribute('aria-label', 'Abrir reproductor de ' + cancion.nombre);
   el('playerNotice').textContent = el('heroNotice').textContent = '';
-  el('playerDetails').href = urlDetalles(cancion);
-  el('playerClassic').href = el('practiceLink').href = '/reproductor.html?song=' + cancion.id;
   if ('mediaSession' in navigator && typeof MediaMetadata !== 'undefined') {
     navigator.mediaSession.metadata = new MediaMetadata({
       title: cancion.nombre, artist: cancion.artista, album: 'Grimminck Music',
@@ -283,8 +272,6 @@ el('previous').addEventListener('click', () => avanzar(-1));
 el('next').addEventListener('click', () => avanzar(1));
 el('heroShare').addEventListener('click', () => compartir(cola[0], el('heroNotice')));
 el('playerShare').addEventListener('click', () => compartir(actual, el('playerNotice')));
-el('heroDetails').addEventListener('click', () => { el('heroDetails').href = urlDetalles(cola[0]); });
-el('playerDetails').addEventListener('click', () => { el('playerDetails').href = urlDetalles(actual); });
 for (const id of ['heroSeek', 'playerSeek']) {
   el(id).addEventListener('input', event => {
     if (Number.isFinite(audio.duration)) { audio.currentTime = Number(event.target.value); actualizarTiempo(); }

@@ -32,7 +32,6 @@
   <div class="page">
     <header class="mast">
       <a class="brand" href="/" aria-label="Grimminck Music, inicio">Grimminck <span>Music</span></a>
-      <a class="practice" href="/reproductor.html" id="practiceLink">Practicar</a>
     </header>
     <main>
       <p id="catalogStatus" class="status" role="status">Cargando canciones…</p>
@@ -40,18 +39,19 @@
       <button type="button" id="retry" class="utility" hidden>Volver a cargar</button>
 
       <section class="hero" aria-labelledby="heroTitle" id="hero" hidden>
-        <button type="button" class="hero-art" id="heroArt" aria-label="Abrir reproductor">
-          <img id="heroCover" width="400" height="400" alt="" fetchpriority="high">
-        </button>
+        <div class="artwork">
+          <button type="button" class="hero-art" id="heroArt" aria-label="Abrir reproductor">
+            <img id="heroCover" width="400" height="400" alt="" fetchpriority="high">
+          </button>
+          <button type="button" class="cover-share" id="heroShare" aria-label="Compartir canción destacada" title="Compartir canción">
+            <svg class="icon" aria-hidden="true"><use href="#i-share"/></svg>
+          </button>
+        </div>
         <div class="hero-info">
           <span class="release">Último lanzamiento</span>
           <div class="hero-copy">
             <h1 id="heroTitle"></h1>
             <p class="artist" id="heroArtist"></p>
-            <div class="song-actions">
-              <button type="button" id="heroShare"><svg class="icon"><use href="#i-share"/></svg>Compartir</button>
-              <a id="heroDetails" href="/html/details.html">Detalles</a>
-            </div>
           </div>
           <div class="hero-controls">
             <div class="timeline">
@@ -66,8 +66,10 @@
 
       <section class="catalog" id="catalog" aria-labelledby="catalogTitle" hidden>
         <h2 id="catalogTitle">Últimos lanzamientos</h2>
-        <div class="feature-grid" id="recentGrid"></div>
-        <div class="cover-grid" id="coverGrid"></div>
+        <div class="catalog-grids">
+          <div class="feature-grid" id="recentGrid"></div>
+          <div class="cover-grid" id="coverGrid"></div>
+        </div>
       </section>
     </main>
   </div>
@@ -107,8 +109,6 @@
       </div>
       <div class="song-actions">
         <button type="button" id="playerShare"><svg class="icon"><use href="#i-share"/></svg>Compartir</button>
-        <a id="playerDetails" href="/html/details.html">Detalles</a>
-        <a id="playerClassic" href="/reproductor.html">Practicar</a>
       </div>
       <p id="playerNotice" class="notice" role="status"></p>
     </div>
