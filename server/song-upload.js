@@ -18,6 +18,9 @@ export async function authenticate(token, expectedNonce) {
   return ownerClaims(payload, process.env.SONG_UPLOAD_OWNER_EMAIL || 'grimminck@gmail.com');
 }
 export async function authenticateRequest(req) {
+  if (req.method === 'POST' && process.env.VERCEL_ENV === 'preview') {
+    throw new HttpError(403, 'La carga de canciones está desactivada en la vista de prueba.');
+  }
   if (!configuration().ready) throw new HttpError(503, 'Falta configurar el acceso de Google y la conexión de subida.');
   if (!['GET','HEAD'].includes(req.method)) requireSameOrigin(req);
   return sessionUser(cookieValue(req, SESSION_COOKIE), process.env.SONG_UPLOAD_SECRET, process.env.SONG_UPLOAD_OWNER_EMAIL || 'grimminck@gmail.com');

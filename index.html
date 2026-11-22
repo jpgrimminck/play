@@ -1,118 +1,118 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Play</title>
-
-  <!-- Configuración para instalar como app en iOS -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#090d16">
+  <meta name="description" content="Escucha las grabaciones de los alumnos de Grimminck Music.">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Play">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
-  <!-- Escala responsive -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-  <!-- Íconos de la app -->
-  <link rel="icon" href="icons/favicon.ico" type="image/x-icon">
-  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-
-  <!-- Estilos -->
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="auth-widget.css">
-
-  
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-touch-fullscreen" content="yes">
-  <link rel="manifest" href="manifest.json">
+  <meta name="apple-mobile-web-app-title" content="Grimminck Music">
+  <title>Grimminck Music</title>
+  <link rel="icon" href="/icons/favicon.ico">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alata&family=Instrument+Sans:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="/catalogo.css">
+  <script type="module" src="/catalogo.js"></script>
 </head>
-
 <body>
-  <!-- ===========================  ESTRUCTURA HTML  ========================== -->
-  <div class="container">
-    <!-- Barra lateral -->
-    <div class="sidebar">
-      <div id="miniaturasContainer"></div>
-    </div>
+  <svg aria-hidden="true" class="symbols" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></symbol>
+    <symbol id="i-choose" viewBox="0 0 24 24"><path d="m8 8 4-4 4 4m-8 8 4 4 4-4"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12m0-12L6 18"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V3m-4 4 4-4 4 4M6 11H4v10h16V11h-2"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M7 3.8v16.4a.9.9 0 0 0 1.4.75l12-8.2a.9.9 0 0 0 0-1.5l-12-8.2a.9.9 0 0 0-1.4.75Z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 4v16m8-16v16" stroke-width="4"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="m5 4 12 8-12 8z"/><path d="M19 5v14" stroke-width="2.5"/></symbol>
+    <symbol id="i-previous" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M19 4 7 12l12 8z"/><path d="M5 5v14" stroke-width="2.5"/></symbol>
+  </svg>
 
-    <!-- Sección principal -->
-    <div class="main">
-      <div class="top-controls" aria-label="Acciones">
-        <div class="top-controls-spacer" aria-hidden="true"></div>
-        <button id="practicar-btn" class="practice-btn-base practice-btn-state-1">Practicar</button>
-        <a id="detailsArrow" class="details-arrow" title="Ver detalles">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M8 4l8 8-8 8" stroke="#4a9eff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-        <div class="top-controls-spacer" aria-hidden="true"></div>
-      </div>
+  <div class="page">
+    <header class="mast">
+      <a class="brand" href="/" aria-label="Grimminck Music, inicio">Grimminck <span>Music</span></a>
+      <a class="practice" href="/reproductor.html" id="practiceLink">Practicar</a>
+    </header>
+    <main>
+      <p id="catalogStatus" class="status" role="status">Cargando canciones…</p>
+      <noscript>Activa JavaScript para escuchar el catálogo.</noscript>
+      <button type="button" id="retry" class="utility" hidden>Volver a cargar</button>
 
-      <button id="guitarraBtn"><span style="font-size:28px;">🎸</span></button>
-      <div class="caratula" id="cover"></div>
-      <div class="info">
-        <div class="nombreCancion" id="nombreCancion"></div>
-        <div class="artista"        id="artista"></div>
-      </div>
-      <input type="range" id="seekBar" value="0" min="0" step="1">
-      <button id="playPause"><div id="icon" class="icon play-icon"></div></button>
-
-      <!-- Usuarios auth widget (email/logout + modals) -->
-      <div class="auth-widget" aria-label="Sesión">
-        <div class="auth-panel">
-          <div class="email-container" aria-label="Email">
-            <table class="email-table">
-              <tbody>
-                <tr>
-                  <td class="email-label">Email</td>
-                  <td class="email-value" id="stored-email">X</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <button id="logout-btn" type="button">Logout</button>
-        </div>
-
-        <div id="modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
-          <div class="modal-content">
-            <label for="email-input" class="input-label">Email</label>
-            <input id="email-input" type="email" placeholder="Ingresa tu email" autocomplete="email">
-            <button id="solicitar-btn" type="button">
-              <div id="progress" class="progress-bar"></div>
-              <span id="btn-text" class="btn-text">Enviar</span>
-            </button>
-          </div>
-        </div>
-
-        <div id="pending-modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
-          <div class="modal-content">
-            <div style="margin-bottom: 1rem;">
-              <p>El administrador te dará acceso pronto...</p>
+      <section class="hero" aria-labelledby="heroTitle" id="hero" hidden>
+        <button type="button" class="hero-art" id="heroArt" aria-label="Abrir reproductor">
+          <img id="heroCover" width="400" height="400" alt="" fetchpriority="high">
+        </button>
+        <div class="hero-info">
+          <span class="release">Último lanzamiento</span>
+          <div class="hero-copy">
+            <h1 id="heroTitle"></h1>
+            <p class="artist" id="heroArtist"></p>
+            <div class="song-actions">
+              <button type="button" id="heroShare"><svg class="icon"><use href="#i-share"/></svg>Compartir</button>
+              <a id="heroDetails" href="/html/details.html">Detalles</a>
             </div>
-            <button id="pending-volver-btn" type="button">Volver</button>
           </div>
+          <div class="hero-controls">
+            <div class="timeline">
+              <input type="range" id="heroSeek" aria-label="Posición de la canción destacada" min="0" max="1" step="0.1" value="0" disabled>
+              <span class="times"><span id="heroTime">0:00</span> / <span id="heroDuration">–:––</span></span>
+            </div>
+            <button type="button" class="hero-play" id="heroPlay">Play</button>
+          </div>
+          <p class="notice" id="heroNotice" role="status"></p>
         </div>
-      </div>
+      </section>
+
+      <section class="catalog" id="catalog" aria-labelledby="catalogTitle" hidden>
+        <h2 id="catalogTitle">Últimos lanzamientos</h2>
+        <div class="feature-grid" id="recentGrid"></div>
+        <div class="cover-grid" id="coverGrid"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="dock" id="dock" hidden>
+    <button type="button" class="now" id="nowPlaying" aria-haspopup="dialog" hidden>
+      <svg class="icon"><use href="#i-play"/></svg><span id="nowTitle"></span>
+    </button>
+    <button type="button" class="filter-trigger" id="openFilter" aria-haspopup="dialog" aria-controls="filterDialog">
+      <span class="avatar"><svg class="icon"><use href="#i-person"/></svg></span><span id="filterName">Todos los alumnos</span>
+      <svg class="icon chevrons"><use href="#i-choose"/></svg>
+    </button>
+  </div>
+
+  <dialog id="filterDialog" class="filter-dialog" aria-labelledby="filterTitle">
+    <div class="dialog-head">
+      <span class="avatar"><svg class="icon"><use href="#i-person"/></svg></span>
+      <h2 id="filterTitle">Filtrar por alumno</h2>
+      <button type="button" class="icon-button close" aria-label="Cerrar filtro" id="closeFilter"><svg class="icon"><use href="#i-close"/></svg></button>
     </div>
-  </div>
+    <div id="studentOptions" class="student-options"></div>
+  </dialog>
 
-  <!-- Etiqueta de versión -->
-  <div class="version" id="version-btn" style="cursor: pointer; user-select: none;">
-    Versión 4.9
-  </div>
-  <div id="spinner"></div>
-
-  <!-- ===========================  AUDIOS OCULTOS  =========================== -->
-  <audio id="audio"></audio>
-  <audio id="audioAlt" style="display:none;"></audio>
-
-  <!-- ==============================  SCRIPTS  =============================== -->
-  <script src="script.js"></script>
-
-  <!-- Usuarios login widget (Supabase approval flow) -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="usuarios/config.js"></script>
-  <script src="usuarios/practice/practice.js"></script>
+  <dialog id="player" class="player" aria-labelledby="playerTitle">
+    <div class="player-inner">
+      <button type="button" class="icon-button close player-close" aria-label="Cerrar reproductor" id="closePlayer"><svg class="icon"><use href="#i-close"/></svg></button>
+      <img id="playerCover" class="player-cover" width="320" height="320" alt="">
+      <div><h2 id="playerTitle"></h2><p class="artist" id="playerArtist"></p></div>
+      <div class="player-timeline">
+        <input type="range" id="playerSeek" aria-label="Posición de reproducción" min="0" max="1" step="0.1" value="0" disabled>
+        <div class="player-times"><span id="playerTime">0:00</span><span id="playerDuration">–:––</span></div>
+      </div>
+      <div class="transport">
+        <button type="button" class="icon-button" id="previous" aria-label="Canción anterior"><svg class="icon"><use href="#i-previous"/></svg></button>
+        <button type="button" class="primary-round" id="playerPlay" aria-label="Reproducir"><svg class="icon"><use id="playIcon" href="#i-play"/></svg></button>
+        <button type="button" class="icon-button" id="next" aria-label="Canción siguiente"><svg class="icon"><use href="#i-next"/></svg></button>
+      </div>
+      <div class="song-actions">
+        <button type="button" id="playerShare"><svg class="icon"><use href="#i-share"/></svg>Compartir</button>
+        <a id="playerDetails" href="/html/details.html">Detalles</a>
+        <a id="playerClassic" href="/reproductor.html">Practicar</a>
+      </div>
+      <p id="playerNotice" class="notice" role="status"></p>
+    </div>
+  </dialog>
+  <audio id="audio" preload="metadata"></audio>
 </body>
 </html>

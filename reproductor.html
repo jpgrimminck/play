@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Play</title>
+
+  <!-- Configuración para instalar como app en iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Play">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- Escala responsive -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <!-- Íconos de la app -->
+  <link rel="icon" href="icons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="auth-widget.css">
+
+  
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+  <!-- ===========================  ESTRUCTURA HTML  ========================== -->
+  <div class="container">
+    <!-- Barra lateral -->
+    <div class="sidebar">
+      <div id="miniaturasContainer"></div>
+    </div>
+
+    <!-- Sección principal -->
+    <div class="main">
+      <div class="top-controls" aria-label="Acciones">
+        <div class="top-controls-spacer" aria-hidden="true"></div>
+        <button id="practicar-btn" class="practice-btn-base practice-btn-state-1">Practicar</button>
+        <a id="detailsArrow" class="details-arrow" title="Ver detalles">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 4l8 8-8 8" stroke="#4a9eff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <div class="top-controls-spacer" aria-hidden="true"></div>
+      </div>
+
+      <button id="guitarraBtn"><span style="font-size:28px;">🎸</span></button>
+      <div class="caratula" id="cover"></div>
+      <div class="info">
+        <div class="nombreCancion" id="nombreCancion"></div>
+        <div class="artista"        id="artista"></div>
+      </div>
+      <input type="range" id="seekBar" value="0" min="0" step="1">
+      <button id="playPause"><div id="icon" class="icon play-icon"></div></button>
+
+      <!-- Usuarios auth widget (email/logout + modals) -->
+      <div class="auth-widget" aria-label="Sesión">
+        <div class="auth-panel">
+          <div class="email-container" aria-label="Email">
+            <table class="email-table">
+              <tbody>
+                <tr>
+                  <td class="email-label">Email</td>
+                  <td class="email-value" id="stored-email">X</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <button id="logout-btn" type="button">Logout</button>
+        </div>
+
+        <div id="modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+          <div class="modal-content">
+            <label for="email-input" class="input-label">Email</label>
+            <input id="email-input" type="email" placeholder="Ingresa tu email" autocomplete="email">
+            <button id="solicitar-btn" type="button">
+              <div id="progress" class="progress-bar"></div>
+              <span id="btn-text" class="btn-text">Enviar</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="pending-modal" class="modal-overlay hidden" role="dialog" aria-modal="true">
+          <div class="modal-content">
+            <div style="margin-bottom: 1rem;">
+              <p>El administrador te dará acceso pronto...</p>
+            </div>
+            <button id="pending-volver-btn" type="button">Volver</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Etiqueta de versión -->
+  <div class="version" id="version-btn" style="cursor: pointer; user-select: none;">
+    Versión 4.9
+  </div>
+  <div id="spinner"></div>
+
+  <!-- ===========================  AUDIOS OCULTOS  =========================== -->
+  <audio id="audio"></audio>
+  <audio id="audioAlt" style="display:none;"></audio>
+
+  <!-- ==============================  SCRIPTS  =============================== -->
+  <script src="script.js"></script>
+
+  <!-- Usuarios login widget (Supabase approval flow) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="usuarios/config.js"></script>
+  <script src="usuarios/practice/practice.js"></script>
+</body>
+</html>
