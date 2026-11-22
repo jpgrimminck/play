@@ -21,6 +21,7 @@
   <svg aria-hidden="true" class="symbols" xmlns="http://www.w3.org/2000/svg">
     <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></symbol>
     <symbol id="i-choose" viewBox="0 0 24 24"><path d="m8 8 4-4 4 4m-8 8 4 4 4-4"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M20 12H4m7-7-7 7 7 7"/></symbol>
     <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12m0-12L6 18"/></symbol>
     <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V3m-4 4 4-4 4 4M6 11H4v10h16V11h-2"/></symbol>
     <symbol id="i-play" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M7 3.8v16.4a.9.9 0 0 0 1.4.75l12-8.2a.9.9 0 0 0 0-1.5l-12-8.2a.9.9 0 0 0-1.4.75Z"/></symbol>
@@ -43,7 +44,7 @@
           <button type="button" class="hero-art" id="heroArt" aria-label="Abrir reproductor">
             <img id="heroCover" width="400" height="400" alt="" fetchpriority="high">
           </button>
-          <button type="button" class="cover-share" id="heroShare" aria-label="Compartir canción destacada" title="Compartir canción">
+          <button type="button" class="corner-button corner-right" id="heroShare" aria-label="Compartir canción destacada" title="Compartir canción">
             <svg class="icon" aria-hidden="true"><use href="#i-share"/></svg>
           </button>
         </div>
@@ -95,7 +96,12 @@
 
   <dialog id="player" class="player" aria-labelledby="playerTitle">
     <div class="player-inner">
-      <button type="button" class="icon-button close player-close" aria-label="Cerrar reproductor" id="closePlayer"><svg class="icon"><use href="#i-close"/></svg></button>
+      <button type="button" class="corner-button corner-back" id="closePlayer" aria-label="Volver a la portada" title="Volver a la portada">
+        <svg class="icon" aria-hidden="true"><use href="#i-back"/></svg>
+      </button>
+      <button type="button" class="corner-button corner-right" id="playerShare" aria-label="Compartir canción" title="Compartir canción">
+        <svg class="icon" aria-hidden="true"><use href="#i-share"/></svg>
+      </button>
       <img id="playerCover" class="player-cover" width="320" height="320" alt="">
       <div><h2 id="playerTitle"></h2><p class="artist" id="playerArtist"></p></div>
       <div class="player-timeline">
@@ -106,9 +112,6 @@
         <button type="button" class="icon-button" id="previous" aria-label="Canción anterior"><svg class="icon"><use href="#i-previous"/></svg></button>
         <button type="button" class="primary-round" id="playerPlay" aria-label="Reproducir"><svg class="icon"><use id="playIcon" href="#i-play"/></svg></button>
         <button type="button" class="icon-button" id="next" aria-label="Canción siguiente"><svg class="icon"><use href="#i-next"/></svg></button>
-      </div>
-      <div class="song-actions">
-        <button type="button" id="playerShare"><svg class="icon"><use href="#i-share"/></svg>Compartir</button>
       </div>
       <p id="playerNotice" class="notice" role="status"></p>
     </div>

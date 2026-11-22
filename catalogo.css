@@ -30,13 +30,15 @@ img { display: block; max-width: 100%; object-fit: cover; }
 .mast { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 4.25rem; padding-top: env(safe-area-inset-top); }
 .brand { display: inline-flex; align-items: center; min-height: 44px; font-size: 1.12rem; font-weight: 700; letter-spacing: -.045em; }
 .brand span { color: var(--blue); margin-left: .25em; }
-.song-actions :is(button,a):hover { color: var(--blue); }
 .status { margin: 1.5rem 0; color: var(--muted); }
 .utility { padding: .75rem 1.35rem; border: 1px solid var(--line); border-radius: 3rem; }
 .hero { display: grid; grid-template-columns: minmax(18rem, min(34%, 25rem)) minmax(0, 1fr); overflow: hidden; border: 1px solid rgba(255,255,255,.18); border-radius: 1.6rem; background: linear-gradient(122deg,#162239 10%,#101a2d 61%,#080f1e); box-shadow: 0 1.2rem 3rem -1.5rem #000, 0 0 2.9rem rgba(56,189,248,.14); }
 .artwork { position: relative; min-width: 0; }
-.cover-share { position: absolute; z-index: 1; top: .75rem; right: .75rem; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; color: white; background: #07111dd9; border: 1px solid #ffffff55; }
-.cover-share:hover { background: #16334a; }
+.corner-button { position: absolute; z-index: 1; top: .75rem; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; color: white; background: #07111dd9; border: 1px solid #ffffff55; }
+.corner-right { right: .75rem; }
+.player .corner-right { right: max(.75rem, env(safe-area-inset-right)); }
+.corner-back { left: max(.75rem, env(safe-area-inset-left)); }
+.corner-button:hover { background: #16334a; }
 .hero-art { display: block; width: 100%; height: 100%; padding: 0; min-width: 0; aspect-ratio: 1; align-self: stretch; background: #0b101b; overflow: hidden; }
 .hero-art img { width: 100%; height: 100%; }
 .hero-info { min-width: 0; padding: clamp(1.4rem, 3vw, 2.6rem); display: flex; flex-direction: column; gap: 1.1rem; }
@@ -44,9 +46,6 @@ img { display: block; max-width: 100%; object-fit: cover; }
 .hero-copy { flex: 1; align-content: center; }
 .hero h1 { font-size: clamp(2.1rem, 4.3vw, 4.1rem); line-height: 1.02; letter-spacing: -.055em; overflow-wrap: anywhere; }
 .artist { margin-top: .45rem; color: #58ceff; font: 500 clamp(1.08rem, 2vw, 1.55rem)/1.35 var(--body); overflow-wrap: anywhere; }
-.song-actions { display: flex; align-items: center; gap: 1.15rem; flex-wrap: wrap; }
-.song-actions :is(button,a) { display: inline-flex; align-items: center; gap: .4rem; min-height: 44px; padding: 0; color: var(--muted); font-weight: 550; font-size: .9rem; }
-.song-actions .icon { width: 1rem; height: 1rem; }
 .hero-controls { display: flex; align-items: center; gap: clamp(.8rem, 2.5vw, 1.8rem); border-top: 1px solid var(--line); padding-top: 1rem; }
 .timeline { display: flex; align-items: center; gap: .8rem; flex: 1; min-width: 0; }
 input[type="range"] { --pos: 0%; -webkit-appearance: none; appearance: none; display: block; min-width: 0; width: 100%; height: 2.75rem; background: transparent; cursor: pointer; margin: 0; accent-color: var(--blue); }
@@ -101,7 +100,6 @@ dialog::backdrop { background: rgba(2,6,13,.8); -webkit-backdrop-filter: blur(5p
 .student-options button[aria-pressed="true"]::after { content: '✓'; margin-left: .35em; }
 .player { inset: auto 0 0; width: 100%; max-width: none; max-height: 92vh; max-height: 92dvh; margin: 0; border-radius: 1.6rem 1.6rem 0 0; background: #0c1423; overflow-y: auto; overscroll-behavior: contain; }
 .player-inner { display: grid; justify-items: center; gap: .85rem; position: relative; width: 100%; padding: 1.6rem 1rem calc(1.4rem + env(safe-area-inset-bottom)); text-align: center; }
-.player-close { position: absolute; right: clamp(.65rem,3vw,2rem); top: .65rem; }
 .player-cover { width: min(17rem,54vw,32vh); aspect-ratio: 1; height: auto; border-radius: 1rem; border: 1px solid var(--line); }
 .player h2 { font-size: clamp(1.4rem,3vw,2rem); line-height: 1.15; letter-spacing: -.035em; overflow-wrap: anywhere; }
 .player .artist { font-size: 1rem; }
@@ -134,7 +132,7 @@ dialog::backdrop { background: rgba(2,6,13,.8); -webkit-backdrop-filter: blur(5p
   .artwork { aspect-ratio: 1; min-height: 100%; }
   .hero-art { position: absolute; inset: 0; }
   .hero-info { z-index: 1; pointer-events: none; padding: 1rem; gap: .45rem; justify-content: flex-end; background: linear-gradient(to bottom, transparent 25%, #03081155 48%, #030811eb 100%); }
-  .cover-share { z-index: 2; }
+  .corner-button { z-index: 2; }
   .hero-info :is(button,input,a) { pointer-events: auto; }
   .hero-copy { flex: none; }
   .release { align-self: flex-start; margin: 0 3.5rem auto 0; color: #d7f3ff; background: #0b192ce0; }
