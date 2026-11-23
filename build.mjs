@@ -27,21 +27,25 @@ const portada = await readFile('index.html', 'utf8');
 const datos = JSON.parse(await readFile('json/covers.json', 'utf8'));
 const origen = 'https://www.grimminck.cl';
 await mkdir('dist/cancion', { recursive: true });
-for (const { id, nombre } of prepararCatalogo(datos.covers, datos.artistas)) {
-  const titulo = nombre.replaceAll('&', '&amp;').replaceAll('"', '&quot;')
+function escaparHtml(texto) {
+  return texto.replaceAll('&', '&amp;').replaceAll('"', '&quot;')
     .replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+}
+
+for (const { id, nombre, artista } of prepararCatalogo(datos.covers, datos.artistas)) {
+  const titulo = escaparHtml(nombre);
+  const credito = escaparHtml(artista);
   const url = origen + '/cancion/' + id;
   const imagen = '/cancion/' + id + '.jpg';
   await sharp('covers/cover' + id + '.jpeg').rotate()
     .resize(600, 600, { fit: 'contain', background: '#090d16' })
     .jpeg({ quality: 82 }).toFile('dist' + imagen);
-  // A nonempty, visually blank description keeps the card free of extra copy.
   const metadatos = [
     '<title>' + titulo + '</title>',
     '<link rel="canonical" href="' + url + '">',
     '<meta property="og:type" content="music.song">',
     '<meta property="og:title" content="' + titulo + '">',
-    '<meta property="og:description" content="&#8203;">',
+    '<meta property="og:description" content="' + credito + '">',
     '<meta property="og:url" content="' + url + '">',
     '<meta property="og:image" content="' + origen + imagen + '">',
     '<meta property="og:image:type" content="image/jpeg">',
