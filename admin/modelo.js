@@ -72,13 +72,17 @@ export function aplicarCambios(original, cambios, comprobar = false) {
       throw new Error(
         'Otra edición cambió «' +
           (antes?.nombre || cambio.despues.nombre) +
-          '» en la rama. Tus borradores siguen en este dispositivo.'
+          '» en el catálogo. Tus borradores siguen en este dispositivo.'
       );
     if (cambio.clave.startsWith('artista:')) {
       const ficha = fichaArtista(cambio.despues);
       const i = catalogo.artistas.findIndex((a) => a.id === ficha.id);
       if (i < 0) catalogo.artistas.push(ficha);
-      else catalogo.artistas[i] = ficha;
+      else {
+        const conservada = { ...catalogo.artistas[i], ...ficha };
+        if (!ficha.referencia) delete conservada.referencia;
+        catalogo.artistas[i] = conservada;
+      }
       if (antes?.nombre !== ficha.nombre) renombrados.add(ficha.id);
     } else {
       const cancion = catalogo.covers.find((c) => claveCancion(c.id) === cambio.clave);

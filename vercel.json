@@ -7,6 +7,9 @@
   "functions": {
     "api/song-upload/publish.js": {
       "maxDuration": 300
+    },
+    "api/catalog-admin.js": {
+      "maxDuration": 300
     }
   },
   "headers": [
@@ -28,7 +31,7 @@
       "headers": [
         {
           "key": "Referrer-Policy",
-          "value": "no-referrer"
+          "value": "strict-origin-when-cross-origin"
         },
         {
           "key": "X-Robots-Tag",
@@ -40,7 +43,11 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' blob: https://raw.githubusercontent.com; media-src 'self' blob: https://raw.githubusercontent.com; connect-src 'self' https://api.github.com https://raw.githubusercontent.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+          "value": "default-src 'self'; script-src 'self' https://accounts.google.com/gsi/client; style-src 'self' https://accounts.google.com/gsi/style; frame-src https://accounts.google.com/gsi/; img-src 'self' blob: https://raw.githubusercontent.com; media-src 'self' blob: https://raw.githubusercontent.com; connect-src 'self' blob: https://raw.githubusercontent.com https://accounts.google.com/gsi/ https://vercel.com/api/blob https://vercel.com/api/blob/ https://*.blob.vercel-storage.com; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin-allow-popups"
         }
       ]
     }

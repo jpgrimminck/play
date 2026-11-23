@@ -1,6 +1,7 @@
 import { createHmac, randomUUID, timingSafeEqual } from 'node:crypto';
 import { separarCredito } from '../catalogo-datos.js';
 export class HttpError extends Error { constructor(status, message) { super(message); this.status = status; } }
+export const MAX_ADMIN_COVER = 20 * 1024 * 1024;
 export const MAX_AUDIO = 30 * 1024 * 1024;
 export function ownerClaims(claims, email) {
   if (!claims.sub || claims.email_verified !== true || claims.email?.toLowerCase() !== email.toLowerCase())
@@ -21,7 +22,15 @@ export function readTicket(ticket, secret, sub, now = Date.now()) {
   if (data.sub !== sub || !Number.isFinite(data.exp) || data.exp < now || !/^[0-9a-f-]{36}$/.test(data.id)) throw new HttpError(403, 'La subida venció. Inicia una nueva subida.');
   return data;
 }
-export function uploadPath(ticket, kind) { return `song-staging/${ticket.id}/${kind === 'cover' ? 'cover.jpeg' : 'audio.mp3'}`; }
+export function uploadPath(ticket, kind) {
+  if (ticket.purpose && ticket.purpose !== 'admin-upload') throw new HttpError(400, 'Autorización de archivo inválida.');
+  const folder = ticket.purpose === 'admin-upload' ? 'admin-staging' : 'song-staging';
+  return `${folder}/${ticket.id}/${kind === 'cover' ? 'cover.jpeg' : 'audio.mp3'}`;
+}
+export function uploadLimit(ticket, kind) {
+  if (kind === 'audio') return MAX_AUDIO;
+  return ticket.purpose === 'admin-upload' ? MAX_ADMIN_COVER : 1024 * 1024;
+}
 export function metadata(body) {
   const nombre = typeof body.nombre === 'string' ? body.nombre.trim() : '';
   const artista = typeof body.artista === 'string' ? body.artista.trim() : '';

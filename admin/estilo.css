@@ -972,3 +972,38 @@ dialog h2 {
     justify-content: space-between;
   }
 }
+.acceso-admin {
+  padding-block: clamp(2.8rem, 9vh, 6.8rem);
+}
+.tarjeta-acceso {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  max-width: 31rem;
+  margin: auto;
+  padding: clamp(1.4rem, 4vw, 2.2rem);
+}
+.tarjeta-acceso h1 {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  line-height: 1.13;
+  letter-spacing: -0.04em;
+  margin: 0.95rem 0 0.5rem;
+}
+.tarjeta-acceso p {
+  color: var(--muted);
+}
+#google-admin:not(:empty) {
+  margin-top: 1.3rem;
+  min-height: 2.75rem;
+}
+#estado-acceso:not(:empty) {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+#reintentar-acceso {
+  margin-top: 0.8rem;
+}
+.barra-acciones .salir {
+  color: var(--muted);
+  padding-inline: 0.38rem;
+}

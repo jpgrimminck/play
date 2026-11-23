@@ -10,6 +10,7 @@ for (const entry of await readdir('.', { withFileTypes: true })) {
 }
 await cp('subir/index.html', 'dist/subir/index.html');
 await cp('subir/style.css', 'dist/subir/style.css');
+await build({ entryPoints: ['admin/app.js'], outfile: 'dist/admin/app.js', bundle: true, format: 'esm', minify: true, target: ['es2022'] });
 await build({ entryPoints: ['subir/app.js'], outfile: 'dist/subir/app.js', bundle: true, format: 'esm', minify: true, target: ['es2022'] });
 
 // Pin the admin's fallback snapshot to its deployment, including while a later commit is building.

@@ -38,6 +38,7 @@ export async function prepararCaratula(archivo) {
       blob = await new Promise((resolve) => lienzo.toBlob(resolve, 'image/jpeg', 0.94));
       if (!blob) throw new Error('No se pudo preparar la imagen en este dispositivo.');
     }
+    if (blob.size > 20 * MiB) throw new Error('La carátula en JPEG supera los 20 MiB. Reduce sus dimensiones.');
     return { blob, meta: { formato: 'JPEG', bytes: blob.size, ancho, alto, sha: await huella(blob) } };
   } finally {
     URL.revokeObjectURL(url);

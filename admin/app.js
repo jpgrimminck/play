@@ -15,7 +15,8 @@ import {
 } from './modelo.js';
 import { cambiarBorradores, leerBorradores } from './borradores.js';
 import { medirArchivo, prepararAudio, prepararCaratula } from './medios.js';
-import { guardarEnRama, leerRama, mediosRemotos } from './repositorio.js';
+import { api, publicarCambios, leerCatalogo, mediosRemotos } from './repositorio.js';
+import { accesoDelEditor } from './acceso.js';
 
 const $ = (id) => document.getElementById(id);
 const nodo = (tag, clase, texto) => {
@@ -656,7 +657,11 @@ async function guardarFicha() {
     await cambiarBorradores([{ clave, revision: revisionInicial, valor }]);
     await recargarLocales();
     canal?.postMessage('cambio');
-    aviso(sinCambio ? 'La ficha coincide con la rama.' : 'Borrador guardado en este dispositivo.');
+    aviso(
+      sinCambio
+        ? 'La ficha coincide con el catálogo publicado.'
+        : 'Borrador guardado en este dispositivo.'
+    );
   } catch (e) {
     aviso(e.message);
   } finally {
@@ -700,14 +705,13 @@ async function recargarLocales() {
 }
 function abrirRama() {
   if (sucio || preparando) {
-    aviso('Guarda el borrador de la ficha antes de abrir la rama.');
+    aviso('Guarda primero el borrador de esta ficha.');
     return;
   }
   $('resultado-rama').replaceChildren();
-  $('credencial').value = '';
   $('rama-contexto').textContent = borradores.length
-    ? 'Estos borradores se guardarán juntos en la rama prototipo-admin y podrás abrirlos desde tus otros dispositivos.'
-    : 'Aquí aparecerán los borradores que guardes en este dispositivo. La rama de prueba se llama prototipo-admin.';
+    ? 'Estos cambios se publicarán juntos en grimminck.cl y serán visibles en el reproductor de tus alumnos.'
+    : 'Aquí aparecerán los borradores que guardes en este dispositivo.';
   $('resumen-cambios').replaceChildren(
     ...borradores.map((c) =>
       nodo('div', '', (c.clave.startsWith('artista:') ? 'Artista · ' : 'Canción · ') + c.despues.nombre)
@@ -720,29 +724,22 @@ $('abrir-rama').onclick = abrirRama;
 $('cerrar-rama').onclick = () => {
   if (!publicando) $('rama').close();
 };
-$('rama').addEventListener('close', () => {
-  $('credencial').value = '';
-});
 $('rama').addEventListener('cancel', (e) => {
   if (publicando) e.preventDefault();
 });
 $('publicar-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   if (publicando || !borradores.length) return;
-  const cambios = [...borradores],
-    token = $('credencial').value.trim();
-  if (!token) return;
+  const cambios = [...borradores];
   publicando = true;
-  $('credencial').value = '';
-  $('credencial').disabled = true;
   $('publicar').disabled = true;
   $('descartar-borradores').disabled = $('cerrar-rama').disabled = true;
   const progreso = (msg) => {
     $('resultado-rama').textContent = msg;
   };
-  progreso('Comprobando la cuenta y los cambios en GitHub…');
+  progreso('Preparando los cambios…');
   try {
-    const guardado = await guardarEnRama(token, cambios, progreso);
+    const guardado = await publicarCambios(cambios, progreso);
     base = guardado.catalogo;
     sha = guardado.sha;
     await cambiarBorradores(
@@ -752,7 +749,8 @@ $('publicar-form').addEventListener('submit', async (e) => {
     await recargarLocales();
     canal?.postMessage('rama');
     $('publicar-form').hidden = $('descartar-borradores').hidden = true;
-    $('rama-contexto').textContent = 'Los cambios ya están guardados en prototipo-admin.';
+    $('rama-contexto').textContent =
+      'Cambios guardados. Aparecerán en el reproductor cuando termine la actualización del sitio.';
     $('resumen-cambios').replaceChildren();
     const enlace = nodo('a', 'enlace', 'Ver cambio en GitHub');
     enlace.href = 'https://github.com/jpgrimminck/play/commit/' + sha;
@@ -760,21 +758,20 @@ $('publicar-form').addEventListener('submit', async (e) => {
     enlace.rel = 'noopener noreferrer';
     $('resultado-rama').replaceChildren(enlace);
   } catch (e) {
-    progreso(e.message + ' Los borradores siguen disponibles.');
+    if (e.status === 401) {
+      $('rama').close();
+      entrar();
+    } else progreso(e.message + ' Los borradores siguen disponibles.');
   } finally {
     publicando = false;
-    $('credencial').disabled =
-      $('publicar').disabled =
-      $('cerrar-rama').disabled =
-      $('descartar-borradores').disabled =
-        false;
+    $('publicar').disabled = $('cerrar-rama').disabled = $('descartar-borradores').disabled = false;
   }
 });
 $('descartar-borradores').onclick = async () => {
   if (
     publicando ||
     !(await confirmar(
-      'Se quitarán todos los borradores de este navegador y se volverá a cargar el catálogo de la rama.'
+      'Se quitarán todos los borradores de este navegador y se volverá a cargar el catálogo publicado.'
     ))
   )
     return;
@@ -821,7 +818,7 @@ movil.addEventListener('change', () => {
 });
 async function actualizarRemoto() {
   try {
-    const remota = await leerRama();
+    const remota = await leerCatalogo();
     if (sucio || preparando || publicando || guardando) return;
     if (remota.sha !== sha) {
       base = remota.catalogo;
@@ -830,9 +827,13 @@ async function actualizarRemoto() {
       abrirRuta(hashActual);
     }
     avisoBase('');
-  } catch {
+  } catch (e) {
+    if (e.status === 401) {
+      entrar();
+      return;
+    }
     avisoBase(
-      'Se está mostrando la copia de esta vista previa. GitHub se volverá a consultar al guardar en la rama.'
+      'Se muestra el catálogo del último despliegue. Se comprobará la versión más reciente al publicar.'
     );
   }
 }
@@ -875,4 +876,19 @@ async function iniciar() {
     $('error-inicial').append(boton('Reintentar', 'boton-texto', iniciar));
   }
 }
-iniciar();
+const entrar = accesoDelEditor(() => {
+  if (catalogo) actualizarRemoto();
+  else iniciar();
+});
+$('salir').addEventListener('click', async () => {
+  if (!(await puedeSalir())) return;
+  try {
+    await api('/api/song-upload/session', { method: 'DELETE' });
+    window.google?.accounts?.id?.disableAutoSelect();
+    sucio = false;
+    location.reload();
+  } catch (e) {
+    aviso(e.message);
+  }
+});
+entrar();

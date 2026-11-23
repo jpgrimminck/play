@@ -2,7 +2,7 @@ let apertura;
 function abrir() {
   if (!apertura)
     apertura = new Promise((resolve, reject) => {
-      const solicitud = indexedDB.open('grimminck-prototipo-admin-v1', 1);
+      const solicitud = indexedDB.open('grimminck-admin-produccion-v1', 1);
       solicitud.onupgradeneeded = () =>
         solicitud.result.createObjectStore('cambios', { keyPath: 'clave' });
       solicitud.onsuccess = () => resolve(solicitud.result);

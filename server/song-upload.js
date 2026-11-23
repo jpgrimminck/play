@@ -25,7 +25,7 @@ export async function authenticateRequest(req) {
   if (!['GET','HEAD'].includes(req.method)) requireSameOrigin(req);
   return sessionUser(cookieValue(req, SESSION_COOKIE), process.env.SONG_UPLOAD_SECRET, process.env.SONG_UPLOAD_OWNER_EMAIL || 'grimminck@gmail.com');
 }
-export function ticketFor(user) { const data = { id: randomUUID(), sub: user.sub, exp: Date.now() + 3600000 }; return { ticket: signTicket(data, process.env.SONG_UPLOAD_SECRET), uploadId: data.id }; }
+export function ticketFor(user, purpose) { const data = { ...(purpose ? { purpose } : {}), id: randomUUID(), sub: user.sub, exp: Date.now() + 3600000 }; return { ticket: signTicket(data, process.env.SONG_UPLOAD_SECRET), uploadId: data.id }; }
 export function checkTicket(ticket, user) { return readTicket(ticket, process.env.SONG_UPLOAD_SECRET, user.sub); }
 export async function github(path, options = {}) {
   const response = await fetch(`https://api.github.com/repos/${REPO}/${path}`, { ...options, headers: { Authorization: `Bearer ${process.env.SONG_UPLOAD_GITHUB_TOKEN}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', 'Content-Type': 'application/json', ...options.headers }, signal: AbortSignal.timeout(60000) });

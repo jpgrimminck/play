@@ -1,21 +1,12 @@
-import { del, get, head } from '@vercel/blob';
+import { del } from '@vercel/blob';
 import { authenticateRequest, checkTicket, catalogAtHead, github, postGithub, route, REPO, BRANCH } from '../../server/song-upload.js';
-import { appendSong, metadata, HttpError, MAX_AUDIO, uploadPath, validMedia } from '../../server/upload-core.js';
-async function readMedia(url, ticket, kind) {
-  let parsed; try { parsed = new URL(url); } catch { throw new HttpError(400,'Archivo inválido.'); }
-  if (parsed.protocol !== 'https:' || !/^[a-z0-9-]+\.private\.blob\.vercel-storage\.com$/.test(parsed.hostname) || parsed.port || parsed.username || parsed.password || parsed.search || parsed.hash || decodeURIComponent(parsed.pathname) !== `/${uploadPath(ticket, kind)}`) throw new HttpError(400,'Archivo inválido.');
-  const info = await head(url);
-  if (info.pathname !== uploadPath(ticket, kind) || info.size <= 0 || info.size > (kind === 'cover' ? 1024 * 1024 : MAX_AUDIO) || info.contentType !== (kind === 'cover' ? 'image/jpeg' : 'audio/mpeg')) throw new HttpError(400,'Formato o tamaño de archivo inválido.');
-  const blob = await get(url, { access: 'private' });
-  if (!blob || blob.statusCode !== 200) throw new HttpError(400,'No se pudo leer el archivo subido.');
-  const bytes = Buffer.from(await new Response(blob.stream).arrayBuffer());
-  if (bytes.length !== info.size || !validMedia(bytes, kind)) throw new HttpError(400, kind === 'cover' ? 'La carátula debe ser JPEG.' : 'El audio debe ser un MP3 válido.');
-  return bytes;
-}
+import { appendSong, metadata, HttpError } from '../../server/upload-core.js';
+import { readMedia } from '../../server/staged-media.js';
 export const config = { maxDuration: 300 };
 export default route('POST', async req => {
   const user = await authenticateRequest(req);
   const ticket = checkTicket(req.body?.ticket, user);
+  if (ticket.purpose) throw new HttpError(400, 'Esta autorización corresponde al editor de canciones.');
   const meta = metadata(req.body || {});
   const snapshot = await catalogAtHead();
   const next = appendSong(snapshot.catalog, meta, ticket.id);

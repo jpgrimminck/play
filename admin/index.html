@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
     <meta name="theme-color" content="#0c1018" />
     <meta name="robots" content="noindex,nofollow" />
-    <meta name="referrer" content="no-referrer" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>Administración · Grimminck Music</title>
     <link rel="icon" href="/icons/favicon.ico" />
     <link rel="stylesheet" href="/admin/estilo.css" />
@@ -54,18 +54,31 @@
           ><span>Grimminck <em>Music</em></span></a
         >
         <span class="division"></span><span class="seccion">Administración</span>
-        <div class="barra-acciones">
-          <span class="entorno"
-            ><svg class="icono"><use href="#i-git" /></svg> Rama de prueba</span
-          >
+        <div class="barra-acciones" id="acciones-admin" hidden>
+          <button type="button" class="boton-texto salir" id="salir">Salir</button>
           <button class="boton linea" id="abrir-rama" disabled>
-            <svg class="icono"><use href="#i-upload" /></svg><span>Guardar en rama</span
+            <svg class="icono"><use href="#i-upload" /></svg><span>Publicar cambios</span
             ><span id="pendientes" class="contador" hidden></span>
           </button>
         </div>
       </div>
     </header>
-    <main class="ancho" id="principal">
+    <section class="ancho acceso-admin" id="acceso" aria-labelledby="titulo-acceso">
+      <div class="tarjeta-acceso">
+        <span class="marca-icono" aria-hidden="true"
+          ><svg class="icono"><use href="#i-wave" /></svg
+        ></span>
+        <h1 id="titulo-acceso">Administrar el catálogo</h1>
+        <p>Ingresa con tu cuenta de Google para editar canciones y artistas de Grimminck Music.</p>
+        <div id="google-admin"></div>
+        <p id="estado-acceso" role="status">Comprobando tu sesión…</p>
+        <button type="button" class="boton linea" id="reintentar-acceso" hidden>
+          Volver a intentar
+        </button>
+        <noscript>Activa JavaScript para entrar al administrador.</noscript>
+      </div>
+    </section>
+    <main class="ancho" id="principal" hidden>
       <div class="cabecera">
         <h1>Catálogo musical</h1>
         <p id="resumen" aria-live="polite">Cargando catálogo…</p>
@@ -144,7 +157,7 @@
     </dialog>
     <dialog id="rama" aria-labelledby="rama-titulo">
       <div class="dialogo-cab">
-        <h2 id="rama-titulo">Guardar en rama</h2>
+        <h2 id="rama-titulo">Publicar cambios</h2>
         <button class="icon-btn" id="cerrar-rama" aria-label="Cerrar">
           <svg class="icono"><use href="#i-close" /></svg>
         </button>
@@ -153,30 +166,8 @@
         <p id="rama-contexto"></p>
         <div id="resumen-cambios" class="resumen-cambios"></div>
         <form id="publicar-form" hidden>
-          <label class="campo"
-            >Credencial de GitHub<input
-              id="credencial"
-              type="password"
-              autocomplete="off"
-              autocapitalize="none"
-              spellcheck="false"
-              required
-              placeholder="Token de jpgrimminck"
-          /></label>
-          <p class="ayuda">
-            Usa una credencial de acceso detallado para <strong>jpgrimminck/play</strong> con permiso de
-            escritura en <strong>Contents</strong>. Se envía directamente a GitHub y se borra al cerrar
-            este cuadro.
-          </p>
-          <a
-            class="enlace"
-            href="https://github.com/settings/personal-access-tokens/new?name=Grimminck%20Admin%20Prueba&amp;target_name=jpgrimminck&amp;contents=write&amp;expires_in=7"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Crear credencial en GitHub</a
-          >
           <button class="boton primario ancho-boton" id="publicar" type="submit">
-            <svg class="icono"><use href="#i-git" /></svg>Guardar en prototipo-admin
+            <svg class="icono"><use href="#i-upload" /></svg>Publicar en grimminck.cl
           </button>
         </form>
         <p id="resultado-rama" role="status"></p>

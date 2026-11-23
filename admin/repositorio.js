@@ -1,142 +1,75 @@
-import { aplicarCambios, rutaArchivo } from './modelo.js';
+import { upload } from '@vercel/blob/client';
 
-export const RAMA = 'prototipo-admin';
-const REPO = 'jpgrimminck/play';
-const API = 'https://api.github.com';
-const RAIZ = '/repos/' + REPO + '/';
-const CATALOGO = 'json/covers.json';
-export const mediosRemotos = (sha) => 'https://raw.githubusercontent.com/' + REPO + '/' + sha + '/';
+const endpoint = '/api/catalog-admin';
+const comprobantes = new Map();
+export const mediosRemotos = (sha) => 'https://raw.githubusercontent.com/jpgrimminck/play/' + sha + '/';
 
-function cliente(token, transporte) {
-  return async (ruta, metodo = 'GET', cuerpo) => {
-    const headers = { Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
-    if (token) headers.Authorization = 'Bearer ' + token;
-    if (cuerpo) headers['Content-Type'] = 'application/json';
-    const respuesta = await transporte(API + ruta, {
-      method: metodo,
-      headers,
-      credentials: 'omit',
-      redirect: 'error',
-      cache: 'no-store',
-      body: cuerpo ? JSON.stringify(cuerpo) : undefined
-    });
-    if (!respuesta.ok) {
-      if (respuesta.status === 401)
-        throw new Error('GitHub no aceptó la credencial. Revisa su vigencia.');
-      if (respuesta.status === 403)
-        throw new Error(
-          'GitHub rechazó el acceso. Revisa el permiso Contents de la credencial o vuelve a intentar más tarde.'
-        );
-      if ([409, 422].includes(respuesta.status))
-        throw new Error(
-          'La rama recibió otro cambio. Vuelve a guardar para revisar la versión más reciente.'
-        );
-      throw new Error('GitHub no pudo completar la operación (' + respuesta.status + ').');
-    }
-    return respuesta.json();
-  };
-}
-
-async function leerCon(api) {
-  const ref = await api(RAIZ + 'git/ref/heads/' + RAMA);
-  const sha = ref.object.sha;
-  if (!/^[a-f0-9]{40}$/.test(sha)) throw new Error('La versión de la rama no es válida.');
-  const archivo = await api(RAIZ + 'contents/' + CATALOGO + '?ref=' + sha);
-  const bytes = Uint8Array.from(atob(archivo.content), (c) => c.charCodeAt(0));
-  const catalogo = JSON.parse(new TextDecoder().decode(bytes));
-  if (!Array.isArray(catalogo.artistas))
-    throw new Error('Esta versión todavía no contiene el directorio de artistas.');
-  return { sha, catalogo };
-}
-
-export function leerRama(transporte = fetch) {
-  return leerCon(cliente('', transporte));
-}
-
-function base64(blob) {
-  return new Promise((resolve, reject) => {
-    const lector = new FileReader();
-    lector.onload = () => resolve(lector.result.split(',')[1]);
-    lector.onerror = () => reject(new Error('No se pudo abrir el archivo seleccionado.'));
-    lector.readAsDataURL(blob);
+export async function api(url, { method = 'GET', body } = {}) {
+  const res = await fetch(url, {
+    method,
+    credentials: 'same-origin',
+    cache: 'no-store',
+    headers: body ? { 'Content-Type': 'application/json' } : {},
+    body: body ? JSON.stringify(body) : undefined
   });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    const error = new Error(
+      data.error || 'El servidor no pudo completar la operación. Vuelve a intentar.'
+    );
+    error.status = res.status;
+    throw error;
+  }
+  return data;
 }
+const enviar = (body) => api(endpoint, { method: 'POST', body });
+export const leerCatalogo = () => api(endpoint);
 
-// Only this fixed branch and catalog/media paths can be addressed by the editing interface.
-export async function guardarEnRama(token, cambios, progreso = () => {}, transporte = fetch) {
-  const api = cliente(token, transporte);
-  const usuario = await api('/user');
-  if (usuario.login.toLowerCase() !== 'jpgrimminck')
-    throw new Error('Esta administración está habilitada para la cuenta jpgrimminck.');
-  const actual = await leerCon(api);
-  const nuevo = aplicarCambios(actual.catalogo, cambios, true);
-  const commitBase = await api(RAIZ + 'git/commits/' + actual.sha);
-  const entradas = [];
-  const medios = cambios.filter(
-    (c) => c.clave.startsWith('cancion:') && Object.keys(c.medios || {}).length
+async function subirArchivo(cambio, clase, blob, progreso) {
+  const id = Number(cambio.clave.slice(8));
+  const meta = cambio.despues.archivos[clase];
+  const clave = id + ':' + clase + ':' + meta.sha;
+  const anterior = comprobantes.get(clave);
+  if (anterior && anterior.exp > Date.now() + 60000) return anterior.comprobante;
+  const { ticket, uploadId } = await enviar({ accion: 'preparar' });
+  const imagen = clase === 'caratula';
+  const prefijo = (imagen ? 'Carátula' : 'Audio') + ' de «' + cambio.despues.nombre + '»';
+  progreso('Subiendo ' + prefijo + '…');
+  const archivo = await upload(
+    'admin-staging/' + uploadId + (imagen ? '/cover.jpeg' : '/audio.mp3'),
+    blob,
+    {
+      access: 'private',
+      handleUploadUrl: '/api/song-upload/blob',
+      clientPayload: JSON.stringify({ ticket }),
+      contentType: imagen ? 'image/jpeg' : 'audio/mpeg',
+      multipart: true,
+      onUploadProgress: ({ percentage }) => progreso(prefijo + ' · ' + Math.round(percentage) + ' %')
+    }
   );
-  if (medios.length) {
-    const arbol = await api(RAIZ + 'git/trees/' + commitBase.tree.sha + '?recursive=1');
-    if (arbol.truncated) throw new Error('GitHub no devolvió el listado completo de archivos.');
-    const archivos = new Map(arbol.tree.map((entrada) => [entrada.path, entrada.sha]));
-    for (const cambio of medios) {
-      const id = Number(cambio.clave.split(':')[1]);
-      for (const clase of ['caratula', 'audio']) {
-        const blob = cambio.medios[clase];
-        if (!blob) continue;
-        const path = rutaArchivo(id, clase);
-        const hash = cambio.despues.archivos[clase].sha;
-        if (archivos.get(path) === hash) continue;
-        let anterior = cambio.antes?.archivos?.[clase]?.sha;
-        if (!anterior && /^[a-f0-9]{40}$/.test(cambio.origen || '')) {
-          anterior = (await api(RAIZ + 'contents/' + path + '?ref=' + cambio.origen)).sha;
-        }
-        if (!anterior || anterior !== archivos.get(path))
-          throw new Error(
-            'El archivo de «' +
-              cambio.despues.nombre +
-              '» cambió en la rama. Revisa la ficha antes de reemplazarlo.'
-          );
-        progreso(
-          'Subiendo ' +
-            (clase === 'audio' ? 'el audio' : 'la carátula') +
-            ' de «' +
-            cambio.despues.nombre +
-            '»…'
-        );
-        const subido = await api(RAIZ + 'git/blobs', 'POST', {
-          encoding: 'base64',
-          content: await base64(blob)
-        });
-        if (subido.sha !== hash) throw new Error('GitHub no confirmó el contenido del archivo.');
-        entradas.push({ path, mode: '100644', type: 'blob', sha: subido.sha });
-      }
+  progreso('Verificando ' + prefijo + '…');
+  const resultado = await enviar({ accion: 'archivo', id, clase, meta, ticket, url: archivo.url });
+  comprobantes.set(clave, resultado);
+  return resultado.comprobante;
+}
+
+export async function publicarCambios(cambios, progreso) {
+  const preparados = [];
+  for (const c of cambios) {
+    const fila = {
+      clave: c.clave,
+      antes: c.antes,
+      despues: c.despues,
+      origen: c.origen,
+      comprobantes: {}
+    };
+    for (const [clase, blob] of Object.entries(c.medios || {})) {
+      fila.comprobantes[clase] = await subirArchivo(c, clase, blob, progreso);
     }
+    preparados.push(fila);
   }
-  if (JSON.stringify(nuevo) !== JSON.stringify(actual.catalogo)) {
-    entradas.push({
-      path: CATALOGO,
-      mode: '100644',
-      type: 'blob',
-      content: JSON.stringify(nuevo, null, 2) + '\n'
-    });
-  }
-  if (!entradas.length) return actual;
-  progreso('Guardando los cambios en la rama de prueba…');
-  const arbol = await api(RAIZ + 'git/trees', 'POST', {
-    base_tree: commitBase.tree.sha,
-    tree: entradas
-  });
-  const commit = await api(RAIZ + 'git/commits', 'POST', {
-    message:
-      'Editar catálogo de prueba: ' +
-      cambios
-        .map((c) => c.despues.nombre)
-        .slice(0, 3)
-        .join(', '),
-    tree: arbol.sha,
-    parents: [actual.sha]
-  });
-  await api(RAIZ + 'git/refs/heads/' + RAMA, 'PATCH', { sha: commit.sha, force: false });
-  return { sha: commit.sha, catalogo: nuevo };
+  progreso('Guardando los cambios en el catálogo de grimminck.cl…');
+  const guardado = await enviar({ accion: 'publicar', cambios: preparados });
+  comprobantes.clear();
+  return guardado;
 }
