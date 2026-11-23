@@ -1,1 +1,1 @@
-{"name":"grimminck-play","private":true,"type":"module","scripts":{"build":"node build.mjs","test":"node --test tests/*.test.mjs"},"dependencies":{"@vercel/blob":"2.9.0","jose":"^6.1.0"},"devDependencies":{"esbuild":"^0.25.0"},"engines":{"node":">=22"}}
+{"name":"grimminck-play","private":true,"type":"module","scripts":{"build":"node build.mjs","test":"node --test tests/*.test.mjs"},"dependencies":{"@vercel/blob":"2.9.0","jose":"^6.1.0"},"devDependencies":{"esbuild":"^0.25.0","sharp":"0.34.5"},"engines":{"node":">=22"}}

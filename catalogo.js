@@ -20,9 +20,7 @@ function reloj(segundos) {
 }
 
 function enlaceCancion(cancion) {
-  const direccion = new URL('/', location.origin);
-  direccion.searchParams.set('song', cancion.id);
-  return direccion;
+  return new URL('/cancion/' + cancion.id, location.origin);
 }
 
 function tarjeta(cancion, destacada) {
@@ -144,7 +142,7 @@ function errorAudio() {
   sincronizar();
 }
 
-async function reproducir() {
+async function reproducir(desdeEnlace = false) {
   const intento = ++intentosPlay;
   mostrarAccesoAlPlayer = true;
   el('playerNotice').textContent = el('heroNotice').textContent = '';
@@ -152,7 +150,12 @@ async function reproducir() {
   try {
     await audio.play();
   } catch (error) {
-    if (intento === intentosPlay && error.name !== 'AbortError') errorAudio();
+    if (intento !== intentosPlay || error.name === 'AbortError') return;
+    if (desdeEnlace && error.name === 'NotAllowedError') {
+      el('playerNotice').textContent = 'Toca Play para escuchar.';
+    } else {
+      errorAudio();
+    }
   }
 }
 
@@ -165,8 +168,8 @@ function actualizarDireccion(metodo, conCancion, abiertaDesdeCatalogo) {
   const url = new URL(location.href);
   if (alumno) url.searchParams.set('alumno', alumno);
   else url.searchParams.delete('alumno');
-  if (conCancion) url.searchParams.set('song', actual.id);
-  else url.searchParams.delete('song');
+  url.pathname = conCancion ? enlaceCancion(actual).pathname : '/';
+  url.searchParams.delete('song');
   history[metodo]({ ...history.state, reproductorDesdeCatalogo: abiertaDesdeCatalogo }, '', url);
 }
 
@@ -192,9 +195,10 @@ function cerrarPlayer() {
   }
 }
 
-function restaurarDireccion() {
+function restaurarDireccion(alCargar = false) {
   const params = new URLSearchParams(location.search);
-  const pedida = catalogo.find(cancion => cancion.id === Number(params.get('song')));
+  const ruta = /^\/cancion\/(\d+)\/?$/.exec(location.pathname);
+  const pedida = catalogo.find(cancion => cancion.id === Number(ruta?.[1] || params.get('song')));
   let filtroUrl = resolverAlumno(params.get('alumno'), alumnos, pedida);
   if (pedida && !pedida.alumnos.includes(filtroUrl)) filtroUrl = '';
   if (!actual || filtroUrl !== alumno) dibujarCatalogo(filtroUrl);
@@ -202,6 +206,7 @@ function restaurarDireccion() {
     seleccionar(pedida);
     if (!player.open) player.showModal();
     mostrarAccesoAlPlayer = true;
+    if (alCargar && ruta) reproducir(true);
   } else if (player.open) {
     player.close();
   }
@@ -220,7 +225,7 @@ async function compartir(cancion, aviso) {
   const url = enlaceCancion(cancion).href;
   aviso.textContent = '';
   if (navigator.share) {
-    try { await navigator.share({ title: cancion.nombre + ' · ' + cancion.artista, url }); return; }
+    try { await navigator.share({ url }); return; }
     catch (error) { if (error.name === 'AbortError') return; }
   }
   try {
@@ -295,7 +300,7 @@ async function cargar() {
     catalogo = prepararCatalogo(datos.covers, datos.artistas);
     if (!catalogo.length) { estado.textContent = 'Todavía no hay canciones en el catálogo.'; return; }
     alumnos = opcionesAlumnos(catalogo, datos.artistas || []);
-    restaurarDireccion();
+    restaurarDireccion(true);
     estado.hidden = true;
   } catch {
     estado.textContent = 'No se pudo cargar el catálogo.';
