@@ -704,7 +704,7 @@
       "artista": "Josefa",
       "tipo": "c",
       "artistaIds": [
-        "ART-028"
+        "ART-824DEF95F09044418CD365845DC743B0"
       ],
       "archivos": {
         "caratula": {
@@ -1072,7 +1072,7 @@
       "artista": "Josefa",
       "tipo": "c",
       "artistaIds": [
-        "ART-028"
+        "ART-824DEF95F09044418CD365845DC743B0"
       ],
       "archivos": {
         "caratula": {
@@ -1280,7 +1280,7 @@
       "artista": "Josefa",
       "tipo": "c",
       "artistaIds": [
-        "ART-028"
+        "ART-824DEF95F09044418CD365845DC743B0"
       ],
       "archivos": {
         "caratula": {
@@ -1673,7 +1673,7 @@
       "artista": "Josefa",
       "tipo": "c",
       "artistaIds": [
-        "ART-028"
+        "ART-824DEF95F09044418CD365845DC743B0"
       ],
       "archivos": {
         "caratula": {
@@ -2022,7 +2022,7 @@
       "artista": "Josefa",
       "tipo": "c",
       "artistaIds": [
-        "ART-028"
+        "ART-824DEF95F09044418CD365845DC743B0"
       ],
       "archivos": {
         "caratula": {
@@ -2417,7 +2417,7 @@
       "artista": "Josefa",
       "tipo": "c",
       "artistaIds": [
-        "ART-028"
+        "ART-824DEF95F09044418CD365845DC743B0"
       ],
       "archivos": {
         "caratula": {
@@ -2580,7 +2580,7 @@
       "artista": "Josefa",
       "tipo": "c",
       "artistaIds": [
-        "ART-028"
+        "ART-824DEF95F09044418CD365845DC743B0"
       ],
       "archivos": {
         "caratula": {
@@ -2673,7 +2673,7 @@
       "artista": "Josefa",
       "tipo": "c",
       "artistaIds": [
-        "ART-028"
+        "ART-824DEF95F09044418CD365845DC743B0"
       ],
       "archivos": {
         "caratula": {
@@ -2696,7 +2696,7 @@
       "artista": "Josefa",
       "tipo": "c",
       "artistaIds": [
-        "ART-028"
+        "ART-824DEF95F09044418CD365845DC743B0"
       ],
       "archivos": {
         "caratula": {
@@ -2973,7 +2973,7 @@
       "artista": "Josefa",
       "tipo": "c",
       "artistaIds": [
-        "ART-028"
+        "ART-824DEF95F09044418CD365845DC743B0"
       ],
       "archivos": {
         "caratula": {
@@ -3067,7 +3067,7 @@
       "uploadedAt": "2026-11-19T21:04:28.806Z",
       "uploadId": "d1e64b74-f60f-40ba-aa0c-86ac82b2ff9f",
       "artistaIds": [
-        "ART-028"
+        "ART-824DEF95F09044418CD365845DC743B0"
       ],
       "archivos": {
         "caratula": {
@@ -3271,7 +3271,8 @@
     },
     {
       "id": "ART-028",
-      "nombre": "Josefa"
+      "nombre": "Josefa",
+      "referencia": "Lo Barnechea"
     },
     {
       "id": "ART-029",
@@ -3444,6 +3445,11 @@
     {
       "id": "ART-071",
       "nombre": "Juan José"
+    },
+    {
+      "id": "ART-824DEF95F09044418CD365845DC743B0",
+      "nombre": "Josefa",
+      "referencia": "San Carlos"
     }
   ]
 }
