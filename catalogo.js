@@ -1,4 +1,4 @@
-import { prepararCatalogo, cancionesDelAlumno, cancionVecina } from './catalogo-datos.js';
+import { prepararCatalogo, cancionesDelAlumno, cancionVecina, opcionesAlumnos, resolverAlumno } from './catalogo-datos.js';
 
 const el = id => document.getElementById(id);
 const audio = el('audio');
@@ -51,18 +51,18 @@ function tarjeta(cancion, destacada) {
 }
 
 function dibujarFiltro() {
-  el('studentOptions').replaceChildren(...['', ...alumnos].map(nombre => {
+  el('studentOptions').replaceChildren(...[{ id: '', etiqueta: 'Todos los alumnos' }, ...alumnos].map(({ id, etiqueta }) => {
     const opcion = document.createElement('button');
     opcion.type = 'button';
-    opcion.dataset.alumno = nombre;
-    opcion.textContent = nombre || 'Todos los alumnos';
-    opcion.setAttribute('aria-pressed', String(nombre === alumno));
+    opcion.dataset.alumno = id;
+    opcion.textContent = etiqueta;
+    opcion.setAttribute('aria-pressed', String(id === alumno));
     return opcion;
   }));
 }
 
 function dibujarCatalogo(nombre) {
-  alumno = alumnos.includes(nombre) ? nombre : '';
+  alumno = resolverAlumno(nombre, alumnos);
   cola = cancionesDelAlumno(catalogo, alumno);
   const [destacada, ...resto] = cola;
   el('heroTitle').textContent = destacada.nombre;
@@ -70,7 +70,7 @@ function dibujarCatalogo(nombre) {
   el('heroCover').src = urlCaratula(destacada.id);
   el('heroArt').setAttribute('aria-label', 'Abrir reproductor de ' + destacada.nombre);
   el('heroNotice').textContent = '';
-  el('filterName').textContent = alumno || 'Todos los alumnos';
+  el('filterName').textContent = alumnos.find(a => a.id === alumno)?.etiqueta || 'Todos los alumnos';
   el('recentGrid').replaceChildren(...resto.slice(0, 3).map(cancion => tarjeta(cancion, true)));
   el('coverGrid').replaceChildren(...resto.slice(3).map(cancion => tarjeta(cancion, false)));
   el('catalog').hidden = resto.length === 0;
@@ -195,7 +195,7 @@ function cerrarPlayer() {
 function restaurarDireccion() {
   const params = new URLSearchParams(location.search);
   const pedida = catalogo.find(cancion => cancion.id === Number(params.get('song')));
-  let filtroUrl = params.get('alumno') || '';
+  let filtroUrl = resolverAlumno(params.get('alumno'), alumnos, pedida);
   if (pedida && !pedida.alumnos.includes(filtroUrl)) filtroUrl = '';
   if (!actual || filtroUrl !== alumno) dibujarCatalogo(filtroUrl);
   if (pedida) {
@@ -291,9 +291,10 @@ async function cargar() {
   try {
     const respuesta = await fetch('/json/covers.json', { cache: 'no-cache' });
     if (!respuesta.ok) throw new Error('catalogo');
-    catalogo = prepararCatalogo((await respuesta.json()).covers);
+    const datos = await respuesta.json();
+    catalogo = prepararCatalogo(datos.covers, datos.artistas);
     if (!catalogo.length) { estado.textContent = 'Todavía no hay canciones en el catálogo.'; return; }
-    alumnos = [...new Set(catalogo.flatMap(cancion => cancion.alumnos))].sort((a,b) => a.localeCompare(b,'es'));
+    alumnos = opcionesAlumnos(catalogo, datos.artistas || []);
     restaurarDireccion();
     estado.hidden = true;
   } catch {

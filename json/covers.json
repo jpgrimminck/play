@@ -5,793 +5,3059 @@
       "id": 1,
       "nombre": "Día de Enero",
       "artista": "Shakira",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-001"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 50664,
+          "ancho": 380,
+          "alto": 374,
+          "sha": "70b3f95d42110d0d7efae90616f4a197c6284de5"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2774923,
+          "sha": "6f5b4aa40c4f02e109c34e89f285d606d32775c3"
+        }
+      }
     },
     {
       "id": 2,
       "nombre": "Hey Jude",
       "artista": "Beatles",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-002"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 13716,
+          "ancho": 374,
+          "alto": 374,
+          "sha": "b0ed66758cc55a98aeee87305d50c0686b1c0c6c"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 6813430,
+          "sha": "172a289ed400bfe53ab3f1df8a61b441c04f534d"
+        }
+      }
     },
     {
       "id": 3,
       "nombre": "The Scientist",
       "artista": "Coldplay",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-003"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 23505,
+          "ancho": 376,
+          "alto": 374,
+          "sha": "7b9925b8312d003ff15a6c2956d482887415e3a5"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 4245348,
+          "sha": "6bf0170337f55ededea3470b1c249089398d92a7"
+        }
+      }
     },
     {
       "id": 4,
       "nombre": "Shake it Off",
       "artista": "Taylor Swift",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-004"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 85827,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "1a55a2ecaa81a8ab9d0d0a3468e331c1947ffeb1"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3639262,
+          "sha": "54eefd8ea4040d692ae158a93a21881c5f8c6be8"
+        }
+      }
     },
     {
       "id": 5,
       "nombre": "Main Theme",
       "artista": "Gravity Falls",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-005"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 152247,
+          "ancho": 299,
+          "alto": 300,
+          "sha": "ba866613c2e3b317fb1fe0d8dda031774378ac11"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 626612,
+          "sha": "c2a24ae814eeabd0d8ab92e01c2d2709fa1cf129"
+        }
+      }
     },
     {
       "id": 6,
       "nombre": "Riptide",
       "artista": "Vance Joy",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-006"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 117445,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "687d2bd2465a93dfca89c7a5f7a73398d558b3c5"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1758864,
+          "sha": "fd379ae31234634e9174c8b47cf6cdacd128426f"
+        }
+      }
     },
     {
       "id": 7,
       "nombre": "El Camión de Samu",
       "artista": "Hermanos",
-      "tipo": "i"
+      "tipo": "i",
+      "artistaIds": [
+        "ART-007"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 124026,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "29ffaacc2bfce03e8f84aec41618be1f59f95b1d"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3446374,
+          "sha": "00531d8aa0cc883dab563a774e6bbfd85493bf35"
+        }
+      }
     },
     {
       "id": 8,
       "nombre": "Capaz",
       "artista": "Alleh & Yorghaki",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-008",
+        "ART-009"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 16008,
+          "ancho": 376,
+          "alto": 378,
+          "sha": "cd6d9ff3a6444aacb0ce5f933c143108b93c2dfd"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2874024,
+          "sha": "a3b93ae789fc05d882a8a86de9d7c396a34833f5"
+        }
+      }
     },
     {
       "id": 9,
       "nombre": "Drive",
       "artista": "Incubus",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-010"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 44517,
+          "ancho": 378,
+          "alto": 378,
+          "sha": "d33ce3f8ddc570581380db074917e069b221bcba"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3744170,
+          "sha": "8be1ac2f52261c926453524e89e6d1e4860296a1"
+        }
+      }
     },
     {
       "id": 10,
       "nombre": "Back to december (Taylor's Version)",
       "artista": "Taylor Swift",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-004"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 35146,
+          "ancho": 376,
+          "alto": 376,
+          "sha": "c4b872d6061fa4a742aa5f530ea29e44686f7229"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 4674129,
+          "sha": "61dbc85a61dffde881655541916c48f6b74a5a04"
+        }
+      }
     },
     {
       "id": 11,
       "nombre": "Gravity Falls",
       "artista": "Pedro y Clemente",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-011",
+        "ART-012"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 45284,
+          "ancho": 320,
+          "alto": 320,
+          "sha": "a29235abf15e438098cb14382d22743abe138e6d"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 629538,
+          "sha": "b0c7bd56dac3ebe7f492629e1023e25bfd6e0c18"
+        }
+      }
     },
     {
       "id": 12,
       "nombre": "Burrito Sabanero",
       "artista": "Borja y Max",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-013",
+        "ART-014"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 45518,
+          "ancho": 320,
+          "alto": 320,
+          "sha": "23b864e57942094b4feb8025b48fb0bfc17003fa"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1888431,
+          "sha": "afe6f7af777fcc27d16d3a90c1d172b46a9e7de7"
+        }
+      }
     },
     {
       "id": 13,
       "nombre": "I'm still standing",
       "artista": "Clemente",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-012"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 27674,
+          "ancho": 320,
+          "alto": 320,
+          "sha": "ba4bf59e5fe86e71e8828910b0d41b564e5d43e2"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 509165,
+          "sha": "8974bd3b0ea0df8438438d61c2671cdb0bf649fc"
+        }
+      }
     },
     {
       "id": 14,
       "nombre": "Diente blanco, No te vayas!",
       "artista": "Clemente y Celeste",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-012",
+        "ART-015"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 120798,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "228b265ca9bbc7b2518dd54f2b385968d6739bf3"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1665241,
+          "sha": "0eed9e5b2d72fb39b74313bc1fdd64aff9ed61d8"
+        }
+      }
     },
     {
       "id": 15,
       "nombre": "Don't Stop Believin'",
       "artista": "Journey",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-016"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 116145,
+          "ancho": 282,
+          "alto": 300,
+          "sha": "a2961912e896b37536e1216c865996037ffebad5"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 4005439,
+          "sha": "df786bce6a8bf5da7cdbfd998b0b19b88ae8fd49"
+        }
+      }
     },
     {
       "id": 16,
       "nombre": "All of me",
       "artista": "John Legend",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-017"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 24241,
+          "ancho": 376,
+          "alto": 374,
+          "sha": "6bd54b14f582c676c2bafda094760028709dc86e"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 4917008,
+          "sha": "d4df39ad4750c2ed934534bc9e62f47ebe4d58da"
+        }
+      }
     },
     {
       "id": 17,
       "nombre": "Somewhere Only we Know",
       "artista": "Keane",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-018"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 33442,
+          "ancho": 376,
+          "alto": 374,
+          "sha": "700b7e57045342786e0d76babdb45ac17cd2608f"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3786011,
+          "sha": "baf361f0a2cbeb848b0c3f16d92e526bb7256006"
+        }
+      }
     },
     {
       "id": 18,
       "nombre": "Someone like You",
       "artista": "Adele",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-019"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 33724,
+          "ancho": 380,
+          "alto": 378,
+          "sha": "459e3fed83f3b883de45c5065bad6e87998fbaee"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 4560907,
+          "sha": "441b4d5657a5e326370342ff1388bacdfb1b960b"
+        }
+      }
     },
     {
       "id": 19,
       "nombre": "Podré ir a Europa",
       "artista": "Martín y Emma",
-      "tipo": "i"
+      "tipo": "i",
+      "artistaIds": [
+        "ART-020",
+        "ART-021"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 168394,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "220f6bd663936c6165e341393452b6174625d613"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1128999,
+          "sha": "15cd4d43b569d967f81efc9e53a23b82875cb2ee"
+        }
+      }
     },
     {
       "id": 20,
       "nombre": "Muerte en Hawaii",
       "artista": "Calle 13",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-022"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 65212,
+          "ancho": 376,
+          "alto": 374,
+          "sha": "da9daceae2dc885caa6575c6afa75d4b81320e7c"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3270365,
+          "sha": "c65faee01714ec1249f999c4d581f200a57cd4bd"
+        }
+      }
     },
     {
       "id": 21,
       "nombre": "Popó, Así me llamo yo",
       "artista": "Martín y Emma",
-      "tipo": "i"
+      "tipo": "i",
+      "artistaIds": [
+        "ART-020",
+        "ART-021"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 113532,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "a8efee2ab516637321c4b64ff44ccb0a9c4efbe5"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 785018,
+          "sha": "43a4eedc8b1819116ef5951df4ac4805b8e0e116"
+        }
+      }
     },
     {
       "id": 22,
       "nombre": "Osito Gominola",
       "artista": "Samuel",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-023"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 128543,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "d624068badbfb8fd8e951c196d1cbe86128a5efa"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 913331,
+          "sha": "0111b03442485d3e4b5ab0314bf25818238ba19f"
+        }
+      }
     },
     {
       "id": 23,
       "nombre": "Ritmo Sideral",
       "artista": "Clemente",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-012"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 139962,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "953551c71bf21c331d22c6b19d38e0da5aa5e077"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2793313,
+          "sha": "8491c7b452b89e581d223f8ed8c5753849a38a35"
+        }
+      }
     },
     {
       "id": 24,
       "nombre": "Pepita",
       "artista": "Samuel",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-023"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 122578,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "4f0f2227e499ac34bf09dc29164de978a23fe776"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1121057,
+          "sha": "a4478b14d8349597b5151727f0e34dcea1a60dbc"
+        }
+      }
     },
     {
       "id": 25,
       "nombre": "De Bebé a Niño",
       "artista": "Emma",
-      "tipo": "i"
+      "tipo": "i",
+      "artistaIds": [
+        "ART-021"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 97360,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "f985709447c9d0d7753cf3529840fa27cec44e6f"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1009044,
+          "sha": "494857f6849cec3e3686c117240b731873685cf5"
+        }
+      }
     },
     {
       "id": 26,
       "nombre": "Steve's Lava Chicken",
       "artista": "Minecraft",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-024"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 146181,
+          "ancho": 300,
+          "alto": 294,
+          "sha": "29932adcbaa93d13a96387af7e2ccd6a067fb183"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2098492,
+          "sha": "5126a582ee649fa35c9851812fc704062e2995fa"
+        }
+      }
     },
     {
       "id": 27,
       "nombre": "In the Stars",
       "artista": "Benson Boone",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-025"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 23071,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "4928baeec3a790a88764dc1ed163a7578c167f6d"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3464182,
+          "sha": "b3820d2d1548e7b19ea2ff788b13b8cefae66e23"
+        }
+      }
     },
     {
       "id": 28,
       "nombre": "Something just like This",
       "artista": "The Chainsmokers & Coldplay",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-026",
+        "ART-003"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 101386,
+          "ancho": 296,
+          "alto": 300,
+          "sha": "e844e6703cd59a349c70468cbae073eff049a962"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3956120,
+          "sha": "33d2ec2007fcc25520b51a07f44e86de2444241f"
+        }
+      }
     },
     {
       "id": 29,
       "nombre": "Zorba",
       "artista": "El Griego",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-027"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 25111,
+          "ancho": 442,
+          "alto": 440,
+          "sha": "d4e17d5058a1ad55bd876bf434b290b295ca002e"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3894262,
+          "sha": "8f0a4ce9de9b9690417be910c47070fb87707013"
+        }
+      }
     },
     {
       "id": 30,
       "nombre": "Chiu Chiu",
       "artista": "Borja",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-013"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 132762,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "1111ee68ed5634ec4bc34c6e647139531ebc61d3"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 761194,
+          "sha": "7a81ff44522258abc9062b6475a00ec1d56e4176"
+        }
+      }
     },
     {
       "id": 31,
       "nombre": "Cuando sea mayor",
       "artista": "Josefa",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-028"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 123885,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "d3d189f5fc1b64f857569cd0e914398684f0c8cf"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2602304,
+          "sha": "98956f06bcbd51e3ce49e45ee163475bf9291e73"
+        }
+      }
     },
     {
       "id": 32,
       "nombre": "Danke Danke",
       "artista": "Emma",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-021"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 99425,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "2cb7617dcd1da10edbc22ef9978f8a940abf312b"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1441214,
+          "sha": "f8e744508fff39c1115cf3d6e907b5b1cb75f54e"
+        }
+      }
     },
     {
       "id": 33,
       "nombre": "Do re mi fa sol",
       "artista": "Bernardo",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-029"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 135001,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "494b7535d60d4ef4ddb4adfb6810a8a91f067075"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 761194,
+          "sha": "3d900eaa097dface8c672b7bfa5182e92ffdf9a1"
+        }
+      }
     },
     {
       "id": 34,
       "nombre": "El colegio es para aprender",
       "artista": "Emma",
-      "tipo": "i"
+      "tipo": "i",
+      "artistaIds": [
+        "ART-021"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 143929,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "9ad348dfcf5edb0e8df87612bc6159cad30d85cf"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1377266,
+          "sha": "5550727ce9e87ea5219ed1ffe551982956957518"
+        }
+      }
     },
     {
       "id": 35,
       "nombre": "Enchanted",
       "artista": "Clarita",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-030"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 96526,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "9ca90151eeddaa5e9273937903dba58805c1a437"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3370095,
+          "sha": "9180646c257c87e8214190fb8aafe5a57815046a"
+        }
+      }
     },
     {
       "id": 36,
       "nombre": "Estrellita",
       "artista": "Rafael",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-031"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 115171,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "b5d7c6efee0115850ceabe9a20f57dbc6d82b8e5"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1024926,
+          "sha": "ca36b99e9b08002870b8992ee0a2c7fe4f5df670"
+        }
+      }
     },
     {
       "id": 37,
       "nombre": "Gallo Pelado",
       "artista": "Borja",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-013"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 145534,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "86bc71ccd06ad471b2ca8edfc1ad9caa75415fd7"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 392972,
+          "sha": "9f34c670dc153d1738022afed26619e01c920de6"
+        }
+      }
     },
     {
       "id": 38,
       "nombre": "Gohstbuster",
       "artista": "Clemente",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-012"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 105400,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "d640654b5fb337c0701dbd15c94a39dcd92206da"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 745312,
+          "sha": "c70c5b0ceb3bf5aeae908b1824b55fe18fddab79"
+        }
+      }
     },
     {
       "id": 39,
       "nombre": "Jurassic Park",
       "artista": "Clemente",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-012"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 109336,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "0e3f1af35e9d42ebe1d205e5bf70ba8df49f2b6f"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1024926,
+          "sha": "f271ff8a367a7b7d049b5a3df3c69344623fc32f"
+        }
+      }
     },
     {
       "id": 40,
       "nombre": "La jardinera",
       "artista": "Lucas",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-032"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 101296,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "cc7296be457cad2229f7e83e340f6621f9e48c24"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1386879,
+          "sha": "2fccc03fd75e74c806fac08d90aea90f8a0e7b24"
+        }
+      }
     },
     {
       "id": 41,
       "nombre": "La Maldita Roberta",
       "artista": "Martín",
-      "tipo": "i"
+      "tipo": "i",
+      "artistaIds": [
+        "ART-020"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 159920,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "98ca30d4ca5d335427bc1d8299b513742e100326"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1019493,
+          "sha": "a2ccc50cb93d605531caf2ea600380a9973615e6"
+        }
+      }
     },
     {
       "id": 42,
       "nombre": "Long Live",
       "artista": "Clarita",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-030"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 126638,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "89ebd21561e22b570af54a5fd91197e9d9b35a15"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1554063,
+          "sha": "1d933abef2e5f7ceea005d0a4304b9b544a14b06"
+        }
+      }
     },
     {
       "id": 43,
       "nombre": "Milo el doctor",
       "artista": "Pedro",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-011"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 95589,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "2453e8a473eaf15915bb131736a73b7821de335a"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 14642246,
+          "sha": "63be9617e1f782f6faf7add62138275d626d3b6d"
+        }
+      }
     },
     {
       "id": 44,
       "nombre": "Piratas del caribe",
       "artista": "Raimundo",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-033"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 145972,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "ecbdf229ab04a3b8e0b62be36b3d1d318371c800"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 392972,
+          "sha": "33bc0b8a4dde28ec5b8f49b4cf98af7e4bd52f56"
+        }
+      }
     },
     {
       "id": 45,
       "nombre": "Polka de los perros",
       "artista": "Clemente",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-012"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 119743,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "82e15c765bd4834c50b5a2b56e1b62da57333c17"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1682376,
+          "sha": "a914263fa67b4442351523dff381f3f2c1969613"
+        }
+      }
     },
     {
       "id": 46,
       "nombre": "Schwarz und weiss",
       "artista": "Martín",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-020"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 126383,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "f91dc547a4099fdbdcbba700812d03e65785ce99"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 761194,
+          "sha": "f9ef59e83d3d508a2bb7f31ac6779cb3679bc2ad"
+        }
+      }
     },
     {
       "id": 47,
       "nombre": "Sky full of stars",
       "artista": "Josefa",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-028"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 120065,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "fbb7cee323d8e26dd88d0ac1a6e1b6ea0431aaa0"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3265188,
+          "sha": "c9a89ebf56039bfa131f9e1cbabf7899687d61e1"
+        }
+      }
     },
     {
       "id": 48,
       "nombre": "Solsito porfavor",
       "artista": "Emma",
-      "tipo": "i"
+      "tipo": "i",
+      "artistaIds": [
+        "ART-021"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 124861,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "21b514bfc22c4faa4511cb0792c6b3b8ea9d0005"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 423901,
+          "sha": "07321ca7115f317ef93ad14111fd762bf992b334"
+        }
+      }
     },
     {
       "id": 49,
       "nombre": "Star Wars",
       "artista": "Lucas",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-032"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 156164,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "ac05bbd10654c7fdd887a1a1654e6db7272e2ceb"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 713129,
+          "sha": "3a982fa90e9085aad78be4e1e5370bbe622186cb"
+        }
+      }
     },
     {
       "id": 50,
       "nombre": "Thunderstruck",
       "artista": "Lucas",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-032"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 151952,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "d1c61f13bf1802890ecebe22a7a0ac3f8c6ab49d"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 473220,
+          "sha": "630adc81b22d7e0c54872ee0d3cf2f2477b36909"
+        }
+      }
     },
     {
       "id": 51,
       "nombre": "Yo nunca vi televisión",
       "artista": "Martín",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-020"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 89505,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "00196b74f5eadeca336b6a341ab730af23b460e2"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2593109,
+          "sha": "c1815add68655a31dd9f97e2cef8035c06d121c0"
+        }
+      }
     },
     {
       "id": 52,
       "nombre": "Yo vendo unos ojos negros",
       "artista": "Eduardo",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-034"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 118519,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "f209dbea47f4220572909e109f06cf2fd4ec1208"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3225064,
+          "sha": "5d681b26f71476fa8c89e8ccc76d8087e84472ef"
+        }
+      }
     },
     {
       "id": 53,
       "nombre": "Jurassic Park",
       "artista": "Agustín",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-035"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 132202,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "84e8ddacb753d42e17c966fafefadd4ffd9a530f"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1825319,
+          "sha": "0302150569144957cfee87c6a88ffbcb0ca68eb3"
+        }
+      }
     },
     {
       "id": 54,
       "nombre": "Los monitos",
       "artista": "Josefa y Emilio",
-      "tipo": "i"
+      "tipo": "i",
+      "artistaIds": [
+        "ART-028",
+        "ART-036"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 97579,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "7311049edee06aaea0ea1f6a3ecde872f67831f3"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 970593,
+          "sha": "8cb7256f029a620b49ad29bdfe5742c517f76cb3"
+        }
+      }
     },
     {
       "id": 55,
       "nombre": "Perdonarte para que",
       "artista": "Clarita",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-030"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 142183,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "b8b96f668b299b3cc123a6f3672c8e029ff4ec85"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 4729718,
+          "sha": "462a2b8682cdb4eaea7df22ce5275f15ff97888e"
+        }
+      }
     },
     {
       "id": 56,
       "nombre": "Rodolfo el Reno",
       "artista": "Josefa",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-028"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 146804,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "2fe1554456cfb9a70599ac7f3d3767c47a41e827"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1753639,
+          "sha": "f4d4d43c365510a2ebc54d3359010b614c7258af"
+        }
+      }
     },
     {
       "id": 57,
       "nombre": "With you",
       "artista": "Clarita",
-      "tipo": "i"
+      "tipo": "i",
+      "artistaIds": [
+        "ART-030"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 139643,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "bd0e6554b8ca6630da7b38ad88c109d9f31a82d7"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 4549159,
+          "sha": "0da75ac45bb2bf0c4a5efc43d8781dd790ffcabc"
+        }
+      }
     },
     {
       "id": 58,
       "nombre": "El mas pequeño",
       "artista": "Samuel",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-023"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 168116,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "4a3cd4ed65ad1cb42f7314417cb1e6d306a6c5b0"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1760954,
+          "sha": "aaebff2db4b927b6df0e9ccb01903cca44ada8d4"
+        }
+      }
     },
     {
       "id": 59,
       "nombre": "I Don't Care",
       "artista": "Max",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-014"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 129537,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "3b9db369ce96d99906bf2c1ca4d8d4f7731ba2b6"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3567791,
+          "sha": "cf043994e8763e28f490b185c7993eb644be24b9"
+        }
+      }
     },
     {
       "id": 60,
       "nombre": "Bundle of Joy",
       "artista": "Florencia",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-037"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 109857,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "e552f5d9079af28a337c168b6e938fd033042679"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 705189,
+          "sha": "e85d609df688fa3f45161229da63a04a059faa33"
+        }
+      }
     },
     {
       "id": 61,
       "nombre": "Himno a la Alegría",
       "artista": "Grupo Musical",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-038"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 159602,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "933255ba7f76ef745188d9c64601b8b1fca5b038"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 4914874,
+          "sha": "11139f98c289254df2b0513db252ffb6615ecfda"
+        }
+      }
     },
     {
       "id": 62,
       "nombre": "Message in a Battle",
       "artista": "The Police",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-039"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 52879,
+          "ancho": 378,
+          "alto": 378,
+          "sha": "a964560ef5979f1418cdc4e8cffa95ca2b6e8ca8"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 4173832,
+          "sha": "ac92e3d61c959e6215aa7dcb475e05959b481ff7"
+        }
+      }
     },
     {
       "id": 63,
       "nombre": "Faded",
       "artista": "Alan Walker",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-040"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 47079,
+          "ancho": 376,
+          "alto": 372,
+          "sha": "8f480f24e4b454ecac1eaa857372f6674d3634f5"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3419461,
+          "sha": "2e1494919b9f2ead4eaafaadf7994ebabf7a28b1"
+        }
+      }
     },
     {
       "id": 64,
       "nombre": "Theme Song",
       "artista": "Piratas del Caribe",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-041"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 27571,
+          "ancho": 223,
+          "alto": 223,
+          "sha": "282996feb63698937f152293b944165143b9a959"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 6741541,
+          "sha": "05a0a9678149ffec3719694893b4b3bef1b0d220"
+        }
+      }
     },
     {
       "id": 65,
       "nombre": "Maguito Explosivo",
       "artista": "31 Minutos",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-042"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 77681,
+          "ancho": 378,
+          "alto": 376,
+          "sha": "a61504e6b5d23c9d1be35f31f26812e751a06a02"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3069546,
+          "sha": "e7db089ad246bb954eff049fd4b6bd67b4c00b5e"
+        }
+      }
     },
     {
       "id": 66,
       "nombre": "Panamericana",
       "artista": "Max Segers",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-043"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 53002,
+          "ancho": 376,
+          "alto": 376,
+          "sha": "1d25cee4cb451784f91a2fb6300a86d1238c8a96"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 6861930,
+          "sha": "932184751a45c81ca227005a2d4f6a7bfc9fe47d"
+        }
+      }
     },
     {
       "id": 67,
       "nombre": "Rin del Angelito",
       "artista": "Violeta Parra",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-044"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 61667,
+          "ancho": 374,
+          "alto": 382,
+          "sha": "d7d3e060f097d9464bbac547e24b68b86be4df39"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1928137,
+          "sha": "79ab32a06be269ae916ab788267875e5be67ae3f"
+        }
+      }
     },
     {
       "id": 68,
       "nombre": "Main Theme",
       "artista": "Mario Bross",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-045"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 42462,
+          "ancho": 376,
+          "alto": 376,
+          "sha": "e7a58f9ba77301b934872fd8512feb2619943502"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 5232333,
+          "sha": "84b2448476643c132b5d54daa2e5dc7ad1e3663c"
+        }
+      }
     },
     {
       "id": 69,
       "nombre": "Hey Jude",
       "artista": "Patricia y Pedro",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-046",
+        "ART-011"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 136937,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "de6111a47593ee7dd4d69797fdb8d34872d1c9b1"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 4544980,
+          "sha": "95df36811c599f5758eb33c433d967e37e320a87"
+        }
+      }
     },
     {
       "id": 70,
       "nombre": "El Cigarrito",
       "artista": "Juanita y Juan Pablo",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-047",
+        "ART-048"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 183443,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "2a95445b63554e1655f6ae2f6227031d00a0de21"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1887177,
+          "sha": "8c9c90c1fd48b63825218585b330843fdf3bc218"
+        }
+      }
     },
     {
       "id": 71,
       "nombre": "Jasmine Flower",
       "artista": "Folklore Chino",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-049"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 136960,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "24b6c9d3f255538fd85017d1cd8de66f1419bec1"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3706136,
+          "sha": "3aed334493c2fc8211c2dc03f9df6d4e6af361db"
+        }
+      }
     },
     {
       "id": 72,
       "nombre": "Llueve sobre la ciudad",
       "artista": "Los Bunkers",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-050"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 45439,
+          "ancho": 372,
+          "alto": 374,
+          "sha": "894d1d2b54b504ee939925ce36ef9a093f2e4fa7"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3769247,
+          "sha": "d2173f2423a6769c6811984401dc8bb49f52cdef"
+        }
+      }
     },
     {
       "id": 73,
       "nombre": "Día de enero",
       "artista": "Josefa",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-028"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 38627,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "afb586b2b96eebb1a7508a068e27ff9751ade219"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2775759,
+          "sha": "100ab10434a10c1e09e21571a7f50383a7c8cde3"
+        }
+      }
     },
     {
       "id": 74,
       "nombre": "Faded",
       "artista": "Agustín",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-035"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 34454,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "228534c871ce231a731800ed36d4d1f18832d7a1"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1437035,
+          "sha": "50ba0927aaa57df12d1c9a08ac609cea04c8f9fa"
+        }
+      }
     },
     {
       "id": 75,
       "nombre": "Cumpleaños feliz",
       "artista": "Emma",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-021"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 62465,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "f9b7c2559c66741d18d537795368070060510714"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2483187,
+          "sha": "fd551becba7accb746e9ca7c9817df0e22a5d8e5"
+        }
+      }
     },
     {
       "id": 76,
       "nombre": "Never grow up (Taylor's version)",
       "artista": "Taylor Swift",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-004"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 35146,
+          "ancho": 376,
+          "alto": 376,
+          "sha": "c4b872d6061fa4a742aa5f530ea29e44686f7229"
+        },
+        "audio": {
+          "formato": "MP4",
+          "bytes": 4800056,
+          "sha": "2325c8ffb977553631804e899ff0e39e12176f8e"
+        }
+      }
     },
     {
       "id": 77,
       "nombre": "Muerte en Hawai",
       "artista": "Juan",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-051"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 54499,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "f35572d22e73063e36938f121ed875b2ad513d56"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3057881,
+          "sha": "7d017756e72cbe734e27eaae44662fae047a2e1a"
+        }
+      }
     },
     {
       "id": 78,
       "nombre": "La media vuelta",
       "artista": "Juan Pablo",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-048"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 36025,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "41db12031ac366aa95392bac162ea5c30aab6067"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2686733,
+          "sha": "238fab1d3fa4b95e1df1fcf08ea94b87492ec7a0"
+        }
+      }
     },
     {
       "id": 79,
       "nombre": "Back to december (Clara's version)",
       "artista": "Clarita",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-030"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 63603,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "79ff2464a9a908995e4601a29c3d57eb0e14a3b4"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 4696699,
+          "sha": "9c9bde0750551dd1ceedb5caccd94d0cffff8687"
+        }
+      }
     },
     {
       "id": 80,
       "nombre": "Minueto en Sol",
       "artista": "Martín",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-020"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 136960,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "f0c4ee36ae0e60d3a50e0b471aaad79e476a14a2"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 647092,
+          "sha": "0ac834cdaf6fa3a9555f6cd6f4d9addd685bd2e8"
+        }
+      }
     },
     {
       "id": 81,
       "nombre": "Maguito Explosivo",
       "artista": "Clemente y Pedro",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-012",
+        "ART-011"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 70297,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "3de1dc90d35d6dca8973cc2b09ac8311d195c35a"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1045407,
+          "sha": "80a6abad97de8855334b3f50b443f0799d313ef4"
+        }
+      }
     },
     {
       "id": 82,
       "nombre": "Mix tonadas Tradicionales",
       "artista": "Los huasos del camino viejo",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-052"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 61810,
+          "ancho": 460,
+          "alto": 460,
+          "sha": "b74c3c1f75db60dd97024b211ed5be7c2063b05f"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 10670774,
+          "sha": "15eec0c649b06792c4c1f5b2bb33edaf78d7b669"
+        }
+      }
     },
     {
       "id": 83,
       "nombre": "Tralalero Tralalá",
       "artista": "Juan, Lucas y Mateo",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-051",
+        "ART-032",
+        "ART-053"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 91024,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "847458699b3e31007536e495d233c0d6a6a9acb6"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1344248,
+          "sha": "b6d4fac087c5210144f177d6ad9972db01330eff"
+        }
+      }
     },
     {
       "id": 84,
       "nombre": "Coconut",
       "artista": "Samuel",
-      "tipo": "i"
+      "tipo": "i",
+      "artistaIds": [
+        "ART-023"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 141602,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "5d896f4197daa86fab9d88f964ad4c465aea18a3"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1903896,
+          "sha": "00719dd8709c70e7bf8714ca0e117797662e2820"
+        }
+      }
     },
     {
       "id": 85,
       "nombre": "Miau Miau",
       "artista": "Samuel y Francisco",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-023",
+        "ART-054"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 155947,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "33bdbcfdb66ee0527e4f1fab279217a33f5b7e2d"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1150315,
+          "sha": "0aaae0f51c1f6b7aad987384e8b696d48e99b41d"
+        }
+      }
     },
     {
       "id": 86,
       "nombre": "Yo vengo de san Rosendo",
       "artista": "Eduardo",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-034"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 52669,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "4f09f04526e919020ba8abcebdbc7d27a3a7f9e5"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 4324297,
+          "sha": "5335aa7676e405e6f5b845b95a9b6e11da6d1b8d"
+        }
+      }
     },
     {
       "id": 87,
       "nombre": "La Media Vuelta",
       "artista": "Eduardo",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-034"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 66831,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "a497e2cb50a59c15c489b63ebbbfd60f1e42115d"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2962586,
+          "sha": "8cc2a91b7689d492f3a2146db00ccb5197dd5a7e"
+        }
+      }
     },
     {
       "id": 88,
       "nombre": "Te aviso, te anuncio",
       "artista": "Josefa",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-028"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 148707,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "00386381871077a5ebcac9eea49a139338fb7aba"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3646367,
+          "sha": "7acee1c53815d2586cc069e41ac865985ab28db7"
+        }
+      }
     },
     {
       "id": 89,
       "nombre": "Es war eine Mutter",
       "artista": "Emma y Martín",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-021",
+        "ART-020"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 162852,
+          "ancho": 300,
+          "alto": 300,
+          "sha": "aa0084c2565f1effa6c58f0628c295b54c29ed72"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1995011,
+          "sha": "8c1c3aafd02f4d9a0feb53091f42c13ce363d7ba"
+        }
+      }
     },
     {
       "id": 90,
       "nombre": "Piratas del Caribe",
       "artista": "Agustín",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-035"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 39677,
+          "ancho": 320,
+          "alto": 320,
+          "sha": "0bd118394c78362198c8bbd0f462323ca9ac24d5"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2809195,
+          "sha": "3a3972847b80605bc093c245705f3f27ab25a872"
+        }
+      }
     },
     {
       "id": 91,
       "nombre": "Capaz",
       "artista": "Eli y Ame",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-055",
+        "ART-056"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 96556,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "0039a3569b71203a4fc41292468837aff10a1532"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2896131,
+          "sha": "c6e2be506e1b339bdfed147294f5511d6221c442"
+        }
+      }
     },
     {
       "id": 92,
       "nombre": "Llueve sobre la ciudad",
       "artista": "Josefa y Emilio",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-028",
+        "ART-036"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 169901,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "8a06548958284e04192aa62eefe96c7b0956be95"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2950047,
+          "sha": "bf8e20e21249de1d4fdd593d1ffe9546eff66047"
+        }
+      }
     },
     {
       "id": 93,
       "nombre": "Panamericana",
       "artista": "Max",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-014"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 105215,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "05866c4d26ccee4723a62e5c50b8139d3d27a16c"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2639086,
+          "sha": "92f505a53e591857a77305482f6537d3f5e926d0"
+        }
+      }
     },
     {
       "id": 94,
       "nombre": "Chipi Chipi",
       "artista": "Charly García",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-057"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 39130,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "7c60402717f0062c1f013ad129f5b8977a72b270"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2995605,
+          "sha": "d9bff26e223ea0c77a612acaa7bce8a789733ef0"
+        }
+      }
     },
     {
       "id": 95,
       "nombre": "Pedro's Lava Chicken",
       "artista": "Pedro",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-011"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 83432,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "a13aa63ee5843a3f80a4bd812fadc6108956e3b7"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1072575,
+          "sha": "a5aeb77b51c0ca8da3d2eb5b308a07af57e4a721"
+        }
+      }
     },
     {
       "id": 96,
       "nombre": "Fast Car",
       "artista": "Tracy Chapman",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-058"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 33357,
+          "ancho": 378,
+          "alto": 376,
+          "sha": "0cb166e4f18bcb0d4c809a862c17a3dfe6981692"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 4239452,
+          "sha": "d269bf373eb138410b7d6602f602621c73e7b99b"
+        }
+      }
     },
     {
       "id": 97,
       "nombre": "Los pollitos dicen",
       "artista": "Violetta",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-059"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 102152,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "1f325c968dc3d099669aff579014fc809e325479"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 907481,
+          "sha": "a0b96f646c4635c5dd0a4461bb35fa729539e8a2"
+        }
+      }
     },
     {
       "id": 98,
       "nombre": "American Idiot",
       "artista": "Green Day",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-060"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 40562,
+          "ancho": 374,
+          "alto": 374,
+          "sha": "8e090d7e8f4206298217309c77e2ae0a7abb6c87"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2904117,
+          "sha": "0230fb7ea09e0ea34715f5fdabc7fde71b6f5938"
+        }
+      }
     },
     {
       "id": 99,
       "nombre": "APT",
       "artista": "ROSÉ y Bruno Mars",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-061",
+        "ART-062"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 38398,
+          "ancho": 374,
+          "alto": 374,
+          "sha": "287d616becae4479bcf2a5408cbc84a4bd8e1430"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2776221,
+          "sha": "71e83653b60c28f52acb2ff512770d34356268a9"
+        }
+      }
     },
     {
       "id": 100,
       "nombre": "Never Grow Up",
       "artista": "Clarita",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-030"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 125235,
+          "ancho": 1024,
+          "alto": 1024,
+          "sha": "b1bad7a6b07119fa3a9f30ccd05e8e40f1fb107c"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 4613525,
+          "sha": "9d4604da962633a02f99893eecab5fd4bcdf29db"
+        }
+      }
     },
     {
       "id": 101,
       "nombre": "Supa Good",
       "artista": "Clemente",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-012"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 92507,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "241214b8045e370978ef8fb72553a9f6bfad8447"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1752594,
+          "sha": "60306e0f769d1e00d692f9c500c46de3b3216e35"
+        }
+      }
     },
     {
       "id": 102,
       "nombre": "Piratas del caribe",
       "artista": "Lucas",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-032"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 137905,
+          "ancho": 1024,
+          "alto": 1024,
+          "sha": "5c76aa35cb0c8db9c217bfa425a1c1f680b70d74"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1685303,
+          "sha": "a4033a2025582edaa1a275cb3f2277cf385228e5"
+        }
+      }
     },
     {
       "id": 103,
       "nombre": "Soy Enigma",
       "artista": "SuperThings",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-063"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 86785,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "4aac293762cf8da9eb8034ade0daa6f4ac0992dc"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1849606,
+          "sha": "d5da681e600963d59754536735ac727c7a0a5364"
+        }
+      }
     },
     {
       "id": 104,
       "nombre": "Let it be",
       "artista": "Dante",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-064"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 113418,
+          "ancho": 662,
+          "alto": 634,
+          "sha": "4d500fbe8f1e27d614964f4949ee560c84cf24ce"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1185006,
+          "sha": "d44d4ba4b16fb4cd6e6c4a31a4d1a1981636d9ab"
+        }
+      }
     },
     {
       "id": 105,
       "nombre": "Inevitable",
       "artista": "Josefa",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-028"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 113643,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "ac31e67026f26c92a9847d0afc0ea773aa36091c"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3095079,
+          "sha": "a1afc2e9a5422a3512750946c6f4935d66796c03"
+        }
+      }
     },
     {
       "id": 106,
       "nombre": "Agustín Lava's Chicken",
       "artista": "Agustín",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-035"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 118554,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "c8051a38a364e55f0961d565c3648a7e7f1b0dd3"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1373505,
+          "sha": "9ed09242468d48776b1e9ca8c2dd808c3665327c"
+        }
+      }
     },
     {
       "id": 107,
       "nombre": "Better than Revenge",
       "artista": "Taylor Swift",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-004"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 43105,
+          "ancho": 344,
+          "alto": 346,
+          "sha": "f72c5e813e0ca2a4c69408e7bc68daba82241190"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3476303,
+          "sha": "0698c1db68ed643feea4c1070bf5970bef649907"
+        }
+      }
     },
     {
       "id": 108,
       "nombre": "Fly me to the moon",
       "artista": "Frank Sinatra",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-065"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 31612,
+          "ancho": 344,
+          "alto": 340,
+          "sha": "e9249d61fe69bcbecb79f428351621f2140ee9c1"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2361606,
+          "sha": "17019c646ba5896bd3fcbccebbf575a3b472291d"
+        }
+      }
     },
     {
       "id": 109,
       "nombre": "In the stars",
       "artista": "Martín",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-020"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 141929,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "dc895c8c48a2f831dfac0fb70b60d2e6323a0d61"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1299109,
+          "sha": "b9ffe15bfe6f0f955456a52ea939788203d6179d"
+        }
+      }
     },
     {
       "id": 110,
       "nombre": "Las pelotitas",
       "artista": "Juan, Mateo y Lucas",
-      "tipo": "i"
+      "tipo": "i",
+      "artistaIds": [
+        "ART-051",
+        "ART-053",
+        "ART-032"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 94895,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "4b0453a22aab26bca61b0b57380ba06b63e8554e"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 904973,
+          "sha": "e8c2af568a3b26449971b109b5b148d6dfc348e1"
+        }
+      }
     },
     {
       "id": 111,
       "nombre": "Bombardino Crocrodrilo",
       "artista": "Juan",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-051"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 53297,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "f2e06b5a0293f9f4f43f71822bd4fc474b65c37c"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1465456,
+          "sha": "5bde7813d7a1c10b1511dc039fb1b8c8db0d876e"
+        }
+      }
     },
     {
       "id": 112,
       "nombre": "All I want for Christmas",
       "artista": "Josefa",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-028"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 72005,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "056d468a84c799eac6b340ac1191569a9be1462e"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2011311,
+          "sha": "b706feaa969100c62da9078015ed70b5080040b2"
+        }
+      }
     },
     {
       "id": 113,
       "nombre": "Piratas del caribe",
       "artista": "Samu y Berna",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-066",
+        "ART-067"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 93291,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "a7870d575edffee910e0f8263bec30945abf0701"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1136105,
+          "sha": "192383acc0614df97c7d8e801d8a43ab93fa9911"
+        }
+      }
     },
     {
       "id": 114,
       "nombre": "Better than Revenge",
       "artista": "Clarita",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-030"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 171563,
+          "ancho": 1024,
+          "alto": 1024,
+          "sha": "179096fb9d258493cb9abf22afe93b83f74f4234"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3476676,
+          "sha": "0b99e293e0ab1ee87bee86ce2475ffd2910eb89f"
+        }
+      }
     },
     {
       "id": 115,
       "nombre": "Betti Caro",
       "artista": "Emma",
-      "tipo": "i"
+      "tipo": "i",
+      "artistaIds": [
+        "ART-021"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 88604,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "0e20f8a11a7afb257d3d78c637e5ba7bca19ce82"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2524983,
+          "sha": "64512af8bea9a6d61bd7f428507572953c2ea6dc"
+        }
+      }
     },
     {
       "id": 116,
       "nombre": "Chocolate",
       "artista": "Josefa",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-028"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 91919,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "4db1bcd02042cc3d06662587c8998d3f0e00bb90"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 4041339,
+          "sha": "7bf164b0cee57484f035ba95f8cd7ffdfdd5e73d"
+        }
+      }
     },
     {
       "id": 117,
       "nombre": "Cerf Volant",
       "artista": "Josefa",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-028"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 106198,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "205ba402d278dc6e1cb23560d82671c28f2606ff"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1695752,
+          "sha": "4397c804f7e09b84dbd847a6eb99f98360af7df2"
+        }
+      }
     },
     {
       "id": 118,
       "nombre": "Red",
       "artista": "Taylor Swift",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-004"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 38259,
+          "ancho": 376,
+          "alto": 374,
+          "sha": "6f580ff7a0b832d06e40806e82aa44a9bac737ea"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3525622,
+          "sha": "93ab613cd6949777784756770ef2fad5721f661b"
+        }
+      }
     },
     {
       "id": 119,
       "nombre": "Que bonita va",
       "artista": "Los huasos del camino viejo",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-052"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 85832,
+          "ancho": 637,
+          "alto": 640,
+          "sha": "d53faa22ed19271b429dad4a68f592f2874b6aa8"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2719796,
+          "sha": "c7b44ec972ecd47fadd5e690f4f87769ca3035f3"
+        }
+      }
     },
     {
       "id": 120,
       "nombre": "Los viejos estandartes ",
       "artista": "Los cuatro cuartos",
-      "tipo": "y"
+      "tipo": "y",
+      "artistaIds": [
+        "ART-068"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 31832,
+          "ancho": 344,
+          "alto": 344,
+          "sha": "942d9519557b68895fd5560e8dc1629d6d5a590a"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3184567,
+          "sha": "34a4275a5aa750b133fed63765583c9215da4a53"
+        }
+      }
     },
     {
       "id": 121,
       "nombre": "Piratas del Caribe",
       "artista": "Clemente y Santiago",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-012",
+        "ART-069"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 99151,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "4b42d63693184b55c5cec2956c2e96fba0cd0744"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2285492,
+          "sha": "08722419aa6fb96b6fa92a2dab1ef34f1536d6d5"
+        }
+      }
     },
     {
       "id": 122,
       "nombre": "Red",
       "artista": "Clarita",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-030"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 106541,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "1e13fe7207a5d3eea3705ae8ece3cc76f4b25c35"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3525995,
+          "sha": "79e3c14989fa036ac105a5215de87a3b8bbcbce1"
+        }
+      }
     },
     {
       "id": 123,
       "nombre": "Tralalero Tralalá",
       "artista": "Agustín",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-035"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 83646,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "5b8a2626dc6671f1c9f6fb153edf1b6c6edb3f7d"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1953215,
+          "sha": "be6e61ab4b7656885bf396d008f8dd5b6f402ed6"
+        }
+      }
     },
     {
       "id": 124,
       "nombre": "I got a feeling",
       "artista": "Lucas",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-032"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 50100,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "ded5596328d9e2e2b4ec8b23cd4440c19c050098"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 4626900,
+          "sha": "632107e2873301480dcdced4ea6496d6b0b8fd19"
+        }
+      }
     },
     {
       "id": 125,
       "nombre": "Navidad",
       "artista": "Pedro",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-011"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 101278,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "a29c771558dca7cbbd45ccb8dd97be2efcae8046"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1636820,
+          "sha": "dececfe909a039b2cee3b2825eed176d824ca4ce"
+        }
+      }
     },
     {
       "id": 126,
       "nombre": "Riptide",
       "artista": "Clarita",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-030"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 91838,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "286daf7d380871f03f7802cd7775326a83ebe6dd"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1201306,
+          "sha": "3b439009874b628fa0322aa4ef06768368511b4f"
+        }
+      }
     },
     {
       "id": 127,
       "nombre": "Soy Enigma",
       "artista": "Lucas",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-032"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 99517,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "dbde0782622420d4a69eea1abefac698ce0f05ed"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 1849979,
+          "sha": "e0366e8f7d2ee23698876b2ca6a6c0fc36b07b6b"
+        }
+      }
     },
     {
       "id": 128,
       "nombre": "La Familia",
       "artista": "Juan",
-      "tipo": "i"
+      "tipo": "i",
+      "artistaIds": [
+        "ART-051"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 134268,
+          "ancho": 640,
+          "alto": 640,
+          "sha": "a3928b1fc3f097ca18eedbc80fb6c0c5564a9031"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 2494472,
+          "sha": "4856423129b777996175fef457d3d704bcd307ad"
+        }
+      }
     },
     {
       "id": 129,
       "nombre": "Ciega, Sordo, Muda",
       "artista": "Josefa",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-028"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 30222,
+          "ancho": 320,
+          "alto": 320,
+          "sha": "4e0cffd088a34a220ead9bdc366ab4a167059a4e"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 4251154,
+          "sha": "499ffd72e50ea2852bb8a0acf6242ae2bf17d0f1"
+        }
+      }
     },
     {
       "id": 130,
       "nombre": "Montagem Xonada",
       "artista": "Agustín",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-035"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 20042,
+          "ancho": 320,
+          "alto": 320,
+          "sha": "eba20f394fbc37f478620f696f0abb33629fedd3"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 801319,
+          "sha": "f83ce2f3fd686276d53055669725f077a66b4099"
+        }
+      }
     },
     {
       "id": 131,
       "nombre": "This is me",
       "artista": "Clarita",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-030"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 30192,
+          "ancho": 320,
+          "alto": 320,
+          "sha": "061052d41dde48e5e5534a33415529af94257960"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3003964,
+          "sha": "9872f231bf3c05188ac80f50523aeb5a42d7a98f"
+        }
+      }
     },
     {
       "id": 132,
       "nombre": "Nos siguen pegando abajo",
       "artista": "Toño",
-      "tipo": "c"
+      "tipo": "c",
+      "artistaIds": [
+        "ART-070"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 239711,
+          "ancho": 1024,
+          "alto": 1024,
+          "sha": "112da12728b2473f2fc524aea98a3e55fec87751"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3176581,
+          "sha": "c270fce74f8f62938e59374f2c575af4552acbe4"
+        }
+      }
     },
     {
       "id": 133,
@@ -799,7 +3065,24 @@
       "artista": "Josefa",
       "tipo": "c",
       "uploadedAt": "2026-11-19T21:04:28.806Z",
-      "uploadId": "d1e64b74-f60f-40ba-aa0c-86ac82b2ff9f"
+      "uploadId": "d1e64b74-f60f-40ba-aa0c-86ac82b2ff9f",
+      "artistaIds": [
+        "ART-028"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 208685,
+          "ancho": 1024,
+          "alto": 1024,
+          "sha": "5ba7594b013e903b5cf343eb49cb4b8b440518cb"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 3177835,
+          "sha": "f4d013149eefef104c97bddf3335e894f10d82b0"
+        }
+      }
     },
     {
       "id": 134,
@@ -807,7 +3090,24 @@
       "artista": "Agustín",
       "tipo": "c",
       "uploadedAt": "2026-11-20T20:07:30.930Z",
-      "uploadId": "80dd6569-9a51-4d83-86d8-8fc474aef732"
+      "uploadId": "80dd6569-9a51-4d83-86d8-8fc474aef732",
+      "artistaIds": [
+        "ART-035"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 318332,
+          "ancho": 1024,
+          "alto": 1024,
+          "sha": "10b92d08440c5bae0ee396d921d1d3d7dfa39da1"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 705189,
+          "sha": "13444987631f8899bc8ef7eb0264129df38b0703"
+        }
+      }
     },
     {
       "id": 135,
@@ -815,7 +3115,24 @@
       "artista": "Juan José",
       "tipo": "c",
       "uploadedAt": "2026-11-20T21:50:31.728Z",
-      "uploadId": "81e18124-4802-43c6-ab77-f7ac85883ee6"
+      "uploadId": "81e18124-4802-43c6-ab77-f7ac85883ee6",
+      "artistaIds": [
+        "ART-071"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 163531,
+          "ancho": 1024,
+          "alto": 1024,
+          "sha": "84a4279aab3d1457aeb7db854d2339527b06e619"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 969339,
+          "sha": "c4a207338ad10f0e7c59fe5f5bc3f3213836cb43"
+        }
+      }
     },
     {
       "id": 136,
@@ -823,7 +3140,310 @@
       "artista": "Juan José",
       "tipo": "c",
       "uploadedAt": "2026-11-20T21:55:21.245Z",
-      "uploadId": "3bfefba8-f055-47b1-a43f-52b1a02dcfd3"
+      "uploadId": "3bfefba8-f055-47b1-a43f-52b1a02dcfd3",
+      "artistaIds": [
+        "ART-071"
+      ],
+      "archivos": {
+        "caratula": {
+          "formato": "JPEG",
+          "bytes": 129645,
+          "ancho": 1024,
+          "alto": 1024,
+          "sha": "a028a8ee49d6eaf5b495d6a25fca0db6ccd80fb9"
+        },
+        "audio": {
+          "formato": "MP3",
+          "bytes": 691814,
+          "sha": "13708481d6036b044030270c1134dfe5861f10e1"
+        }
+      }
+    }
+  ],
+  "artistas": [
+    {
+      "id": "ART-001",
+      "nombre": "Shakira"
+    },
+    {
+      "id": "ART-002",
+      "nombre": "Beatles"
+    },
+    {
+      "id": "ART-003",
+      "nombre": "Coldplay"
+    },
+    {
+      "id": "ART-004",
+      "nombre": "Taylor Swift"
+    },
+    {
+      "id": "ART-005",
+      "nombre": "Gravity Falls"
+    },
+    {
+      "id": "ART-006",
+      "nombre": "Vance Joy"
+    },
+    {
+      "id": "ART-007",
+      "nombre": "Hermanos"
+    },
+    {
+      "id": "ART-008",
+      "nombre": "Alleh"
+    },
+    {
+      "id": "ART-009",
+      "nombre": "Yorghaki"
+    },
+    {
+      "id": "ART-010",
+      "nombre": "Incubus"
+    },
+    {
+      "id": "ART-011",
+      "nombre": "Pedro"
+    },
+    {
+      "id": "ART-012",
+      "nombre": "Clemente"
+    },
+    {
+      "id": "ART-013",
+      "nombre": "Borja"
+    },
+    {
+      "id": "ART-014",
+      "nombre": "Max"
+    },
+    {
+      "id": "ART-015",
+      "nombre": "Celeste"
+    },
+    {
+      "id": "ART-016",
+      "nombre": "Journey"
+    },
+    {
+      "id": "ART-017",
+      "nombre": "John Legend"
+    },
+    {
+      "id": "ART-018",
+      "nombre": "Keane"
+    },
+    {
+      "id": "ART-019",
+      "nombre": "Adele"
+    },
+    {
+      "id": "ART-020",
+      "nombre": "Martín"
+    },
+    {
+      "id": "ART-021",
+      "nombre": "Emma"
+    },
+    {
+      "id": "ART-022",
+      "nombre": "Calle 13"
+    },
+    {
+      "id": "ART-023",
+      "nombre": "Samuel"
+    },
+    {
+      "id": "ART-024",
+      "nombre": "Minecraft"
+    },
+    {
+      "id": "ART-025",
+      "nombre": "Benson Boone"
+    },
+    {
+      "id": "ART-026",
+      "nombre": "The Chainsmokers"
+    },
+    {
+      "id": "ART-027",
+      "nombre": "El Griego"
+    },
+    {
+      "id": "ART-028",
+      "nombre": "Josefa"
+    },
+    {
+      "id": "ART-029",
+      "nombre": "Bernardo"
+    },
+    {
+      "id": "ART-030",
+      "nombre": "Clarita"
+    },
+    {
+      "id": "ART-031",
+      "nombre": "Rafael"
+    },
+    {
+      "id": "ART-032",
+      "nombre": "Lucas"
+    },
+    {
+      "id": "ART-033",
+      "nombre": "Raimundo"
+    },
+    {
+      "id": "ART-034",
+      "nombre": "Eduardo"
+    },
+    {
+      "id": "ART-035",
+      "nombre": "Agustín"
+    },
+    {
+      "id": "ART-036",
+      "nombre": "Emilio"
+    },
+    {
+      "id": "ART-037",
+      "nombre": "Florencia"
+    },
+    {
+      "id": "ART-038",
+      "nombre": "Grupo Musical"
+    },
+    {
+      "id": "ART-039",
+      "nombre": "The Police"
+    },
+    {
+      "id": "ART-040",
+      "nombre": "Alan Walker"
+    },
+    {
+      "id": "ART-041",
+      "nombre": "Piratas del Caribe"
+    },
+    {
+      "id": "ART-042",
+      "nombre": "31 Minutos"
+    },
+    {
+      "id": "ART-043",
+      "nombre": "Max Segers"
+    },
+    {
+      "id": "ART-044",
+      "nombre": "Violeta Parra"
+    },
+    {
+      "id": "ART-045",
+      "nombre": "Mario Bross"
+    },
+    {
+      "id": "ART-046",
+      "nombre": "Patricia"
+    },
+    {
+      "id": "ART-047",
+      "nombre": "Juanita"
+    },
+    {
+      "id": "ART-048",
+      "nombre": "Juan Pablo"
+    },
+    {
+      "id": "ART-049",
+      "nombre": "Folklore Chino"
+    },
+    {
+      "id": "ART-050",
+      "nombre": "Los Bunkers"
+    },
+    {
+      "id": "ART-051",
+      "nombre": "Juan"
+    },
+    {
+      "id": "ART-052",
+      "nombre": "Los huasos del camino viejo"
+    },
+    {
+      "id": "ART-053",
+      "nombre": "Mateo"
+    },
+    {
+      "id": "ART-054",
+      "nombre": "Francisco"
+    },
+    {
+      "id": "ART-055",
+      "nombre": "Eli"
+    },
+    {
+      "id": "ART-056",
+      "nombre": "Ame"
+    },
+    {
+      "id": "ART-057",
+      "nombre": "Charly García"
+    },
+    {
+      "id": "ART-058",
+      "nombre": "Tracy Chapman"
+    },
+    {
+      "id": "ART-059",
+      "nombre": "Violetta"
+    },
+    {
+      "id": "ART-060",
+      "nombre": "Green Day"
+    },
+    {
+      "id": "ART-061",
+      "nombre": "ROSÉ"
+    },
+    {
+      "id": "ART-062",
+      "nombre": "Bruno Mars"
+    },
+    {
+      "id": "ART-063",
+      "nombre": "SuperThings"
+    },
+    {
+      "id": "ART-064",
+      "nombre": "Dante"
+    },
+    {
+      "id": "ART-065",
+      "nombre": "Frank Sinatra"
+    },
+    {
+      "id": "ART-066",
+      "nombre": "Samu"
+    },
+    {
+      "id": "ART-067",
+      "nombre": "Berna"
+    },
+    {
+      "id": "ART-068",
+      "nombre": "Los cuatro cuartos"
+    },
+    {
+      "id": "ART-069",
+      "nombre": "Santiago"
+    },
+    {
+      "id": "ART-070",
+      "nombre": "Toño"
+    },
+    {
+      "id": "ART-071",
+      "nombre": "Juan José"
     }
   ]
 }

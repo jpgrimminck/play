@@ -1,4 +1,5 @@
-import { createHmac, timingSafeEqual } from 'node:crypto';
+import { createHmac, randomUUID, timingSafeEqual } from 'node:crypto';
+import { separarCredito } from '../catalogo-datos.js';
 export class HttpError extends Error { constructor(status, message) { super(message); this.status = status; } }
 export const MAX_AUDIO = 30 * 1024 * 1024;
 export function ownerClaims(claims, email) {
@@ -35,7 +36,26 @@ export function appendSong(catalog, meta, uploadId, now = new Date().toISOString
   const existing = catalog.covers.find(s => s.uploadId === uploadId);
   if (existing) return { catalog, song: existing, existing: true };
   const song = { id: max + 1, ...meta, uploadedAt: now, uploadId };
-  return { catalog: { ...catalog, totalCovers: song.id, covers: [...catalog.covers, song] }, song, existing: false };
+  const next = { ...catalog, totalCovers: song.id, covers: [...catalog.covers, song] };
+  if (Array.isArray(catalog.artistas)) {
+    next.artistas = [...catalog.artistas];
+    const nombres = separarCredito(meta.artista);
+    // Homonyms need an explicit selection in the editor; the original credit stays readable.
+    if (nombres.every(nombre => next.artistas.filter(a => a.nombre === nombre).length <= 1)) {
+      song.artistaIds = [];
+      for (const nombre of nombres) {
+        let ficha = next.artistas.find(a => a.nombre === nombre);
+        if (!ficha) {
+          ficha = { id: 'ART-' + randomUUID().replaceAll('-', '').toUpperCase(), nombre };
+          next.artistas.push(ficha);
+        }
+        if (!song.artistaIds.includes(ficha.id)) song.artistaIds.push(ficha.id);
+      }
+    } else {
+      song.artistaIds = [];
+    }
+  }
+  return { catalog: next, song, existing: false };
 }
 export function validMedia(bytes, kind) {
   if (kind === 'cover') return bytes.length > 3 && bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255;

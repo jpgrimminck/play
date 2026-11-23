@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="theme-color" content="#0c1018" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="referrer" content="no-referrer" />
+    <title>Administración · Grimminck Music</title>
+    <link rel="icon" href="/icons/favicon.ico" />
+    <link rel="stylesheet" href="/admin/estilo.css" />
+    <script type="module" src="/admin/app.js"></script>
+  </head>
+  <body>
+    <svg class="simbolos" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+      <symbol id="i-disc" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9" />
+        <circle cx="12" cy="12" r="2.2" />
+        <path d="M6.3 10a6 6 0 0 1 3.5-3.7m4.5 11.3a6 6 0 0 0 3.5-3.7" />
+      </symbol>
+      <symbol id="i-users" viewBox="0 0 24 24">
+        <circle cx="9" cy="8" r="3" />
+        <path d="M3 20v-2a6 6 0 0 1 12 0v2m1-15a3 3 0 0 1 0 6m2 3a5 5 0 0 1 3 5" />
+      </symbol>
+      <symbol id="i-search" viewBox="0 0 24 24">
+        <circle cx="10.5" cy="10.5" r="6.5" />
+        <path d="m16 16 5 5" />
+      </symbol>
+      <symbol id="i-git" viewBox="0 0 24 24">
+        <circle cx="7" cy="5" r="2.3" />
+        <circle cx="7" cy="19" r="2.3" />
+        <circle cx="18" cy="7" r="2.3" />
+        <path d="M7 7.3v9.4m.2-4c6.7 0 10.8-.9 10.8-3.5" />
+      </symbol>
+      <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V3m-5 5 5-5 5 5M4 16v4h16v-4" /></symbol>
+      <symbol id="i-photo" viewBox="0 0 24 24">
+        <rect x="3" y="4" width="18" height="16" rx="3" />
+        <circle cx="8" cy="9" r="1.4" />
+        <path d="m4 18 5-5 3.3 3 3.7-5 5 6" />
+      </symbol>
+      <symbol id="i-wave" viewBox="0 0 24 24"><path d="M3 10v4m4-8v12m5-16v20m5-16v12m4-8v4" /></symbol>
+      <symbol id="i-back" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7" /></symbol>
+      <symbol id="i-next" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7" /></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" /></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 13 5 5L20 6" /></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" /></symbol>
+      <symbol id="i-library" viewBox="0 0 24 24"><path d="M4 4v16M9 4v16m3-15 5-1 4 15-5 1z" /></symbol>
+    </svg>
+    <header class="barra">
+      <div class="ancho barra-interior">
+        <a class="marca" href="/admin" aria-label="Grimminck Music, administración"
+          ><span class="marca-icono"
+            ><svg class="icono"><use href="#i-wave" /></svg></span
+          ><span>Grimminck <em>Music</em></span></a
+        >
+        <span class="division"></span><span class="seccion">Administración</span>
+        <div class="barra-acciones">
+          <span class="entorno"
+            ><svg class="icono"><use href="#i-git" /></svg> Rama de prueba</span
+          >
+          <button class="boton linea" id="abrir-rama" disabled>
+            <svg class="icono"><use href="#i-upload" /></svg><span>Guardar en rama</span
+            ><span id="pendientes" class="contador" hidden></span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <main class="ancho" id="principal">
+      <div class="cabecera">
+        <h1>Catálogo musical</h1>
+        <p id="resumen" aria-live="polite">Cargando catálogo…</p>
+      </div>
+      <nav class="pestanas" aria-label="Secciones del catálogo">
+        <button id="tab-canciones" aria-pressed="true">
+          <svg class="icono"><use href="#i-disc" /></svg>Canciones
+        </button>
+        <button id="tab-artistas" aria-pressed="false">
+          <svg class="icono"><use href="#i-users" /></svg>Artistas
+        </button>
+      </nav>
+      <p id="error-inicial" class="aviso" hidden></p>
+      <div class="trabajo" id="trabajo" hidden>
+        <section class="lista-panel" aria-labelledby="lista-titulo">
+          <div class="lista-superior">
+            <div class="encabezado-fila">
+              <h2 id="lista-titulo">Canciones</h2>
+              <span id="resultado" class="conteo"></span
+              ><button id="nuevo" class="boton compacto" hidden>
+                <svg class="icono"><use href="#i-plus" /></svg>Nuevo
+              </button>
+            </div>
+            <div class="buscador">
+              <svg class="icono"><use href="#i-search" /></svg
+              ><input
+                type="search"
+                autocomplete="off"
+                id="buscar"
+                aria-label="Buscar canciones"
+                placeholder="Buscar canción o artista"
+              />
+            </div>
+            <div id="filtros" class="filtros" aria-label="Filtrar canciones por tipo">
+              <button data-tipo="" aria-pressed="true">Todas</button
+              ><button data-tipo="c" aria-pressed="false">Cover</button
+              ><button data-tipo="i" aria-pressed="false">Inédita</button
+              ><button data-tipo="y" aria-pressed="false">YouTube</button>
+            </div>
+          </div>
+          <div class="lista" id="lista"></div>
+        </section>
+        <section class="detalle" id="detalle" aria-label="Editor de la ficha">
+          <button id="volver" class="volver">
+            <svg class="icono"><use href="#i-back" /></svg><span>Volver al catálogo</span>
+          </button>
+          <div id="contenido"></div>
+        </section>
+      </div>
+      <noscript>Activa JavaScript para editar el catálogo.</noscript>
+    </main>
+    <div id="anuncio" class="anuncio" role="status" aria-live="polite"></div>
+    <dialog id="selector" aria-labelledby="selector-titulo">
+      <div class="dialogo-cab">
+        <h2 id="selector-titulo">Elegir artistas</h2>
+        <button class="icon-btn" id="cerrar-selector" aria-label="Cerrar">
+          <svg class="icono"><use href="#i-close" /></svg>
+        </button>
+      </div>
+      <div class="dialogo-centro">
+        <div class="buscador">
+          <svg class="icono"><use href="#i-search" /></svg
+          ><input
+            id="buscar-artista"
+            type="search"
+            placeholder="Buscar por nombre, referencia o ID"
+            aria-label="Buscar artista por nombre, referencia o ID"
+          />
+        </div>
+        <div id="opciones" class="opciones"></div>
+      </div>
+      <div class="dialogo-pie">
+        <span id="cuantos"></span
+        ><button id="aceptar-artistas" class="boton primario">Aplicar selección</button>
+      </div>
+    </dialog>
+    <dialog id="rama" aria-labelledby="rama-titulo">
+      <div class="dialogo-cab">
+        <h2 id="rama-titulo">Guardar en rama</h2>
+        <button class="icon-btn" id="cerrar-rama" aria-label="Cerrar">
+          <svg class="icono"><use href="#i-close" /></svg>
+        </button>
+      </div>
+      <div class="dialogo-centro">
+        <p id="rama-contexto"></p>
+        <div id="resumen-cambios" class="resumen-cambios"></div>
+        <form id="publicar-form" hidden>
+          <label class="campo"
+            >Credencial de GitHub<input
+              id="credencial"
+              type="password"
+              autocomplete="off"
+              autocapitalize="none"
+              spellcheck="false"
+              required
+              placeholder="Token de jpgrimminck"
+          /></label>
+          <p class="ayuda">
+            Usa una credencial de acceso detallado para <strong>jpgrimminck/play</strong> con permiso de
+            escritura en <strong>Contents</strong>. Se envía directamente a GitHub y se borra al cerrar
+            este cuadro.
+          </p>
+          <a
+            class="enlace"
+            href="https://github.com/settings/personal-access-tokens/new?name=Grimminck%20Admin%20Prueba&amp;target_name=jpgrimminck&amp;contents=write&amp;expires_in=7"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Crear credencial en GitHub</a
+          >
+          <button class="boton primario ancho-boton" id="publicar" type="submit">
+            <svg class="icono"><use href="#i-git" /></svg>Guardar en prototipo-admin
+          </button>
+        </form>
+        <p id="resultado-rama" role="status"></p>
+        <button id="descartar-borradores" class="boton-texto peligro" hidden>
+          Descartar borradores de este dispositivo
+        </button>
+      </div>
+    </dialog>
+    <dialog id="confirmar" aria-labelledby="confirmar-titulo">
+      <div class="dialogo-centro">
+        <h2 id="confirmar-titulo">¿Descartar los cambios?</h2>
+        <p id="confirmar-texto"></p>
+      </div>
+      <div class="dialogo-pie">
+        <button class="boton linea" id="conservar">Conservar</button
+        ><button class="boton primario" id="descartar">Descartar</button>
+      </div>
+    </dialog>
+  </body>
+</html>
