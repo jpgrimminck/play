@@ -2600,11 +2600,11 @@
     {
       "id": 113,
       "nombre": "Piratas del caribe",
-      "artista": "Samu y Berna",
+      "artista": "Berna y Samuel",
       "tipo": "c",
       "artistaIds": [
-        "ART-066",
-        "ART-067"
+        "ART-067",
+        "ART-023"
       ],
       "archivos": {
         "caratula": {
