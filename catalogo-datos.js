@@ -21,12 +21,9 @@ export function prepararCatalogo(entradas, artistas = []) {
 export function opcionesAlumnos(catalogo, artistas) {
   const fichas = new Map(artistas.map(a => [a.id, a]));
   const ids = [...new Set(catalogo.flatMap(c => c.alumnos))];
-  const nombres = ids.map(id => fichas.get(id)?.nombre || id);
-  return ids.map((id, i) => {
-    const nombre = nombres[i];
-    const repetido = nombres.indexOf(nombre) !== nombres.lastIndexOf(nombre);
-    const ficha = fichas.get(id);
-    return { id, nombre, etiqueta: repetido && ficha ? [nombre, ficha.referencia, id].filter(Boolean).join(' · ') : nombre };
+  return ids.map(id => {
+    const nombre = fichas.get(id)?.nombre || id;
+    return { id, nombre, etiqueta: nombre };
   }).sort((a,b) => a.etiqueta.localeCompare(b.etiqueta, 'es'));
 }
 

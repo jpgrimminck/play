@@ -45,7 +45,8 @@ test('los homónimos tienen repertorios independientes; renombrar afecta solo a 
   assert.equal(siguiente.covers[0].uploadId, 'heredado');
   const canciones = prepararCatalogo(catalogo.covers, catalogo.artistas);
   const opciones = opcionesAlumnos(canciones, catalogo.artistas);
-  assert.notEqual(opciones[0].etiqueta, opciones[1].etiqueta);
+  assert.deepEqual(opciones.map(opcion => opcion.etiqueta), ['Josefa', 'Josefa']);
+  assert.notEqual(opciones[0].id, opciones[1].id);
   assert.equal(resolverAlumno('Josefa', opciones), '');
   assert.equal(resolverAlumno('Josefa', opciones, canciones[0]), b.id);
   assert.deepEqual(
