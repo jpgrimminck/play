@@ -96,12 +96,14 @@
 
   <dialog id="player" class="player" aria-labelledby="playerTitle">
     <div class="player-inner">
-      <button type="button" class="corner-button corner-back" id="closePlayer" aria-label="Volver a la portada" title="Volver a la portada">
-        <svg class="icon" aria-hidden="true"><use href="#i-back"/></svg>
-      </button>
-      <button type="button" class="corner-button corner-right" id="playerShare" aria-label="Compartir canción" title="Compartir canción">
-        <svg class="icon" aria-hidden="true"><use href="#i-share"/></svg>
-      </button>
+      <div class="player-actions">
+        <button type="button" class="corner-button" id="closePlayer" aria-label="Volver a la portada" title="Volver a la portada">
+          <svg class="icon" aria-hidden="true"><use href="#i-back"/></svg>
+        </button>
+        <button type="button" class="corner-button" id="playerShare" aria-label="Compartir canción" title="Compartir canción">
+          <svg class="icon" aria-hidden="true"><use href="#i-share"/></svg>
+        </button>
+      </div>
       <img id="playerCover" class="player-cover" width="320" height="320" alt="">
       <div><h2 id="playerTitle"></h2><p class="artist" id="playerArtist"></p></div>
       <div class="player-timeline">
