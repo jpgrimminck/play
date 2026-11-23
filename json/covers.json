@@ -142,10 +142,12 @@
     {
       "id": 7,
       "nombre": "El Camión de Samu",
-      "artista": "Hermanos",
+      "artista": "Samuel y Eli y Berna",
       "tipo": "i",
       "artistaIds": [
-        "ART-007"
+        "ART-023",
+        "ART-055",
+        "ART-067"
       ],
       "archivos": {
         "caratula": {
