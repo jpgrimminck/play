@@ -51,7 +51,7 @@ function tarjeta(cancion, destacada) {
 }
 
 function dibujarFiltro() {
-  el('studentOptions').replaceChildren(...[{ id: '', etiqueta: 'Todos los alumnos' }, ...alumnos].map(({ id, etiqueta }) => {
+  el('studentOptions').replaceChildren(...[{ id: '', etiqueta: 'Todos' }, ...alumnos].map(({ id, etiqueta }) => {
     const opcion = document.createElement('button');
     opcion.type = 'button';
     opcion.dataset.alumno = id;
@@ -70,7 +70,7 @@ function dibujarCatalogo(nombre) {
   el('heroCover').src = urlCaratula(destacada.id);
   el('heroArt').setAttribute('aria-label', 'Abrir reproductor de ' + destacada.nombre);
   el('heroNotice').textContent = '';
-  el('filterName').textContent = alumnos.find(a => a.id === alumno)?.etiqueta || 'Todos los alumnos';
+  el('filterName').textContent = alumnos.find(a => a.id === alumno)?.etiqueta || 'Todos';
   el('recentGrid').replaceChildren(...resto.slice(0, 3).map(cancion => tarjeta(cancion, true)));
   el('coverGrid').replaceChildren(...resto.slice(3).map(cancion => tarjeta(cancion, false)));
   el('catalog').hidden = resto.length === 0;
