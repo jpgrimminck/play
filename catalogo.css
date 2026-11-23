@@ -125,7 +125,19 @@ dialog::backdrop { background: rgba(2,6,13,.8); -webkit-backdrop-filter: blur(5p
   .feature .card-artist { -webkit-line-clamp: 2; font-size: .9rem; }
 }
 @media (orientation: portrait) and (max-width: 47.99rem) {
-  .page { padding-inline: clamp(.85rem,4vw,1.4rem); }
+  :root { --mobile-gutter: clamp(.85rem,4vw,1.4rem); }
+  .page { padding-inline: var(--mobile-gutter); }
+  .player {
+    max-height: calc(100vh - env(safe-area-inset-top) - .5rem);
+    max-height: calc(100dvh - env(safe-area-inset-top) - .5rem);
+    scrollbar-width: none;
+  }
+  .player::-webkit-scrollbar { display: none; }
+  .player-inner { padding: .75rem var(--mobile-gutter) calc(1.4rem + env(safe-area-inset-bottom)); }
+  .player-cover { width: 100%; }
+  .player .corner-button { top: 1.5rem; }
+  .player .corner-back { left: max(calc(var(--mobile-gutter) + .75rem), env(safe-area-inset-left)); }
+  .player .corner-right { right: max(calc(var(--mobile-gutter) + .75rem), env(safe-area-inset-right)); }
   .mast { min-height: 3.2rem; }
   .hero { position: relative; isolation: isolate; grid-template-columns: minmax(0,1fr); border-radius: 1.25rem; }
   .artwork, .hero-info { grid-area: 1 / 1; }
