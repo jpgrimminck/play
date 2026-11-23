@@ -195,18 +195,36 @@ function cerrarPlayer() {
   }
 }
 
+function idDeRuta() {
+  const ruta = /^\/cancion\/(\d+)\/?$/.exec(location.pathname);
+  return ruta ? Number(ruta[1]) : null;
+}
+
+function iniciarCancionCompartida() {
+  const id = idDeRuta();
+  const nombre = document.querySelector('meta[property="og:title"]')?.content;
+  if (!id || !nombre) return;
+  const artista = document.querySelector('meta[property="og:description"]')?.content || '';
+  const cancion = { id, nombre, artista };
+  cola = [cancion];
+  seleccionar(cancion);
+  player.showModal();
+  reproducir(true);
+}
+
 function restaurarDireccion(alCargar = false) {
   const params = new URLSearchParams(location.search);
-  const ruta = /^\/cancion\/(\d+)\/?$/.exec(location.pathname);
-  const pedida = catalogo.find(cancion => cancion.id === Number(ruta?.[1] || params.get('song')));
+  const id = idDeRuta() ?? Number(params.get('song'));
+  const pedida = catalogo.find(cancion => cancion.id === id);
+  const iniciarAudio = alCargar && pedida && pedida.id !== actual?.id;
   let filtroUrl = resolverAlumno(params.get('alumno'), alumnos, pedida);
   if (pedida && !pedida.alumnos.includes(filtroUrl)) filtroUrl = '';
-  if (!actual || filtroUrl !== alumno) dibujarCatalogo(filtroUrl);
+  if (alCargar || !actual || filtroUrl !== alumno) dibujarCatalogo(filtroUrl);
   if (pedida) {
     seleccionar(pedida);
     if (!player.open) player.showModal();
     mostrarAccesoAlPlayer = true;
-    if (alCargar && ruta) reproducir(true);
+    if (iniciarAudio) reproducir(true);
   } else if (player.open) {
     player.close();
   }
@@ -308,4 +326,5 @@ async function cargar() {
   }
 }
 el('retry').addEventListener('click', cargar);
+iniciarCancionCompartida();
 cargar();
