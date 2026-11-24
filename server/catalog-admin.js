@@ -98,11 +98,15 @@ function normalizarCambios(input, user) {
   const vistos = new Set(),
     archivos = [];
   const cambios = input.map((c) => {
-    if (!object(c) || typeof c.clave !== 'string' || !object(c.despues) || vistos.has(c.clave))
+    if (!object(c) || typeof c.clave !== 'string' || (c.despues !== null && !object(c.despues)) || vistos.has(c.clave))
       throw invalid();
     vistos.add(c.clave);
     const { clave, antes, despues, origen } = c;
     if (/^artista:ART-[0-9A-F]{1,32}$/.test(clave)) {
+      if (despues === null) {
+        if (!object(antes) || clave !== 'artista:' + antes.id) throw invalid();
+        return { clave, antes: fichaArtista(antes), despues: null };
+      }
       if (clave !== 'artista:' + despues.id || (antes !== null && antes?.id !== despues.id))
         throw invalid();
       return { clave, antes, despues: fichaArtista(despues) };
@@ -110,6 +114,7 @@ function normalizarCambios(input, user) {
     if (
       !/^cancion:[1-9]\d*$/.test(clave) ||
       !object(antes) ||
+      !object(despues) ||
       !Array.isArray(despues.artistaIds) ||
       !object(despues.archivos) ||
       !object(c.comprobantes || {})
@@ -192,7 +197,7 @@ export async function publicarCatalogo(user, entradas) {
       'Actualizar catálogo musical: ' +
       lote.cambios
         .slice(0, 3)
-        .map((c) => c.despues.nombre)
+        .map((c) => c.despues?.nombre || ('Eliminar artista ' + c.antes.nombre))
         .join(', '),
     tree: arbol.sha,
     parents: [actual.sha]

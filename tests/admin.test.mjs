@@ -394,3 +394,44 @@ test('una carátula privada pasa por la autorización de carga y genera un compr
   assert.deepEqual(comprobante.archivo, meta);
   transporte.assertNoPendingInterceptors();
 });
+
+test('eliminar artistas respeta IDs, créditos finales, concurrencia e idempotencia', () => {
+  const libre = { id: 'ART-003', nombre: a.nombre };
+  const base = { ...catalogo, artistas: [...catalogo.artistas, libre] };
+  const eliminar = { clave: 'artista:' + libre.id, antes: libre, despues: null };
+  const resultado = aplicarCambios(base, [eliminar], true);
+  assert.deepEqual(resultado.artistas, catalogo.artistas);
+  assert.deepEqual(aplicarCambios(resultado, [eliminar], true), resultado);
+  assert.throws(() => aplicarCambios(catalogo, [
+    { clave: 'artista:' + a.id, antes: a, despues: null }
+  ], true), /canciones asociadas/);
+  assert.throws(() => aplicarCambios({
+    ...base, artistas: [...catalogo.artistas, { ...libre, nombre: 'Cambiado' }]
+  }, [eliminar], true), /Otra edición/);
+  const reasignar = { clave: 'cancion:1', antes: fichaCancion(primera),
+    despues: { ...fichaCancion(primera), artistaIds: [b.id] } };
+  assert.deepEqual(aplicarCambios(catalogo, [
+    { clave: 'artista:' + a.id, antes: a, despues: null }, reasignar
+  ], true).artistas, [b]);
+  assert.throws(() => aplicarCambios(base, [
+    eliminar, { ...reasignar, despues: { ...reasignar.despues, artistaIds: [libre.id] } }
+  ], true), /canciones asociadas/);
+});
+
+test('la API publica eliminaciones vacías y bloquea artistas vinculados y borrados inválidos', async (t) => {
+  entorno(t);
+  const libre = { id: 'ART-003', nombre: a.nombre };
+  const base = { ...catalogo, artistas: [...catalogo.artistas, libre] };
+  const llamadas = gitSimulado(t, { base });
+  const token = await createSession(usuario, secreto);
+  const eliminar = { clave: 'artista:' + libre.id, antes: libre, despues: null };
+  const publicar = (cambio) => llamar('POST', { accion: 'publicar', cambios: [cambio] }, token);
+  const respuesta = await publicar(eliminar);
+  assert.equal(respuesta.code, 200);
+  assert.deepEqual(respuesta.body.catalogo.artistas, catalogo.artistas);
+  llamadas.length = 0;
+  assert.equal((await publicar({ clave: 'artista:' + a.id, antes: a, despues: null })).code, 400);
+  assert.ok(llamadas.every((c) => c.method === 'GET'));
+  assert.equal((await publicar({ ...eliminar, antes: null })).code, 400);
+  assert.equal((await publicar({ ...eliminar, clave: 'cancion:1' })).code, 400);
+});

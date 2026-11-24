@@ -71,10 +71,11 @@ export function aplicarCambios(original, cambios, comprobar = false) {
     if (comprobar && !iguales(antes, cambio.antes) && !iguales(antes, cambio.despues))
       throw new Error(
         'Otra edición cambió «' +
-          (antes?.nombre || cambio.despues.nombre) +
+          (antes?.nombre || cambio.despues?.nombre || cambio.antes?.nombre || cambio.clave) +
           '» en el catálogo. Tus borradores siguen en este dispositivo.'
       );
     if (cambio.clave.startsWith('artista:')) {
+      if (cambio.despues === null) continue;
       const ficha = fichaArtista(cambio.despues);
       const i = catalogo.artistas.findIndex((a) => a.id === ficha.id);
       if (i < 0) catalogo.artistas.push(ficha);
@@ -91,6 +92,13 @@ export function aplicarCambios(original, cambios, comprobar = false) {
       if (!iguales(cancion.artistaIds, cambio.despues.artistaIds)) reasignadas.add(cancion.id);
       Object.assign(cancion, structuredClone(cambio.despues));
     }
+  }
+  for (const cambio of cambios) {
+    if (!cambio.clave.startsWith('artista:') || cambio.despues !== null) continue;
+    const id = cambio.clave.slice(8);
+    if (catalogo.covers.some((c) => c.artistaIds?.includes(id)))
+      throw new Error('Este artista tiene canciones asociadas a su ID. Retíralo de sus créditos antes de eliminarlo.');
+    catalogo.artistas = catalogo.artistas.filter((a) => a.id !== id);
   }
   const nombres = new Map(catalogo.artistas.map((a) => [a.id, a.nombre]));
   for (const cancion of catalogo.covers) {

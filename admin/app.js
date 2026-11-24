@@ -210,10 +210,13 @@ function resumen() {
   $('pendientes').textContent = borradores.length;
   $('pendientes').hidden = !borradores.length;
 }
-function confirmar(texto) {
+function confirmar(texto, eliminar = false) {
   return new Promise((resolve) => {
     const d = $('confirmar');
     $('confirmar-texto').textContent = texto;
+    $('confirmar-titulo').textContent = eliminar ? '¿Eliminar artista?' : '¿Descartar los cambios?';
+    $('conservar').textContent = eliminar ? 'Cancelar' : 'Conservar';
+    $('descartar').textContent = eliminar ? 'Eliminar artista' : 'Descartar';
     d.returnValue = '';
     d.addEventListener('close', () => resolve(d.returnValue === 'descartar'), { once: true });
     d.showModal();
@@ -576,6 +579,8 @@ function editar() {
   guardar.id = 'guardar-ficha';
   const acciones = nodo('div', 'acciones-ficha');
   if (cambio) acciones.append(boton('Descartar borrador', 'boton-texto', () => descartarFicha(clave)));
+  if (!esCancion && item && !catalogo.covers.some((c) => c.artistaIds?.includes(elegido)))
+    acciones.append(boton('Eliminar artista', 'boton-texto peligro', eliminarArtista));
   acciones.append(guardar);
   pie.append(estado, acciones);
   caja.append(pie);
@@ -669,6 +674,35 @@ async function guardarFicha() {
     actualizarPie();
   }
 }
+async function eliminarArtista() {
+  if (guardando || preparando || publicando) return;
+  const id = elegido, clave = claveArtista(id), artista = buscarArtista(id);
+  if (!artista || catalogo.covers.some((c) => c.artistaIds?.includes(id))) return;
+  if (!(await confirmar('Se eliminará «' + artista.nombre + '» (' + id +
+    '). La eliminación quedará como borrador hasta que publiques los cambios.', true))) return;
+  guardando = true;
+  try {
+    const valor = baseEdicion ? {
+      clave, antes: baseEdicion, despues: null, origen: origenEdicion,
+      revision: crypto.randomUUID()
+    } : null;
+    await cambiarBorradores([{ clave, revision: revisionInicial, valor }]);
+    sucio = false;
+    idNuevo = '';
+    elegido = null;
+    history.replaceState(null, '', '#artistas');
+    hashActual = '#artistas';
+    document.body.classList.remove('ficha-abierta');
+    await recargarLocales();
+    canal?.postMessage('cambio');
+    aviso(valor ? 'Eliminación guardada como borrador. Publica los cambios para aplicarla.' : 'Artista nuevo descartado.');
+  } catch (e) {
+    aviso(e.message);
+  } finally {
+    guardando = false;
+    actualizarPie();
+  }
+}
 async function descartarFicha(clave) {
   if (guardando || preparando || publicando) return;
   const cambio = cambioDe(clave);
@@ -679,7 +713,7 @@ async function descartarFicha(clave) {
     );
     return;
   }
-  if (!(await confirmar('Se descartará el borrador de «' + cambio.despues.nombre + '».'))) return;
+  if (!(await confirmar('Se descartará el borrador de «' + (cambio.despues?.nombre || cambio.antes?.nombre) + '».'))) return;
   try {
     await cambiarBorradores([{ clave, revision: cambio.revision }]);
     if (!cambio.antes) {
@@ -714,7 +748,7 @@ function abrirRama() {
     : 'Aquí aparecerán los borradores que guardes en este dispositivo.';
   $('resumen-cambios').replaceChildren(
     ...borradores.map((c) =>
-      nodo('div', '', (c.clave.startsWith('artista:') ? 'Artista · ' : 'Canción · ') + c.despues.nombre)
+      nodo('div', '', (c.despues === null ? 'Eliminar artista · ' : c.clave.startsWith('artista:') ? 'Artista · ' : 'Canción · ') + (c.despues?.nombre || c.antes?.nombre))
     )
   );
   $('publicar-form').hidden = $('descartar-borradores').hidden = !borradores.length;
