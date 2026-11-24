@@ -7,7 +7,9 @@ export default route('POST', async req => {
   const user = await authenticateRequest(req);
   const ticket = checkTicket(req.body?.ticket, user);
   if (ticket.purpose) throw new HttpError(400, 'Esta autorización corresponde al editor de canciones.');
-  const meta = metadata(req.body || {});
+  if (!Array.isArray(req.body?.artistaIds))
+    throw new HttpError(400, 'Selecciona los artistas de la lista.');
+  const meta = metadata(req.body);
   const snapshot = await catalogAtHead();
   const next = appendSong(snapshot.catalog, meta, ticket.id);
   const response = sha => ({ song: next.song, commit: `https://github.com/${REPO}/commit/${sha}`, player: `https://grimminck.cl/?song=${next.song.id}`, state: 'saved', message: 'Guardada en GitHub. Esperando que el alojamiento publique el cambio.' });

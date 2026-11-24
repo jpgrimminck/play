@@ -33,6 +33,15 @@ export function uploadLimit(ticket, kind) {
 }
 export function metadata(body) {
   const nombre = typeof body.nombre === 'string' ? body.nombre.trim() : '';
+  if (Object.hasOwn(body, 'artistaIds')) {
+    const ids = body.artistaIds;
+    if (!nombre || nombre.length > 160 || !['c','i','y'].includes(body.tipo) ||
+        !Array.isArray(ids) || ids.length < 1 || ids.length > 3 ||
+        new Set(ids).size !== ids.length ||
+        ids.some(id => typeof id !== 'string' || !/^ART-[0-9A-F]{1,32}$/.test(id)))
+      throw new HttpError(400, 'Selecciona entre uno y tres artistas existentes.');
+    return { nombre, artistaIds: [...ids], tipo: body.tipo };
+  }
   const artista = typeof body.artista === 'string' ? body.artista.trim() : '';
   if (!nombre || nombre.length > 160 || !artista || artista.length > 160 || !['c','i','y'].includes(body.tipo)) throw new HttpError(400, 'Completa nombre, artista y tipo de canción.');
   return { nombre, artista, tipo: body.tipo };
@@ -44,9 +53,17 @@ export function appendSong(catalog, meta, uploadId, now = new Date().toISOString
   if (new Set(ids).size !== ids.length || ids.length !== max || catalog.totalCovers !== max) throw new HttpError(500, 'El catálogo tiene IDs inconsistentes. No se ha modificado.');
   const existing = catalog.covers.find(s => s.uploadId === uploadId);
   if (existing) return { catalog, song: existing, existing: true };
+  let seleccion;
+  if (Object.hasOwn(meta, 'artistaIds')) {
+    const validada = metadata(meta);
+    seleccion = validada.artistaIds.map(id => catalog.artistas?.find(a => a.id === id));
+    if (seleccion.some(a => !a))
+      throw new HttpError(400, 'Un artista ya no está disponible. Recarga y vuelve a seleccionarlo.');
+    meta = { ...validada, artista: seleccion.map(a => a.nombre).join(' y ') };
+  }
   const song = { id: max + 1, ...meta, uploadedAt: now, uploadId };
   const next = { ...catalog, totalCovers: song.id, covers: [...catalog.covers, song] };
-  if (Array.isArray(catalog.artistas)) {
+  if (!seleccion && Array.isArray(catalog.artistas)) {
     next.artistas = [...catalog.artistas];
     const nombres = separarCredito(meta.artista);
     // Homonyms need an explicit selection in the editor; the original credit stays readable.

@@ -87,3 +87,35 @@ test('Google JWT verification checks signature, audience, expiry and owner', asy
   const signed=await token();const parts=signed.split('.');parts[1]=Buffer.from(JSON.stringify({email:'someone@gmail.com'})).toString('base64url');
   await assert.rejects(authenticate(parts.join('.')),{status:401});
 });
+
+test('new uploads resolve 1–3 existing artist IDs without creating artists or mixing homonyms', () => {
+  const artistas = [
+    { id:'ART-001', nombre:'José' }, { id:'ART-002', nombre:'José', referencia:'Dúo' },
+    { id:'ART-003', nombre:'Ana' }, { id:'ART-004', nombre:'Luis' }
+  ];
+  const base = { ...catalog, artistas };
+  const meta = metadata({ nombre:' Nueva ', artistaIds:['ART-002','ART-003'], tipo:'i' });
+  const result = appendSong(base, meta, data.id);
+  assert.deepEqual(result.song.artistaIds, ['ART-002','ART-003']);
+  assert.equal(result.song.artista, 'José y Ana');
+  assert.deepEqual(result.catalog.artistas, artistas);
+  assert.equal(base.covers.length, 2);
+  assert.equal(appendSong(result.catalog,meta,data.id).existing,true);
+  assert.equal(appendSong(base,metadata({nombre:'Tres',artistaIds:['ART-001','ART-002','ART-003'],tipo:'c'}),'three').song.artistaIds.length,3);
+  for (const ids of [[],['ART-001','ART-001'],artistas.map(a=>a.id),['inventado'],['ART-DEAD']])
+    assert.throws(()=>appendSong(base,metadata({nombre:'Nueva',artistaIds:ids,tipo:'c'}),'bad'),{status:400});
+});
+
+test('artist suggestions ignore accents, distinguish IDs and exclude already selected artists', async () => {
+  const { coincidenciasArtistas, seleccionValida } = await import('../subir/artistas.js');
+  const artistas = [
+    {id:'ART-001',nombre:'José'}, {id:'ART-002',nombre:'José',referencia:'Dúo'},
+    {id:'ART-003',nombre:'Ana'}
+  ];
+  assert.equal(coincidenciasArtistas(artistas,[],'jose').length,2);
+  assert.deepEqual(coincidenciasArtistas(artistas,['ART-001'],'jose').map(a=>a.id),['ART-002']);
+  assert.equal(coincidenciasArtistas(artistas,[],'duo')[0].id,'ART-002');
+  assert.equal(seleccionValida(artistas,['ART-002','ART-003']),true);
+  for(const ids of [[],['ART-001','ART-001'],['ART-DEAD'],artistas.map(a=>a.id).concat('ART-004')])
+    assert.equal(seleccionValida(artistas,ids),false);
+});
