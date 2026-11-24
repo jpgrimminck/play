@@ -1903,12 +1903,12 @@
     {
       "id": 83,
       "nombre": "Tralalero Tralalá",
-      "artista": "Juan, Lucas y Mateo",
+      "artista": "Juan y Mateo y Lucas",
       "tipo": "c",
       "artistaIds": [
         "ART-051",
-        "ART-032",
-        "ART-053"
+        "ART-053",
+        "ART-73B442C8903E4F89A0D24F06206D0903"
       ],
       "archivos": {
         "caratula": {
@@ -2531,12 +2531,12 @@
     {
       "id": 110,
       "nombre": "Las pelotitas",
-      "artista": "Juan, Mateo y Lucas",
+      "artista": "Juan y Mateo y Lucas",
       "tipo": "i",
       "artistaIds": [
         "ART-051",
         "ART-053",
-        "ART-032"
+        "ART-73B442C8903E4F89A0D24F06206D0903"
       ],
       "archivos": {
         "caratula": {
