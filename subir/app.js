@@ -3,7 +3,7 @@ import { coincidenciasArtistas, seleccionValida } from './artistas.js';
 const $ = id => document.getElementById(id);
 let coverBlob = null, audioFile = null, audioReady = false, busy = false, pending = null;
 let photoVersion = 0, audioVersion = 0, coverObjectUrl = '', audioObjectUrl = '';
-let artists = [], selected = [];
+let artists = [], selected = [], addingArtist = false;
 const status = message => { $('status').textContent = message; };
 async function api(path, { method = 'GET', body } = {}) {
   const response = await fetch(`/api/song-upload/${path}`, { method, credentials: 'same-origin', headers: { ...(body ? { 'Content-Type': 'application/json' } : {}) }, body: body ? JSON.stringify(body) : undefined, cache: 'no-store' });
@@ -15,12 +15,61 @@ async function api(path, { method = 'GET', body } = {}) {
   return data;
 }
 
+
+function renderLatest(song, sha) {
+  const audio = $('latest-audio');
+  audio.pause(); $('latest-play').disabled = true; $('latest-seek').disabled = true; $('latest-seek').value = 0;
+  $('latest-status').textContent = song ? '' : 'Sin canciones';
+  if (!song) {
+    $('latest-image').hidden = true; $('latest-title').textContent = ''; $('latest-artist').textContent = '';
+    audio.removeAttribute('src'); audio.load(); return;
+  }
+  const base = 'https://raw.githubusercontent.com/jpgrimminck/play/' + sha;
+  $('latest-image').src = base + '/covers/cover' + song.id + '.jpeg';
+  $('latest-image').alt = 'Carátula de ' + song.nombre; $('latest-image').hidden = false;
+  $('latest-title').textContent = song.nombre; $('latest-artist').textContent = song.artista;
+  audio.src = base + '/songs/' + song.id + '.mp3';
+  audio.onloadedmetadata = () => {
+    const ready = Number.isFinite(audio.duration) && audio.duration > 0;
+    $('latest-play').disabled = !ready; $('latest-seek').disabled = !ready;
+  };
+  audio.onerror = () => { $('latest-status').textContent = 'No se pudo cargar el audio.'; $('latest-play').disabled = true; $('latest-seek').disabled = true; };
+  audio.load();
+}
+async function refreshLatest() {
+  try { const data = await api('latest'); renderLatest(data.song, data.sha); }
+  catch (e) { $('latest-status').textContent = e.message; }
+}
+function syncLatest() {
+  const paused = $('latest-audio').paused;
+  $('latest-play-icon').setAttribute('d', paused ? 'm8 5 11 7-11 7z' : 'M6 5h4v14H6zM14 5h4v14h-4z');
+  $('latest-play').setAttribute('aria-label', paused ? 'Reproducir último single' : 'Pausar último single');
+}
+$('latest-play').onclick = async () => {
+  const audio = $('latest-audio');
+  if (audio.paused) {
+    try { $('preview-audio').pause(); await audio.play(); }
+    catch { $('latest-status').textContent = 'No se pudo reproducir el audio.'; }
+  } else audio.pause();
+};
+for (const event of ['play','pause','ended']) $('latest-audio').addEventListener(event,syncLatest);
+$('preview-audio').addEventListener('play', () => $('latest-audio').pause());
+$('latest-audio').addEventListener('timeupdate', () => {
+  if (Number.isFinite($('latest-audio').duration) && $('latest-audio').duration > 0)
+    $('latest-seek').value = 100 * $('latest-audio').currentTime / $('latest-audio').duration;
+});
+$('latest-seek').oninput = () => {
+  if (Number.isFinite($('latest-audio').duration) && $('latest-audio').duration > 0)
+    $('latest-audio').currentTime = $('latest-audio').duration * Number($('latest-seek').value) / 100;
+};
+
 async function loadArtists() {
   $('fields').disabled = true; $('publish').disabled = true;
   try {
     const data = await api('latest');
     if (!Array.isArray(data.artistas)) throw new Error('No se pudieron cargar los artistas. Recarga la página.');
     artists = data.artistas;
+    renderLatest(data.song, data.sha);
     renderArtists();
     $('fields').disabled = false; $('publish').disabled = false;
   } catch (e) { status(e.message); }
@@ -34,10 +83,18 @@ function renderArtists() {
     name.textContent = artist?.nombre || id; name.title = [artist?.referencia, id].filter(Boolean).join(' · ');
     const remove = document.createElement('button'); remove.type = 'button'; remove.className = 'remove-artist';
     remove.textContent = '×'; remove.setAttribute('aria-label', 'Quitar ' + name.textContent);
-    remove.onclick = () => { selected = selected.filter(value => value !== id); clearPending(); renderArtists(); };
+    remove.onclick = () => { selected = selected.filter(value => value !== id); addingArtist = false; clearPending(); renderArtists(); };
     chip.append(name, remove); root.append(chip);
   }
   if (selected.length === 3) return;
+  if (selected.length && !addingArtist) {
+    const add = document.createElement('button');
+    add.type = 'button'; add.className = 'add-artist'; add.textContent = '+';
+    add.setAttribute('aria-label', selected.length === 1 ? 'Agregar segundo artista' : 'Agregar tercer artista');
+    add.onclick = () => { addingArtist = true; renderArtists(); root.querySelector('.artist-search')?.focus(); };
+    root.append(add);
+    return;
+  }
   const slot = document.createElement('div'); slot.className = 'artist-slot';
   const input = document.createElement('input'); input.className = 'artist-search';
   input.placeholder = selected.length ? '+ Artista' : 'Artista';
@@ -56,8 +113,8 @@ function renderArtists() {
       const detail = document.createElement('small'); detail.textContent = [a.referencia,a.id].filter(Boolean).join(' · ');
       option.append(detail);
       option.onclick = () => {
-        selected.push(a.id); clearPending(); renderArtists();
-        (root.querySelector('.artist-search') || $('type')).focus();
+        selected.push(a.id); addingArtist = false; clearPending(); renderArtists();
+        (root.querySelector('.add-artist') || $('type')).focus();
       };
       option.onkeydown = e => {
         if(e.key === 'ArrowDown') { e.preventDefault(); (option.nextElementSibling || results.firstElementChild).focus(); }
@@ -175,7 +232,8 @@ $('song-form').addEventListener('submit', async event => {
     photoVersion++; audioVersion++;
     $('song-form').reset(); pending = null; coverBlob = null; audioFile = null; audioReady = false;
     $('preview-audio').pause(); $('preview-audio').removeAttribute('src'); $('preview-audio').load(); $('preview-audio').hidden = true; syncAudio();
-    $('preview-image').hidden = true; $('artwork').classList.add('empty'); selected = []; renderArtists(); $('seek').value = 0;
+    $('preview-image').hidden = true; $('artwork').classList.add('empty'); selected = []; addingArtist = false; renderArtists(); $('seek').value = 0;
+    await refreshLatest();
     if(coverObjectUrl) URL.revokeObjectURL(coverObjectUrl); if(audioObjectUrl) URL.revokeObjectURL(audioObjectUrl);
 
   } catch (e) { status(`${e.message} Tus archivos siguen seleccionados para reintentar.`); $('result').textContent = 'No se confirmó una nueva publicación. Puedes reintentar; una subida ya guardada no se duplicará.'; }

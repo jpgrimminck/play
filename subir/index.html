@@ -14,7 +14,26 @@
       <div id="google-button"></div>
     </section>
     <section id="workspace" hidden aria-label="Subir canción">
-      <form id="song-form" class="song-card">
+      <div class="singles">
+        <section class="latest-single" aria-labelledby="latest-heading">
+          <h2 id="latest-heading">Ultimo Single</h2>
+          <div id="latest-card" class="song-card latest-card">
+            <img id="latest-image" class="latest-image" alt="Carátula del último single" hidden>
+            <div class="latest-info">
+              <p id="latest-title" class="single-title"></p>
+              <p id="latest-artist" class="latest-artist"></p>
+              <button id="latest-play" class="play" type="button" aria-label="Reproducir último single" disabled>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path id="latest-play-icon" d="m8 5 11 7-11 7z"/></svg>
+              </button>
+              <audio id="latest-audio" preload="metadata"></audio>
+              <input id="latest-seek" class="seek" type="range" min="0" max="100" value="0" step=".1" aria-label="Posición del último single" disabled>
+              <p id="latest-status" role="status"></p>
+            </div>
+          </div>
+        </section>
+        <section class="new-single" aria-labelledby="new-heading">
+          <h2 id="new-heading">Nuevo Single</h2>
+          <form id="song-form" class="song-card">
         <fieldset id="fields" disabled>
           <label class="artwork empty" id="artwork" for="photo">
             <img id="preview-image" alt="Carátula" hidden>
@@ -39,12 +58,14 @@
             <audio id="preview-audio" preload="metadata"></audio>
             <input id="seek" class="seek" type="range" min="0" max="100" value="0" step=".1" aria-label="Posición del audio" disabled>
             <label class="confirmation"><input type="checkbox" id="confirmed" required>Listo para publicar</label>
+            <button class="primary" id="publish" type="submit" disabled>Publicar</button>
           </div>
         </fieldset>
-        <button class="primary" id="publish" type="submit" disabled>Publicar</button>
       </form>
       <progress id="progress" max="100" value="0" hidden></progress>
       <div id="result" aria-live="polite"></div>
+        </section>
+      </div>
     </section>
     <p id="status" role="status" aria-live="polite"></p>
   </main>
