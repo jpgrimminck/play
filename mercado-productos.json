@@ -4,13 +4,15 @@
     "title": "Capodastro Nutech Guitarra Clásica 4990",
     "image": "https://http2.mlstatic.com/D_NQ_NP_850965-MLC42407900962_062020-F.webp",
     "price": 6389,
-    "currency": "CLP"
+    "currency": "CLP",
+    "comment": "especial para guitarras acústicas que tienen el mástil ancho"
   },
   {
     "url": "https://www.mercadolibre.cl/audifonos-kz-edx-pro-in-ear-con-cable-negros/p/MLC19837562?pdp_filters=item_id:MLC2860699956&sid=purchases",
     "title": "Audífonos KZ EDX Pro in-ear con cable negros",
     "image": "https://http2.mlstatic.com/D_Q_NP_872005-MLA95846838473_102025-F.webp",
     "price": 10462,
-    "currency": "CLP"
+    "currency": "CLP",
+    "comment": "aguantan mucha potencia, cómodos, pero dificil de saber cual es el izquierdo y el derecho"
   }
 ]

@@ -73,8 +73,24 @@ function makeCard(product) {
 
   const card = document.createElement("article");
   card.className = "product-card";
-  const surface = document.createElement("div");
+  const hasComment = typeof product.comment === "string" && product.comment.trim().length > 0;
+  const surface = document.createElement(hasComment ? "button" : "div");
   surface.className = "product-surface";
+  if (hasComment) {
+    surface.type = "button";
+    surface.setAttribute("aria-pressed", "false");
+    surface.setAttribute("aria-label", "Leer comentario de Juan Pablo sobre " + product.title);
+    surface.addEventListener("click", () => {
+      const flipped = surface.classList.toggle("is-flipped");
+      surface.setAttribute("aria-pressed", String(flipped));
+      surface.setAttribute("aria-label", (flipped ? "Volver al producto " : "Leer comentario de Juan Pablo sobre ") + product.title);
+    });
+  }
+
+  const flipInner = document.createElement("div");
+  flipInner.className = "product-flip-inner";
+  const front = document.createElement("div");
+  front.className = "product-face product-front";
 
   const imageWrap = document.createElement("div");
   imageWrap.className = "product-image-wrap";
@@ -89,14 +105,37 @@ function makeCard(product) {
 
   const info = document.createElement("div");
   info.className = "product-info";
-  const title = document.createElement("h3");
+  const title = document.createElement("span");
   title.className = "product-title";
   title.textContent = product.title;
   const price = document.createElement("p");
   price.className = "product-price";
   price.textContent = formatPrice(product.price, product.currency);
   info.append(title, price);
-  surface.append(imageWrap, info);
+  if (hasComment) {
+    const hint = document.createElement("span");
+    hint.className = "product-flip-hint";
+    hint.textContent = "Toca para leer el comentario";
+    info.append(hint);
+  }
+  front.append(imageWrap, info);
+  flipInner.append(front);
+  if (hasComment) {
+    const back = document.createElement("div");
+    back.className = "product-face product-back";
+    const heading = document.createElement("span");
+    heading.className = "product-comment-heading";
+    heading.textContent = "Comentario de Juan Pablo";
+    const comment = document.createElement("span");
+    comment.className = "product-comment";
+    comment.textContent = product.comment.trim();
+    const returnHint = document.createElement("span");
+    returnHint.className = "product-flip-hint";
+    returnHint.textContent = "Toca para volver";
+    back.append(heading, comment, returnHint);
+    flipInner.append(back);
+  }
+  surface.append(flipInner);
 
   const actions = document.createElement("div");
   actions.className = "product-actions";
