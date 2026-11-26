@@ -30,5 +30,53 @@
     "price": 15491,
     "currency": "CLP",
     "comment": "Estuche cómodo para MacBook Neo de 13\""
+  },
+  {
+    "url": "https://articulo.mercadolibre.cl/MLC-1865519559-guiro-madera-tipo-pescado-modelo-re-29-rmx-marron-_JM?sid=purchases",
+    "title": "Guiro Madera Tipo Pescado Modelo Re-29 Rmx Marrón",
+    "image": "https://http2.mlstatic.com/D_NQ_NP_717044-MLC107809049071_022026-O-guiro-madera-tipo-pescado-modelo-re-29-rmx-marron.webp",
+    "price": 19980,
+    "currency": "CLP",
+    "comment": "Buen sonido y calidad, cuidado con la barita que hay que amarrarla para que no se pierda"
+  },
+  {
+    "url": "https://www.mercadolibre.cl/cargador-25w-enchufe-carga-rapida-joyroom-usb-tipo-c/p/MLC40699357?pdp_filters=item_id:MLC1766621493&sid=purchases",
+    "title": "Cargador 25w Enchufe Carga Rápida Joyroom Usb + Tipo C",
+    "image": "https://http2.mlstatic.com/D_NQ_NP_816477-MLA99452090240_112025-O.webp",
+    "price": 8484,
+    "currency": "CLP",
+    "comment": "Cargador para aparatos electrónicos con conector tipo A y C"
+  },
+  {
+    "url": "https://articulo.mercadolibre.cl/MLC-1135674287-extension-alargador-de-corriente-cable-30-metros-1mm-_JM?sid=purchases",
+    "title": "Extensión Alargador De Corriente Cable 30 Metros 1mm",
+    "image": "https://http2.mlstatic.com/D_NQ_NP_920681-MLC84522494483_052025-O-extension-alargador-de-corriente-cable-30-metros-1mm.webp",
+    "price": 28990,
+    "currency": "CLP",
+    "comment": "Buena calidad"
+  },
+  {
+    "url": "https://www.mercadolibre.cl/cable-poder-tipo-8-enchufe-nacional-18mts-cobre-c7-c/up/MLCU55887592?pdp_filters=item_id:MLC515911303&sid=purchases",
+    "title": "Cable Poder Tipo 8 Enchufe Nacional 1.8mts Cobre C7 C",
+    "image": "https://http2.mlstatic.com/D_NQ_NP_883129-MLC93547413772_102025-O.webp",
+    "price": 1790,
+    "currency": "CLP",
+    "comment": "Cable de poder para cargadores antiguos"
+  },
+  {
+    "url": "https://www.mercadolibre.cl/grabadora-de-voz-digital-lcd-8-gb-con-microfono-externo-y-reduccion-de-ruido/p/MLC27185245?pdp_filters=item_id:MLC1455558467&sid=purchases",
+    "title": "Grabadora de Voz Digital LCD 8 GB con Micrófono Externo y Reducción de Ruido",
+    "image": "https://http2.mlstatic.com/D_NQ_NP_829996-MLA94811111832_102025-O.webp",
+    "price": 14990,
+    "currency": "CLP",
+    "comment": "Grabadora para clases regulares para uso de profesor"
+  },
+  {
+    "url": "https://www.mercadolibre.cl/cable-adaptador-splitter-de-audifono-y-microfono-trrs-35mm/up/MLCU2865755450?pdp_filters=item_id:MLC1553260581&sid=purchases",
+    "title": "Cable Adaptador Splitter De Audifono Y Microfono Trrs 3.5mm",
+    "image": "https://http2.mlstatic.com/D_NQ_NP_733796-MLC80733746028_112024-O.webp",
+    "price": 5990,
+    "currency": "CLP",
+    "comment": "Adaptador para conectar micrófono y audífono por separado a un notebook con un solo conector TRRS, de 3 pines"
   }
 ]
