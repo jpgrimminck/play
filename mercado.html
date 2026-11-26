@@ -4,33 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#080b12">
-  <meta name="description" content="Productos seleccionados de Mercado Libre.">
-  <title>Mercado — Grimminck</title>
+  <meta name="description" content="Productos recomendados de Mercado Libre.">
+  <title>Productos Recomendados — Grimminck</title>
   <link rel="icon" href="/icons/favicon.ico">
   <link rel="preconnect" href="https://http2.mlstatic.com" crossorigin>
   <link rel="stylesheet" href="/mercado.css">
   <script type="module" src="/mercado.js"></script>
 </head>
 <body>
-  <header class="topbar">
-    <a class="brand" href="/" aria-label="Grimminck Music, inicio"><span class="brand-mark">G</span><span>Grimminck</span></a>
-    <span class="top-label">Selección de productos</span>
-  </header>
   <main class="shell">
-    <section class="intro" aria-labelledby="page-title">
-      <p class="eyebrow"><span class="live-dot" aria-hidden="true"></span> MERCADO LIBRE</p>
-      <h1 id="page-title">Encuentra tu próximo favorito.</h1>
-      <p class="intro-copy">Una selección de productos recomendados.</p>
-    </section>
-    <section class="catalog" aria-label="Productos">
-      <div class="catalog-head">
-        <h2>Productos</h2>
-        <span id="product-count" class="product-count"></span>
-      </div>
-      <p id="catalog-status" class="status" role="status" aria-live="polite">Cargando productos…</p>
-      <div id="product-grid" class="product-grid"></div>
-    </section>
+    <h1>Productos Recomendados</h1>
+    <p id="catalog-status" class="status" role="status" aria-live="polite">Cargando productos…</p>
+    <div id="product-grid" class="product-grid"></div>
   </main>
-  <footer class="footer"><span>Grimminck</span><span>Los precios y disponibilidad se consultan en Mercado Libre.</span></footer>
+  <p id="share-feedback" class="share-feedback" role="status" aria-live="polite"></p>
 </body>
 </html>

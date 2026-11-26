@@ -1,6 +1,10 @@
 const grid = document.querySelector("#product-grid");
 const status = document.querySelector("#catalog-status");
-const count = document.querySelector("#product-count");
+const feedback = document.querySelector("#share-feedback");
+const mobilePhone = typeof navigator.userAgentData?.mobile === "boolean"
+  ? navigator.userAgentData.mobile
+  : /iPhone|iPod|Android.*Mobile/i.test(navigator.userAgent);
+let feedbackTimer;
 const approvedDomains = [
   "mercadolibre.cl", "mercadolibre.com", "mercadolibre.com.ar",
   "mercadolibre.com.mx", "mercadolibre.com.co", "mercadolibre.com.uy",
@@ -34,16 +38,43 @@ function formatPrice(price, currency) {
   }
 }
 
+function showFeedback(message) {
+  clearTimeout(feedbackTimer);
+  feedback.textContent = message;
+  feedbackTimer = setTimeout(() => { feedback.textContent = ""; }, 3000);
+}
+
+async function copyLink(url) {
+  try {
+    if (!navigator.clipboard?.writeText) throw new Error("Clipboard unavailable");
+    await navigator.clipboard.writeText(url);
+  } catch {
+    const field = document.createElement("textarea");
+    field.value = url;
+    field.setAttribute("readonly", "");
+    field.style.position = "fixed";
+    field.style.opacity = "0";
+    document.body.append(field);
+    field.select();
+    let copied = false;
+    try { copied = document.execCommand("copy"); } catch {}
+    field.remove();
+    if (!copied) {
+      showFeedback("No se pudo copiar el enlace");
+      return;
+    }
+  }
+  showFeedback("Enlace copiado");
+}
+
 function makeCard(product) {
   if (!product || typeof product.title !== "string" || typeof product.image !== "string" ||
       !isMercadoLibreUrl(product.url)) return null;
 
-  const link = document.createElement("a");
-  link.className = "product-card";
-  link.href = product.url;
-  link.target = "_blank";
-  link.rel = "noopener noreferrer";
-  link.setAttribute("aria-label", product.title + ", " + formatPrice(product.price, product.currency) + ". Abrir en Mercado Libre.");
+  const card = document.createElement("article");
+  card.className = "product-card";
+  const surface = document.createElement("div");
+  surface.className = "product-surface";
 
   const imageWrap = document.createElement("div");
   imageWrap.className = "product-image-wrap";
@@ -64,12 +95,35 @@ function makeCard(product) {
   const price = document.createElement("p");
   price.className = "product-price";
   price.textContent = formatPrice(product.price, product.currency);
-  const label = document.createElement("span");
-  label.className = "buy-label";
-  label.textContent = "Ver en Mercado Libre";
-  info.append(title, price, label);
-  link.append(imageWrap, info);
-  return link;
+  info.append(title, price);
+  surface.append(imageWrap, info);
+
+  const actions = document.createElement("div");
+  actions.className = "product-actions";
+  const view = document.createElement("a");
+  view.className = "view-button";
+  view.href = product.url;
+  view.target = "_blank";
+  view.rel = "noopener noreferrer";
+  view.textContent = "Ver";
+  view.setAttribute("aria-label", "Ver " + product.title + " en Mercado Libre");
+
+  const share = document.createElement(mobilePhone ? "a" : "button");
+  share.className = "share-button";
+  share.title = mobilePhone ? "Compartir por WhatsApp" : "Copiar enlace";
+  share.setAttribute("aria-label", share.title + " de " + product.title);
+  share.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 10.6 6.6-4.1m-6.6 6.9 6.6 4.1"/></svg>';
+  if (mobilePhone) {
+    share.href = "https://wa.me/?text=" + encodeURIComponent(product.url);
+    share.target = "_blank";
+    share.rel = "noopener noreferrer";
+  } else {
+    share.type = "button";
+    share.addEventListener("click", () => copyLink(product.url));
+  }
+  actions.append(view, share);
+  card.append(surface, actions);
+  return card;
 }
 
 try {
@@ -79,7 +133,6 @@ try {
   if (!Array.isArray(products)) throw new Error("El formato del catálogo no es válido.");
   const cards = products.map(makeCard).filter(Boolean);
   grid.replaceChildren(...cards);
-  count.textContent = cards.length ? cards.length + (cards.length === 1 ? " producto" : " productos") : "";
   status.textContent = cards.length
     ? ""
     : "Estamos preparando el catálogo. Los productos aparecerán aquí.";
