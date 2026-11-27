@@ -1,5 +1,5 @@
 {
-  "totalCovers": 136,
+  "totalCovers": 137,
   "covers": [
     {
       "id": 1,
@@ -3160,6 +3160,17 @@
           "sha": "13708481d6036b044030270c1134dfe5861f10e1"
         }
       }
+    },
+    {
+      "id": 137,
+      "nombre": "Portugal",
+      "artistaIds": [
+        "ART-035"
+      ],
+      "tipo": "c",
+      "artista": "Agustín",
+      "uploadedAt": "2026-11-27T20:18:08.905Z",
+      "uploadId": "fb3d495a-730e-418f-8a64-4dbe3881a248"
     }
   ],
   "artistas": [
